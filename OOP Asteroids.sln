@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "OOP Asteroids", "OOP Asteroids\OOP Asteroids.vbproj", "{A5E2A0EA-1DC1-4CA6-8F00-F917B4F41526}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5E2A0EA-1DC1-4CA6-8F00-F917B4F41526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E2A0EA-1DC1-4CA6-8F00-F917B4F41526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E2A0EA-1DC1-4CA6-8F00-F917B4F41526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E2A0EA-1DC1-4CA6-8F00-F917B4F41526}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21F59FA5-5DF4-4D12-A122-24463AEF9EB5}
+	EndGlobalSection
+EndGlobal
