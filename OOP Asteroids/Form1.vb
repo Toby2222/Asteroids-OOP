@@ -1,9 +1,9 @@
 ﻿Public Class Asteroids_Game
-    Dim random As Integer = (Rnd() * 5) + 3
+
     'creating all the objects
     Dim mySpaceship As Ship = New Ship
     Dim asteroid As Asteroids
-    Dim asteroid_array As New List(Of Asteroids)(random)
+    Dim asteroid_array As New List(Of Asteroids)(numberOfAsteroids)
     Dim bullet As Bullets
     Dim bullet_array As New List(Of Bullets)()
 
@@ -11,8 +11,11 @@
     Dim formwidth As Integer
     Dim formheight As Integer
 
-    'asteroid angles
+    'asteroid Variables
     Dim AsteroidAngles As Double() = {0.1, 1, 2.5, 3.2, 4, 5.8}
+    Dim numberOfAsteroids As Integer = (Rnd() * 5) + 3
+    Dim OnePoint As New Point
+
 
     'booleans for keys
     Dim up As Boolean = False
@@ -106,7 +109,7 @@
         Public Sub New()
             onScreen = 1
             alive = 1
-            aSpeed = Rnd() * (5) + 1
+            aSpeed = Rnd() * (3) + 1
             numberOfPoints = Int(Rnd() * (4)) + 5
             For i = 1 To numberOfPoints
                 FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
@@ -191,23 +194,11 @@
             Dim BF As New Point(bullet_array(i).BBx, bullet_array(i).BBy)
             e.Graphics.DrawLine(pen, BR, BF)
         Next
-        For i = 0 To random - 1
+        For i = 0 To numberOfAsteroids - 1
             If asteroid_array(i).alive = True And asteroid_array(i).onScreen = True Then
                 e.Graphics.DrawPolygon(pen, asteroid_array(i).AsteroidPoints)
             End If
         Next
-        '    For i = 0 To 4
-        'If BA(14, i) = 1 Then
-        'Dim BA1 As New Point(BA(2, i), BA(8, i))
-        'Dim BA2 As New Point(BA(3, i), BA(9, i))
-        'Dim BA3 As New Point(BA(4, i), BA(10, i))
-        'Dim BA4 As New Point(BA(5, i), BA(11, i))
-        'Dim BA5 As New Point(BA(6, i), BA(12, i))
-        'Dim BA6 As New Point(BA(7, i), BA(13, i))
-        'Dim asteroid As Point() = {BA1, BA2, BA3, BA4, BA5, BA6, BA1}
-        '            e.Graphics.DrawPolygon(pen, asteroid)
-        'End If
-        'Next
 
         'draw the ship
         e.Graphics.FillPolygon(brush, shipPoints)
@@ -215,6 +206,7 @@
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         'update the ship angle and position
+#Region "Ship"
         'update front point
         mySpaceship.SFx = mySpaceship.SOx + ((Math.Cos(mySpaceship.SOa)) * mySpaceship.SFl)
         mySpaceship.SFy = mySpaceship.SOy + ((Math.Sin(mySpaceship.SOa)) * mySpaceship.SFl)
@@ -233,14 +225,6 @@
         End If
         'update the angle of the ship
         mySpaceship.SOa += mySpaceship.SOad
-        'if statement to define the drag of turning the ship
-        'If mySpaceship.SOad < -0.003 Then
-        '    mySpaceship.SOad += mySpaceship.adrag
-        'ElseIf mySpaceship.SOad > 0.003 Then
-        '    mySpaceship.SOad -= mySpaceship.adrag
-        'Else
-        '    mySpaceship.SOad = 0
-        'End If
         'when the ship leaves the form appear on the opposite side
         If mySpaceship.SOx < 0 Then
 
@@ -255,18 +239,21 @@
         If mySpaceship.SOy > formheight Then
             mySpaceship.SOy = 0
         End If
-
+#End Region
         'update the asteroid points
-        For i = 0 To 4
+#Region "Asteroids"
+        For i = 0 To numberOfAsteroids - 1
             asteroid_array(i).startX += ((Math.Cos(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
             asteroid_array(i).startY += ((Math.Sin(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
             For j = 0 To asteroid_array(i).numberOfPoints - 1
                 asteroid_array(i).xPoints(j) += ((Math.Cos(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
                 asteroid_array(i).yPoints(j) += ((Math.Sin(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
+                Dim OnePoint As New Point(asteroid_array(i).xPoints(j), asteroid_array(i).yPoints(j))
+                asteroid_array(i).AsteroidPoints(j) = (OnePoint)
             Next
         Next
         'check if off screen
-        For i = 0 To 4
+        For i = 0 To numberOfAsteroids - 1
             If asteroid_array(i).startX > formwidth Or asteroid_array(i).startX < 0 Then
                 AsteroidAngle(i)
             End If
@@ -274,19 +261,8 @@
                 AsteroidAngle(i)
             End If
         Next
-        'key press booleans
-        'If right = True Then
-        '    'prevent ship turning to fast
-        '    If mySpaceship.SOad < mySpaceship.damax Then
-        '        mySpaceship.SOad += 0.007
-        '    End If
-        'End If
-        'If left = True Then
-        '    'prevent ship turning to fast
-        '    If mySpaceship.SOad > (0 - mySpaceship.damax) Then
-        '        mySpaceship.SOad -= 0.007
-        '    End If
-        'End If
+#End Region
+#Region "Key Press"
         If right = True Then
             'prevent ship turning to fast
             mySpaceship.SOa += 0.1
@@ -312,16 +288,16 @@
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy)
             End If
         End If
-        'If test = True Then
-        '    asteroid = New Asteroids
-        'End If
+#End Region
+#Region "Bullets"
         If bullet_array.Count > 0 Then
             bullet.update()
         End If
+#End Region
         Invalidate()
     End Sub
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'random numbers
+        'numberOfAsteroids numbers
         Randomize()
 
         'set the starting points for the origin point within the ship
@@ -331,13 +307,13 @@
         formwidth = Me.Width
         formheight = Me.Height
         'populating defaults in Asteroids arrays
-        For i = 0 To random - 1
+        For i = 0 To numberOfAsteroids - 1
             asteroid = New Asteroids
         Next
 
     End Sub
     Function AsteroidAngle(i)
-        'random number to decde the starting side
+        'numberOfAsteroids number to decde the starting side
         Dim side As Integer = (Rnd() * 3) + 1
         'if side is one then start at top
         If side = 3 Then
