@@ -1,6 +1,4 @@
-﻿
-
-Public Class Asteroids_Game
+﻿Public Class Asteroids_Game
     Dim random As Integer = (Rnd() * 5) + 3
     'creating all the objects
     Dim mySpaceship As Ship = New Ship
@@ -93,32 +91,38 @@ Public Class Asteroids_Game
 
     Class Asteroids
         'Variables needed for all asteroids
-        Public Shared numberOfAsteroids As Integer 'integer for number of asteroids
         Public onScreen As Boolean 'boolean for wether the asteroid is on the screen
         Public alive As Boolean 'booleon for wether alove or not
         Public aAngle As Double 'double for the angle asteroids
         Public aSpeed As Integer 'integer for the speed of the asteroids
-        Public xPoints() As Integer 'array for all the xcoordiantes for the points in the asteroid
-        Public yPoints() As Integer 'array for all the y coordinates for the points in the asteroid
-        Public Shared AsteroidPoints As Point()
+        Public xPoints() As Integer  'array for all the xcoordiantes for the points in the asteroid
+        Public yPoints() As Integer  'array for all the y coordinates for the points in the asteroid
+        Public AsteroidPoints() As Point
         Public startX As Integer 'starting x coordinate
         Public startY As Integer 'starting y coordinate
         Public numberOfPoints As Integer 'integer for number of points in the asteroid
+        Public FixedAngles(7) As Double
 
         Public Sub New()
             onScreen = 1
             alive = 1
-            numberOfAsteroids = Asteroids_Game.random
             aSpeed = Rnd() * (5) + 1
-            numberOfPoints = Rnd() * (5) + 4
-            For i = 0 To (numberOfPoints / 2) - 1
+            numberOfPoints = Int(Rnd() * (4)) + 5
+            For i = 1 To numberOfPoints
+                FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
+            Next
+            ReDim xPoints(numberOfPoints - 1)
+            ReDim yPoints(numberOfPoints - 1)
+            ReDim AsteroidPoints(numberOfPoints - 1)
+            Asteroids_Game.asteroid_array.Add(Me)
+            Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1)
+            For i = 0 To (numberOfPoints) - 1
                 Dim rand As Integer = (Rnd() * 45) + 35
-                xPoints(i) = startX + ((Math.Cos(Asteroids_Game.AsteroidAngle(i))) * (rand))
-                yPoints(i) = startY + ((Math.Sin(Asteroids_Game.AsteroidAngle(i))) * (rand))
+                xPoints(i) = startX + ((Math.Cos(FixedAngles(i))) * (rand))
+                yPoints(i) = startY + ((Math.Sin(FixedAngles(i))) * (rand))
                 Dim OnePoint As New Point(xPoints(i), yPoints(i))
                 AsteroidPoints(i) = (OnePoint)
             Next
-            Asteroids_Game.asteroid_array.Add(Me)
         End Sub
     End Class
 
@@ -187,9 +191,9 @@ Public Class Asteroids_Game
             Dim BF As New Point(bullet_array(i).BBx, bullet_array(i).BBy)
             e.Graphics.DrawLine(pen, BR, BF)
         Next
-        For i = 0 To random
-            If asteroid_array(i).alive = 1 And asteroid_array(i).onScreen = 1 Then
-                e.Graphics.DrawPolygon(pen, Asteroids.AsteroidPoints)
+        For i = 0 To random - 1
+            If asteroid_array(i).alive = True And asteroid_array(i).onScreen = True Then
+                e.Graphics.DrawPolygon(pen, asteroid_array(i).AsteroidPoints)
             End If
         Next
         '    For i = 0 To 4
@@ -253,23 +257,23 @@ Public Class Asteroids_Game
         End If
 
         'update the asteroid points
-        'For i = 0 To 4
-        '    BA(15, i) += ((Math.Cos(BA(0, i))) * BA(1, i))
-        '    BA(16, i) += ((Math.Sin(BA(0, i))) * BA(1, i))
-        '    For j = 0 To 5
-        '        BA(j + 2, i) += ((Math.Cos(BA(0, i))) * BA(1, i))
-        '        BA((j + 8), i) += ((Math.Sin(BA(0, i))) * BA(1, i))
-        '    Next
-        'Next
-        ''check if off screen
-        'For i = 0 To 4
-        '    If BA(15, i) > formwidth Or BA(15, i) < 0 Then
-        '        AsteroidAngle(i)
-        '    End If
-        '    If BA(16, i) > formheight Or BA(16, i) < 0 Then
-        '        AsteroidAngle(i)
-        '    End If
-        'Next
+        For i = 0 To 4
+            asteroid_array(i).startX += ((Math.Cos(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
+            asteroid_array(i).startY += ((Math.Sin(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
+            For j = 0 To asteroid_array(i).numberOfPoints - 1
+                asteroid_array(i).xPoints(j) += ((Math.Cos(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
+                asteroid_array(i).yPoints(j) += ((Math.Sin(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
+            Next
+        Next
+        'check if off screen
+        For i = 0 To 4
+            If asteroid_array(i).startX > formwidth Or asteroid_array(i).startX < 0 Then
+                AsteroidAngle(i)
+            End If
+            If asteroid_array(i).startY > formheight Or asteroid_array(i).startY < 0 Then
+                AsteroidAngle(i)
+            End If
+        Next
         'key press booleans
         'If right = True Then
         '    'prevent ship turning to fast
@@ -316,8 +320,6 @@ Public Class Asteroids_Game
         End If
         Invalidate()
     End Sub
-
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'random numbers
         Randomize()
@@ -329,8 +331,8 @@ Public Class Asteroids_Game
         formwidth = Me.Width
         formheight = Me.Height
         'populating defaults in Asteroids arrays
-        For i = 1 To Asteroids.numberOfAsteroids
-            AsteroidAngle(i)
+        For i = 0 To random - 1
+            asteroid = New Asteroids
         Next
 
     End Sub
