@@ -255,7 +255,11 @@
         'check if off screen
         For i = 0 To numberOfAsteroids - 1
             If asteroid_array(i).startX > formwidth Or asteroid_array(i).startX < 0 Then
+                MsgBox(asteroid_array(i).startX.ToString + "start x")
+                MsgBox(formwidth.ToString + "form width")
                 AsteroidAngle(i)
+
+                MsgBox("test")
             End If
             If asteroid_array(i).startY > formheight Or asteroid_array(i).startY < 0 Then
                 AsteroidAngle(i)
