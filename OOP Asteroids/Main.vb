@@ -102,7 +102,7 @@
         formheight = Me.Height
         'populating defaults in Asteroids arrays
         For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids
+            asteroid = New Asteroids(i)
         Next
 
     End Sub
