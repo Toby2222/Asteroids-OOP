@@ -60,64 +60,11 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         'update the ship angle and position
 #Region "Ship"
-        'update front point
-        mySpaceship.SFx = mySpaceship.SOx + ((Math.Cos(mySpaceship.SOa)) * mySpaceship.SFl)
-        mySpaceship.SFy = mySpaceship.SOy + ((Math.Sin(mySpaceship.SOa)) * mySpaceship.SFl)
-        'update left point
-        mySpaceship.SLx = mySpaceship.SOx + ((Math.Cos(mySpaceship.SOa + mySpaceship.SLa)) * mySpaceship.SLl)
-        mySpaceship.SLy = mySpaceship.SOy + ((Math.Sin(mySpaceship.SOa + mySpaceship.SLa)) * mySpaceship.SLl)
-        'update right point
-        mySpaceship.SRx = mySpaceship.SOx + ((Math.Cos(mySpaceship.SOa + mySpaceship.SRa)) * mySpaceship.SRl)
-        mySpaceship.SRy = mySpaceship.SOy + ((Math.Sin(mySpaceship.SOa + mySpaceship.SRa)) * mySpaceship.SRl)
-        'update the origin point by the delta of the speed
-        mySpaceship.SOx = mySpaceship.SOx + ((Math.Cos(mySpaceship.pSOa)) * mySpaceship.SOsd)
-        mySpaceship.SOy = mySpaceship.SOy + ((Math.Sin(mySpaceship.pSOa)) * mySpaceship.SOsd)
-        'if statement for the drag to slow the ship
-        If mySpaceship.SOsd > 0 Then
-            mySpaceship.SOsd -= mySpaceship.sdrag
-        End If
-        'update the angle of the ship
-        mySpaceship.SOa += mySpaceship.SOad
-        'when the ship leaves the form appear on the opposite side
-        If mySpaceship.SOx < 0 Then
-
-            mySpaceship.SOx = formwidth
-        End If
-        If mySpaceship.SOy < 0 Then
-            mySpaceship.SOy = formheight
-        End If
-        If mySpaceship.SOx > formwidth Then
-            mySpaceship.SOx = 0
-        End If
-        If mySpaceship.SOy > formheight Then
-            mySpaceship.SOy = 0
-        End If
+        mySpaceship.update()
 #End Region
         'update the asteroid points
 #Region "Asteroids"
-        For i = 0 To numberOfAsteroids - 1
-            asteroid_array(i).startX += ((Math.Cos(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
-            asteroid_array(i).startY += ((Math.Sin(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
-            For j = 0 To asteroid_array(i).numberOfPoints - 1
-                asteroid_array(i).xPoints(j) += ((Math.Cos(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
-                asteroid_array(i).yPoints(j) += ((Math.Sin(asteroid_array(i).aAngle)) * asteroid_array(i).aSpeed)
-                Dim OnePoint As New Point(asteroid_array(i).xPoints(j), asteroid_array(i).yPoints(j))
-                asteroid_array(i).AsteroidPoints(j) = (OnePoint)
-            Next
-        Next
-        'check if off screen
-        For i = 0 To numberOfAsteroids - 1
-            If asteroid_array(i).startX > formwidth Or asteroid_array(i).startX < 0 Then
-                MsgBox(asteroid_array(i).startX.ToString + "start x")
-                MsgBox(formwidth.ToString + "form width")
-                AsteroidAngle(i)
-
-                MsgBox("test")
-            End If
-            If asteroid_array(i).startY > formheight Or asteroid_array(i).startY < 0 Then
-                AsteroidAngle(i)
-            End If
-        Next
+        asteroid.update()
 #End Region
 #Region "Key Press"
         If right = True Then
