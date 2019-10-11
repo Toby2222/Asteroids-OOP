@@ -13,8 +13,8 @@
     Public FixedAngles(7) As Double
 
     Public Sub New()
-        onScreen = 1
-        alive = 1
+        onScreen = True
+        alive = True
         aSpeed = Rnd() * (3) + 1
         numberOfPoints = Int(Rnd() * (4)) + 5
         For i = 1 To numberOfPoints
@@ -31,6 +31,36 @@
             yPoints(i) = startY + ((Math.Sin(FixedAngles(i))) * (rand))
             Dim OnePoint As New Point(xPoints(i), yPoints(i))
             AsteroidPoints(i) = (OnePoint)
+        Next
+    End Sub
+    Public Sub replace(f)
+        Console.WriteLine(Asteroids_Game.asteroid_array(f).onScreen.ToString + " onscreen")
+        Console.WriteLine(Me.onScreen.ToString + " me onscreen")
+        Console.WriteLine(Asteroids_Game.asteroid_array(f).startX.ToString + " startX")
+        Console.WriteLine(Asteroids_Game.asteroid_array(f).startY.ToString + " startY")
+        Console.WriteLine(Me.startX.ToString + " me startX")
+        Console.WriteLine(Me.startY.ToString + " me startY")
+
+        Asteroids_Game.asteroid_array(f).onScreen = True
+        Asteroids_Game.asteroid_array(f).alive = True
+        Asteroids_Game.asteroid_array(f).aSpeed = Rnd() * (3) + 1
+        Asteroids_Game.asteroid_array(f).numberOfPoints = Int(Rnd() * (4)) + 5
+        For i = 1 To numberOfPoints
+            Asteroids_Game.asteroid_array(f).FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / Asteroids_Game.asteroid_array(f).numberOfPoints) + (i - 1) * (2 * Math.PI) / Asteroids_Game.asteroid_array(f).numberOfPoints
+        Next
+        ReDim Asteroids_Game.asteroid_array(f).xPoints(Asteroids_Game.asteroid_array(f).numberOfPoints - 1)
+        ReDim Asteroids_Game.asteroid_array(f).yPoints(Asteroids_Game.asteroid_array(f).numberOfPoints - 1)
+        ReDim Asteroids_Game.asteroid_array(f).AsteroidPoints(Asteroids_Game.asteroid_array(f).numberOfPoints - 1)
+        Asteroids_Game.AsteroidAngle(f)
+        For i = 0 To (Asteroids_Game.asteroid_array(f).numberOfPoints) - 1
+            Dim rand As Integer = (Rnd() * 45) + 35
+            Console.WriteLine(Asteroids_Game.asteroid_array(f).startX.ToString + " startX before")
+            Console.WriteLine(Asteroids_Game.asteroid_array(f).startY.ToString + " startY before")
+            Console.WriteLine(Asteroids_Game.asteroid_array(f).aAngle.ToString + " Aangle")
+            Asteroids_Game.asteroid_array(f).xPoints(i) = Asteroids_Game.asteroid_array(f).startX + ((Math.Cos(Asteroids_Game.asteroid_array(f).FixedAngles(i))) * (rand))
+            Asteroids_Game.asteroid_array(f).yPoints(i) = Asteroids_Game.asteroid_array(f).startY + ((Math.Sin(Asteroids_Game.asteroid_array(f).FixedAngles(i))) * (rand))
+            Dim OnePoint As New Point(Asteroids_Game.asteroid_array(f).xPoints(i), Asteroids_Game.asteroid_array(f).yPoints(i))
+            Asteroids_Game.asteroid_array(f).AsteroidPoints(i) = (OnePoint)
         Next
     End Sub
     Public Sub Update()
@@ -63,9 +93,10 @@
                 Asteroids_Game.asteroid_array(i).onScreen = False
             End If
             If Asteroids_Game.asteroid_array(i).onScreen = False Then
-                Asteroids_Game.asteroid_array(i).onScreen = True
-                Asteroids_Game.asteroid_array(i).Finalize()
-                Asteroids_Game.asteroid = New Asteroids
+                Asteroids_Game.asteroid_array(i).replace(i)
+                'Asteroids_Game.asteroid_array(i).onScreen = True
+                'Asteroids_Game.asteroid_array(i).Finalize()
+                'Asteroids_Game.asteroid = New Asteroids
             End If
         Next
     End Sub
