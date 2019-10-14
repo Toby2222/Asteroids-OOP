@@ -12,7 +12,7 @@
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double
 
-    Public Sub New(f As Integer)
+    Public Sub New()
         onScreen = True
         alive = True
         aSpeed = Rnd() * (3) + 1
@@ -23,7 +23,7 @@
         ReDim xPoints(numberOfPoints - 1)
         ReDim yPoints(numberOfPoints - 1)
         ReDim AsteroidPoints(numberOfPoints - 1)
-        Asteroids_Game.asteroid_array.Insert(f, Me)
+        Asteroids_Game.asteroid_array.Add(Me)
         Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1)
         For i = 0 To (numberOfPoints) - 1
             Dim rand As Integer = (Rnd() * 45) + 35
@@ -63,41 +63,41 @@
     '        Asteroids_Game.asteroid_array(f).AsteroidPoints(i) = (OnePoint)
     '    Next
     'End Sub
-    Public Sub Update()
-        For i = 0 To Asteroids_Game.numberOfAsteroids - 1
-            'Console.WriteLine(Asteroids_Game.formwidth.ToString + " form width")
-            'Console.WriteLine(Asteroids_Game.formheight.ToString + " form height")
-            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startX.ToString + " x before update")
-            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startY.ToString + " y before update")
-            'Console.WriteLine(Int(((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed)).ToString + " update x by")
-            'Console.WriteLine(Int(((Math.Sin(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed)).ToString + " update y by")
-            Asteroids_Game.asteroid_array(i).startX += Int(((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed))
-            Asteroids_Game.asteroid_array(i).startY += Int(((Math.Sin(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed))
-            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startX.ToString + " x after update")
-            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startY.ToString + " y after update")
-            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 1
-                'Console.WriteLine(Asteroids_Game.asteroid_array(i).xPoints(j).ToString + " x " + j.ToString + " before update")
-                'Console.WriteLine(Asteroids_Game.asteroid_array(i).yPoints(j).ToString + " y " + j.ToString + " before update")
-                Asteroids_Game.asteroid_array(i).xPoints(j) += Int(((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed) + 1)
-                Asteroids_Game.asteroid_array(i).yPoints(j) += Int(((Math.Sin(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed) + 1)
-                'Console.WriteLine(Asteroids_Game.asteroid_array(i).xPoints(j).ToString + " x " + j.ToString + " after update")
-                'Console.WriteLine(Asteroids_Game.asteroid_array(i).yPoints(j).ToString + " y " + j.ToString + " after update")
-                Dim OnePoint As New Point(Asteroids_Game.asteroid_array(i).xPoints(j), Asteroids_Game.asteroid_array(i).yPoints(j))
-                Asteroids_Game.asteroid_array(i).AsteroidPoints(j) = (OnePoint)
-                'check if off screen
-            Next
-            If Asteroids_Game.asteroid_array(i).startX > Asteroids_Game.formwidth Or Asteroids_Game.asteroid_array(i).startX < 0 Then
-                Asteroids_Game.asteroid_array(i).onScreen = False
-            End If
-            If Asteroids_Game.asteroid_array(i).startY > Asteroids_Game.formheight Or Asteroids_Game.asteroid_array(i).startY < 0 Then
-                Asteroids_Game.asteroid_array(i).onScreen = False
-            End If
-            If Asteroids_Game.asteroid_array(i).onScreen = False Then
-                Asteroids_Game.asteroid_array(i).Finalize()
-                Asteroids_Game.asteroid = New Asteroids(i)
-                'Asteroids_Game.asteroid_array(i).onScreen = True
-                'Asteroids_Game.asteroid = New Asteroids
-            End If
+    Public Sub Update(i)
+        'Console.WriteLine(Asteroids_Game.formwidth.ToString + " form width")
+        'Console.WriteLine(Asteroids_Game.formheight.ToString + " form height")
+        'Console.WriteLine(Asteroids_Game.asteroid_array(i).startX.ToString + " x before update")
+        'Console.WriteLine(Asteroids_Game.asteroid_array(i).startY.ToString + " y before update")
+        'Console.WriteLine(Int(((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed)).ToString + " update x by")
+        'Console.WriteLine(Int(((Math.Sin(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed)).ToString + " update y by")
+        Asteroids_Game.asteroid_array(i).startX += Int(((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed))
+        Asteroids_Game.asteroid_array(i).startY += Int(((Math.Sin(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed))
+        'Console.WriteLine(Asteroids_Game.asteroid_array(i).startX.ToString + " x after update")
+        'Console.WriteLine(Asteroids_Game.asteroid_array(i).startY.ToString + " y after update")
+        For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 1
+            'Console.WriteLine(Asteroids_Game.asteroid_array(i).xPoints(j).ToString + " x " + j.ToString + " before update")
+            'Console.WriteLine(Asteroids_Game.asteroid_array(i).yPoints(j).ToString + " y " + j.ToString + " before update")
+            Asteroids_Game.asteroid_array(i).xPoints(j) += Int(((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed) + 1)
+            Asteroids_Game.asteroid_array(i).yPoints(j) += Int(((Math.Sin(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed) + 1)
+            'Console.WriteLine(Asteroids_Game.asteroid_array(i).xPoints(j).ToString + " x " + j.ToString + " after update")
+            'Console.WriteLine(Asteroids_Game.asteroid_array(i).yPoints(j).ToString + " y " + j.ToString + " after update")
+            Dim OnePoint As New Point(Asteroids_Game.asteroid_array(i).xPoints(j), Asteroids_Game.asteroid_array(i).yPoints(j))
+            Asteroids_Game.asteroid_array(i).AsteroidPoints(j) = (OnePoint)
+            'check if off screen
         Next
+        If Asteroids_Game.asteroid_array(i).startX > Asteroids_Game.formwidth Or Asteroids_Game.asteroid_array(i).startX < 0 Then
+            Asteroids_Game.asteroid_array(i).onScreen = False
+
+        ElseIf Asteroids_Game.asteroid_array(i).startY > Asteroids_Game.formheight Or Asteroids_Game.asteroid_array(i).startY < 0 Then
+            Asteroids_Game.asteroid_array(i).onScreen = False
+        Else
+            Asteroids_Game.asteroid_array(i).onScreen = True
+        End If
+        If Asteroids_Game.asteroid_array(i).onScreen = False Then
+            Asteroids_Game.asteroid_array.RemoveAt(i)
+            Asteroids_Game.asteroid = New Asteroids()
+            'Asteroids_Game.asteroid_array(i).onScreen = True
+            'Asteroids_Game.asteroid = New Asteroids
+        End If
     End Sub
 End Class

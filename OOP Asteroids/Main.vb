@@ -3,7 +3,7 @@
     'creating all the objects
     Public mySpaceship As Ship = New Ship
     Public asteroid As Asteroids
-    Public asteroid_array As New List(Of Asteroids)(numberOfAsteroids)
+    Public asteroid_array As New List(Of Asteroids) '(numberOfAsteroids)
     Public bullet As Bullets
     Public bullet_array As New List(Of Bullets)()
 
@@ -38,7 +38,7 @@
         Dim SF As New Point(mySpaceship.SFx, mySpaceship.SFy)
         Dim shipPoints As Point() = {SL, SO, SR, SF, SL}
 
-        For i = 0 To Me.bullet_array.Count - 1
+        For i = 0 To bullet_array.Count - 1
             Dim BR As New Point(bullet_array(i).BFx, bullet_array(i).BFy)
             Dim BF As New Point(bullet_array(i).BBx, bullet_array(i).BBy)
             e.Graphics.DrawLine(pen, BR, BF)
@@ -57,7 +57,10 @@
         'update the ship angle and position
         mySpaceship.Update()
         'update the asteroid points
-        asteroid.Update()
+        For i = 0 To numberOfAsteroids - 1
+            asteroid_array(i).Update(i)
+        Next
+
 #Region "Key Press"
         If right = True Then
             'prevent ship turning to fast
@@ -102,7 +105,7 @@
         formheight = Me.Height
         'populating defaults in Asteroids arrays
         For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids(i)
+            asteroid = New Asteroids()
         Next
 
     End Sub
