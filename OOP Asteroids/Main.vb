@@ -12,7 +12,7 @@
     Public formheight As Integer
 
     'asteroid Variables
-    Public numberOfAsteroids As Integer = 1 '(Rnd() * 5) + 3
+    Public numberOfAsteroids As Integer = 17 '(Rnd() * 5) + 3
 
     'booleans for keys
     Public up As Boolean = False
@@ -111,7 +111,7 @@
     End Sub
     Function AsteroidAngle(i)
         'numberOfAsteroids number to decde the starting side
-        Dim side As Integer = 1 '(Rnd() * 3) + 1
+        Dim side As Integer = (Rnd() * 3) + 1
         'if side is one then start at top
         If side = 3 Then
             Dim rand As Integer = (Rnd() * formwidth)
@@ -144,22 +144,24 @@
             Else
                 asteroid_array(i).aAngle = ((Rnd() * (Math.PI)) + (Math.PI))
             End If
+
         ElseIf side = 1 Then
             Dim rand As Integer = (Rnd() * formwidth)
             asteroid_array(i).startX = rand
             asteroid_array(i).startY = formheight
             'if start pos is in upper third of bottom number then 270 to 360
-            If True Then 'rand > ((2 / 3) * formwidth) Then
-                'asteroid_array(i).aAngle = ((Rnd() * (0.64 * Math.PI)) + (Math.PI * 1.36))
-                asteroid_array(i).aAngle = 2 * Math.PI
+            If rand > ((2 / 3) * formwidth) Then
 
+                asteroid_array(i).aAngle = (Rnd() * (0.2 * Math.PI)) + (1.2 * Math.PI)
                 'if start pos is in the bottom third of bottom number then 0 to 90
             ElseIf rand < ((1 / 3) * formwidth) Then
-                asteroid_array(i).aAngle = (Rnd() * (0.5 * Math.PI))
+                asteroid_array(i).aAngle = ((Rnd() * (0.45 * Math.PI)) + (Math.PI * 1.53))
+
                 'if the start pos is in the middle third of the bottom number then 270 to 90
             Else
                 asteroid_array(i).aAngle = ((Rnd() * (Math.PI)) + (1.5 * Math.PI))
             End If
+
         ElseIf side = 2 Then
             Dim rand As Integer = (Rnd() * formheight)
             asteroid_array(i).startX = 0
