@@ -12,7 +12,7 @@
     Public formheight As Integer
 
     'asteroid Variables
-    Public numberOfAsteroids As Integer = 17 '(Rnd() * 5) + 3
+    Public numberOfAsteroids As Integer = (Rnd() * 5) + 3
 
     'booleans for keys
     Public up As Boolean = False
