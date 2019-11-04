@@ -36,7 +36,7 @@
         Dim SR As New Point(mySpaceship.SRx, mySpaceship.SRy)
         Dim SO As New Point(mySpaceship.SOx, mySpaceship.SOy)
         Dim SF As New Point(mySpaceship.SFx, mySpaceship.SFy)
-        Dim shipPoints As Point() = {SL, SO, SR, SF, SL}
+        Dim shipPoints As Point() = {SL, SR, SF, SL}
 
         For i = 0 To bullet_array.Count - 1
             Dim BR As New Point(bullet_array(i).BFx, bullet_array(i).BFy)

@@ -33,8 +33,8 @@
     Public Sub New()
         'give the points a value to represent the length from the origin to define the size of the ship
         SFl = 34    'ship front length
-        SLl = 56    'ship left length
-        SRl = 56    'ship right length
+        SLl = 23    'ship left length
+        SRl = 20    'ship right length
 
         'give the points an angle from the origin point of the ship
         SOa = 0.872664626    'ship origin angle
