@@ -7,7 +7,6 @@
     Public xPoints() As Double  'array for all the xcoordiantes for the points in the asteroid
     Public yPoints() As Double  'array for all the y coordinates for the points in the asteroid
     Public AsteroidPoints() As Point
-    Public AsteroidPointList As New List(Of Point)
     Public startX As Double 'starting x coordinate
     Public startY As Double 'starting y coordinate
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
@@ -34,40 +33,7 @@
             Dim OnePoint As New Point(xPoints(i), yPoints(i))
             AsteroidPoints(i) = (OnePoint)
         Next
-        ConvexHull(AsteroidPointList)
     End Sub
-    Public Function ConvexHull(p As List(Of Point)) As List(Of Point)
-        If p.Count = 0 Then
-            Return New List(Of Point)
-        End If
-        p.Sort()
-        Dim h As New List(Of Point)
-
-        ' Lower hull
-        For Each pt In p
-            While h.Count >= 2 AndAlso Not Ccw(h(h.Count - 2), h(h.Count - 1), pt)
-                h.RemoveAt(h.Count - 1)
-            End While
-            h.Add(pt)
-        Next
-
-        ' Upper hull
-        Dim t = h.Count + 1
-        For i = p.Count - 1 To 0 Step -1
-            Dim pt = p(i)
-            While h.Count >= t AndAlso Not Ccw(h(h.Count - 2), h(h.Count - 1), pt)
-                h.RemoveAt(h.Count - 1)
-            End While
-            h.Add(pt)
-        Next
-
-        h.RemoveAt(h.Count - 1)
-        Return h
-    End Function
-
-    Function Ccw(a As Point, b As Point, c As Point) As Boolean
-        Return ((b.X - a.X) * (c.Y - a.Y)) > ((b.Y - a.Y) * (c.X - a.X))
-    End Function
 
     Public Sub Update(i)
 
