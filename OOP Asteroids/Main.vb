@@ -29,6 +29,7 @@
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         Dim pen As New Drawing.Pen(brushColor) 'create a pen element
+        Dim shippen As New Drawing.Pen(Color.AntiqueWhite)
         Dim brush As Brush
         brush = New SolidBrush(Color.White)
         'define the points for the ship based off the coordinates
@@ -50,7 +51,7 @@
         Next
 
         'draw the ship
-        e.Graphics.FillPolygon(brush, shipPoints)
+        e.Graphics.DrawPolygon(shippen, shipPoints)
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick

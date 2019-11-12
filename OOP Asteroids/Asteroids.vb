@@ -1,4 +1,5 @@
-﻿Public Class Asteroids
+﻿Imports System.Windows
+Public Class Asteroids
     'Variables needed for all asteroids
     Public onScreen As Boolean 'boolean for wether the asteroid is on the screen
     Public alive As Boolean 'booleon for wether alove or not
@@ -34,7 +35,15 @@
             AsteroidPoints(i) = (OnePoint)
         Next
     End Sub
-
+    Public Sub ConvexHull()
+        Dim count As Integer = 2
+        For i = 0 To Asteroids_Game.asteroid_array.Count - 1
+            For j = 0 To Asteroids_Game.asteroid_array(i).AsteroidPoints.Count - 1
+                Dim test As New vector
+                Asteroids_Game.asteroid_array(i).AsteroidPoints(j)
+            Next
+        Next
+    End Sub
     Public Sub Update(i)
 
         Asteroids_Game.asteroid_array(i).startX += ((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed)
