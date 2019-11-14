@@ -1,4 +1,5 @@
 ﻿Imports System.Windows
+Imports Vector2D
 Public Class Asteroids
     'Variables needed for all asteroids
     Public onScreen As Boolean 'boolean for wether the asteroid is on the screen
@@ -10,6 +11,7 @@ Public Class Asteroids
     Public AsteroidPoints() As Point
     Public startX As Double 'starting x coordinate
     Public startY As Double 'starting y coordinate
+    Public startPoint As Point
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double
 
@@ -31,16 +33,15 @@ Public Class Asteroids
             Dim rand As Integer = (Rnd() * 45) + 35
             xPoints(i) = startX + ((Math.Cos(FixedAngles(i))) * (rand))
             yPoints(i) = startY + ((Math.Sin(FixedAngles(i))) * (rand))
-            Dim OnePoint As New Point(xPoints(i), yPoints(i))
-            AsteroidPoints(i) = (OnePoint)
+            AsteroidPoints(i) = New Point(xPoints(i), yPoints(i))
         Next
+        startPoint = New Point(startX, startY)
     End Sub
     Public Sub ConvexHull()
         Dim count As Integer = 2
         For i = 0 To Asteroids_Game.asteroid_array.Count - 1
             For j = 0 To Asteroids_Game.asteroid_array(i).AsteroidPoints.Count - 1
-                Dim test As New vector
-                Asteroids_Game.asteroid_array(i).AsteroidPoints(j)
+                Dim value As Double = (0.4 * Asteroids_Game.asteroid_array(i).AsteroidPoints(j), Asteroids_Game.asteroid_array(i).startPoint) + (0.6 * 0.4 * Asteroids_Game.asteroid_array(i).AsteroidPoints(j + 2), Asteroids_Game.asteroid_array(i).startPoint)
             Next
         Next
     End Sub
