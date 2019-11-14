@@ -1,9 +1,8 @@
 ﻿Imports System.Windows
-Imports Vector2D
 Public Class Asteroids
     'Variables needed for all asteroids
     Public onScreen As Boolean 'boolean for wether the asteroid is on the screen
-    Public alive As Boolean 'booleon for wether alove or not
+    Public alive As Boolean 'booleon for wether alive or not
     Public aAngle As Double 'double for the angle asteroids
     Public aSpeed As Double 'integer for the speed of the asteroids
     Public xPoints() As Double  'array for all the xcoordiantes for the points in the asteroid
@@ -14,6 +13,8 @@ Public Class Asteroids
     Public startPoint As Point
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double
+    Public count As Integer
+    Public count2 As Integer
 
 
     Public Sub New()
@@ -36,14 +37,40 @@ Public Class Asteroids
             AsteroidPoints(i) = New Point(xPoints(i), yPoints(i))
         Next
         startPoint = New Point(startX, startY)
+        ConvexHull()
     End Sub
     Public Sub ConvexHull()
         Dim count As Integer = 2
         For i = 0 To Asteroids_Game.asteroid_array.Count - 1
+            count = 2
+            count2 = 1
             For j = 0 To Asteroids_Game.asteroid_array(i).AsteroidPoints.Count - 1
-                Dim value As Double = (0.4 * Asteroids_Game.asteroid_array(i).AsteroidPoints(j), Asteroids_Game.asteroid_array(i).startPoint) + (0.6 * 0.4 * Asteroids_Game.asteroid_array(i).AsteroidPoints(j + 2), Asteroids_Game.asteroid_array(i).startPoint)
+                If j >= Asteroids_Game.asteroid_array(i).AsteroidPoints.Count - 3 Then
+                    count = 0
+                End If
+                If j >= Asteroids_Game.asteroid_array(i).AsteroidPoints.Count - 2 Then
+                    count2 = 0
+                End If
+                Dim v1 As Double = (Asteroids_Game.asteroid_array(i).xPoints(j) - Asteroids_Game.asteroid_array(i).startX) + (Asteroids_Game.asteroid_array(i).yPoints(j) - Asteroids_Game.asteroid_array(i).startY)
+                Dim v2 As Double = (Asteroids_Game.asteroid_array(i).xPoints(count) - Asteroids_Game.asteroid_array(i).startX) + (Asteroids_Game.asteroid_array(i).yPoints(count) - Asteroids_Game.asteroid_array(i).startY)
+                Console.WriteLine("J: " + j.ToString)
+                Console.WriteLine("v2: " + v2.ToString)
+                Console.WriteLine("v1: " + v1.ToString)
+                Dim checkV As Double = (Asteroids_Game.asteroid_array(i).xPoints(count2) - Asteroids_Game.asteroid_array(i).startX) + (Asteroids_Game.asteroid_array(i).yPoints(count2) - Asteroids_Game.asteroid_array(i).startY)
+                Console.WriteLine("checkV: " + checkV.ToString)
+                Dim beta As Double = ((0.7 * v1) - checkV) / v2
+                Console.WriteLine("beta: " + beta.ToString)
+                If beta <> 0.3 Then
+                    Console.WriteLine("delete point: " + (j + 1).ToString)
+                Else
+                    Console.WriteLine("convex already" + j.ToString + (j + 1).ToString + (j + 2).ToString)
+                End If
+                count += 1
+                count2 += 1
+                'Dim value As Double = (0.4 * Asteroids_Game.asteroid_array(i).AsteroidPoints(j), Asteroids_Game.asteroid_array(i).startPoint) + (0.6 * 0.4 * Asteroids_Game.asteroid_array(i).AsteroidPoints(j + 2), Asteroids_Game.asteroid_array(i).startPoint)
             Next
         Next
+        Console.WriteLine("test")
     End Sub
     Public Sub Update(i)
 
