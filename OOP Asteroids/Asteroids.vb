@@ -11,12 +11,15 @@
     Public startY As Double 'starting y coordinate
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double
+    Public collideAreas As Double
+    Public asteroidAreas As Double
+    Public x1, x2, x3, y1, y2, y3 As Double
 
 
     Public Sub New()
         onScreen = True
         alive = True
-        aSpeed = Rnd() * (3) + 1
+        aSpeed = 0.5 'Rnd() * (3) + 1
         numberOfPoints = Int(Rnd() * (4)) + 5
         For i = 1 To numberOfPoints
             FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
@@ -33,8 +36,60 @@
             Dim OnePoint As New Point(xPoints(i), yPoints(i))
             AsteroidPoints(i) = (OnePoint)
         Next
+        AsteroidArea()
     End Sub
 
+    Public Sub AsteroidArea()
+        For i = 0 To Asteroids_Game.numberOfAsteroids - 1
+            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2
+                x1 = Asteroids_Game.asteroid_array(i).xPoints(j)
+                x2 = Asteroids_Game.asteroid_array(i).xPoints(j + 1)
+                x3 = Asteroids_Game.asteroid_array(i).startX
+                y1 = Asteroids_Game.asteroid_array(i).yPoints(j)
+                y2 = Asteroids_Game.asteroid_array(i).yPoints(j + 1)
+                y3 = Asteroids_Game.asteroid_array(i).startY
+                Asteroids_Game.asteroid_array(i).asteroidAreas += Math.Abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2
+                'Asteroids_Game.asteroid_array(i).asteroidAreas += Math.Abs((x2 * y1 - x1 * y2) + (x3 * y2 - x2 * y3) + (x1 * y3 - x3 * y1)) / 2
+            Next
+            x1 = Asteroids_Game.asteroid_array(i).xPoints(0)
+            x2 = Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1)
+            x3 = Asteroids_Game.asteroid_array(i).startX
+            y1 = Asteroids_Game.asteroid_array(i).yPoints(0)
+            y2 = Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1)
+            y3 = Asteroids_Game.asteroid_array(i).startY
+            Asteroids_Game.asteroid_array(i).asteroidAreas += Math.Abs(x1 * Math.Abs(y2 - y3) + x2 * Math.Abs(y3 - y1) + x3 * Math.Abs(y1 - y2)) / 2
+            'Asteroids_Game.asteroid_array(i).asteroidAreas += Math.Abs((x2 * y1 - x1 * y2) + (x3 * y2 - x2 * y3) + (x1 * y3 - x3 * y1)) / 2
+
+        Next
+    End Sub
+    Public Sub collidesWith()
+        For i = 0 To Asteroids_Game.numberOfAsteroids - 1
+            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2
+                x1 = Asteroids_Game.asteroid_array(i).xPoints(j)
+                x2 = Asteroids_Game.asteroid_array(i).xPoints(j + 1)
+                x3 = Asteroids_Game.mySpaceship.SFx
+                y1 = Asteroids_Game.asteroid_array(i).yPoints(j)
+                y2 = Asteroids_Game.asteroid_array(i).yPoints(j + 1)
+                y3 = Asteroids_Game.mySpaceship.SFy
+                Asteroids_Game.asteroid_array(i).collideAreas += Math.Abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2
+                'Asteroids_Game.asteroid_array(i).asteroidAreas += Math.Abs((x2 * y1 - x1 * y2) + (x3 * y2 - x2 * y3) + (x1 * y3 - x3 * y1)) / 2
+
+            Next
+            x1 = Asteroids_Game.asteroid_array(i).xPoints(0)
+            x2 = Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1)
+            x3 = Asteroids_Game.mySpaceship.SFx
+            y1 = Asteroids_Game.asteroid_array(i).yPoints(0)
+            y2 = Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1)
+            y3 = Asteroids_Game.mySpaceship.SFy
+            Asteroids_Game.asteroid_array(i).collideAreas += Math.Abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2
+            'Asteroids_Game.asteroid_array(i).asteroidAreas += Math.Abs((x2 * y1 - x1 * y2) + (x3 * y2 - x2 * y3) + (x1 * y3 - x3 * y1)) / 2
+
+            If Math.Round((Asteroids_Game.asteroid_array(i).collideAreas) / 1000, 0) = Math.Round((Asteroids_Game.asteroid_array(i).asteroidAreas) / 1000, 0) Then
+                MsgBox("collided")
+            End If
+            Asteroids_Game.asteroid_array(i).collideAreas = 0
+        Next
+    End Sub
     Public Sub Update(i)
 
         Asteroids_Game.asteroid_array(i).startX += ((Math.Cos(Asteroids_Game.asteroid_array(i).aAngle)) * Asteroids_Game.asteroid_array(i).aSpeed)
