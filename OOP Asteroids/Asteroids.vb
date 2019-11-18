@@ -11,12 +11,13 @@
     Public startY As Double 'starting y coordinate
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double
+    Public collideangle As Double
 
 
     Public Sub New()
         onScreen = True
         alive = True
-        aSpeed = Rnd() * (3) + 1
+        aSpeed = 1 'Rnd() * (3) + 1
         numberOfPoints = Int(Rnd() * (4)) + 5
         For i = 1 To numberOfPoints
             FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
@@ -33,6 +34,23 @@
             Dim OnePoint As New Point(xPoints(i), yPoints(i))
             AsteroidPoints(i) = (OnePoint)
         Next
+    End Sub
+    Public Sub collides()
+        For i = 0 To Asteroids_Game.asteroid_array.Count - 1
+            collideangle = 0
+            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 1
+                Dim opposite = Math.Abs((Asteroids_Game.mySpaceship.SFy - Asteroids_Game.asteroid_array(i).yPoints(j)))
+                Dim adjacent = Math.Abs((Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(j)))
+                collideangle += Math.Atan(opposite / adjacent)
+            Next
+            If Math.Round(collideangle) = 2 * Math.PI Then
+                MsgBox("collision")
+            End If
+        Next
+
+        'negative tan opposite of adjacent
+        'shipx - astpoix / shipy - astpoiy
+
     End Sub
 
     Public Sub Update(i)

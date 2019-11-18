@@ -12,7 +12,7 @@
     Public formheight As Integer
 
     'asteroid Variables
-    Public numberOfAsteroids As Integer = (Rnd() * 5) + 3
+    Public numberOfAsteroids As Integer = 1 '(Rnd() * 5) + 3
 
     'booleans for keys
     Public up As Boolean = False
@@ -60,6 +60,7 @@
         For i = 0 To numberOfAsteroids - 1
             asteroid_array(i).Update(i)
         Next
+        asteroid.collides()
 
 #Region "Key Press"
         If right = True Then
