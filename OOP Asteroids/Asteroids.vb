@@ -43,7 +43,7 @@
                 Dim adjacent = Math.Abs((Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(j)))
                 collideangle += Math.Atan(opposite / adjacent)
             Next
-            If Math.Round(collideangle) = 2 * Math.PI Then
+            If collideangle = 2 * Math.PI Then
                 MsgBox("collision")
             End If
         Next
