@@ -82,8 +82,11 @@
             dotproduct = ((ax * bx) + (ay * by))
             thisone = Math.Acos(dotproduct / (a * b))
             collideangle += thisone
-            If collideangle >= 1.2 * Math.PI Then
-                MsgBox("collision")
+            If collideangle >= Math.PI Then
+                Asteroids_Game.brushColor = Color.Red
+            End If
+            If collideangle < Math.PI Then
+                Asteroids_Game.brushColor = Color.White
             End If
         Next
         'negative tan opposite of adjacent
