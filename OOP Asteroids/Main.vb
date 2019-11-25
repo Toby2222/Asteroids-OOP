@@ -5,14 +5,16 @@
     Public asteroid As Asteroids
     Public asteroid_array As New List(Of Asteroids) '(numberOfAsteroids)
     Public bullet As Bullets
-    Public bullet_array As New List(Of Bullets)()
+    Public bullet_array As New List(Of Bullets)(4)
 
     'get the size of the form
     Public formwidth As Integer
     Public formheight As Integer
 
     'asteroid Variables
-    Public numberOfAsteroids As Integer = 500 '(Rnd() * 5) + 3
+
+    Public numberOfAsteroids As Integer = (Rnd() * 5) + 3
+
 
     'booleans for keys
     Public up As Boolean = False
@@ -77,6 +79,10 @@
             mySpaceship.SOa -= 0.1
         End If
         If up = True Then
+            If right = True Or left = True Then
+            ElseIf mySpaceship.pSOa <> mySpaceship.SOa Then
+                mySpaceship.SOsd /= 2
+            End If
             'ensure angle of movement stays constant even after turning the ship
             mySpaceship.pSOa = mySpaceship.SOa
             'stop the ship from propelling forward and turning at the same time
@@ -88,14 +94,24 @@
         End If
         If space = True Then
             counter += 1
-            If counter = 10 Then
+            If counter >= 10 And bullet_array.Count < 5 Then
                 counter = 0
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy)
+            Else
+                For i = 0 To bullet_array.Count - 1
+                    If counter >= 10 And bullet_array(i).inForm = False Then
+                        bullet.fire(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy, i)
+                    End If
+                Next
             End If
-        End If
+            End If
 #End Region
         If bullet_array.Count > 0 Then
-            bullet.update()
+            For i = 0 To bullet_array.Count - 1
+                If bullet_array(i).inForm = True Then
+                    bullet.update(i)
+                End If
+            Next
         End If
         Invalidate()
     End Sub

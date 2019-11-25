@@ -22,25 +22,31 @@
         bAngle = currentAngle
         Asteroids_Game.bullet_array.Add(Me)
     End Sub
-    Public Sub update()
-        For i = 0 To Asteroids_Game.bullet_array.Count - 1
-            If Asteroids_Game.bullet_array(i).inForm = True Then
-                Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength)
-                Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * bLength)
-                Asteroids_Game.bullet_array(i).BFx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd))
-                Asteroids_Game.bullet_array(i).BFy = Asteroids_Game.bullet_array(i).BFy + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd))
-                If Asteroids_Game.bullet_array(i).BFx >= Asteroids_Game.formwidth Or Asteroids_Game.bullet_array(i).BFx < 0 Then
-                    Asteroids_Game.bullet_array(i).inForm = False
-                End If
-                If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
-                    Asteroids_Game.bullet_array(i).inForm = False
-                End If
-            Else
-                Asteroids_Game.bullet_array(i).BFx = -1
-                Asteroids_Game.bullet_array(i).BFy = -1
-                Asteroids_Game.bullet_array(i).BBx = -1
-                Asteroids_Game.bullet_array(i).BBy = -1
-            End If
-        Next
+    Public Sub fire(currentAngle, frontx, fronty, i)
+        Asteroids_Game.bullet_array(i).fired = False
+        Asteroids_Game.bullet_array(i).inForm = True
+        Asteroids_Game.bullet_array(i).BFx = frontx
+        Asteroids_Game.bullet_array(i).BFy = fronty
+        Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(Asteroids_Game.mySpaceship.SOa)) * bLength)
+        Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(Asteroids_Game.mySpaceship.SOa)) * bLength)
+        bAngle = currentAngle
+    End Sub
+    Public Sub update(i)
+        Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength)
+        Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * bLength)
+        Asteroids_Game.bullet_array(i).BFx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd))
+        Asteroids_Game.bullet_array(i).BFy = Asteroids_Game.bullet_array(i).BFy + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd))
+        If Asteroids_Game.bullet_array(i).BFx >= Asteroids_Game.formwidth Or Asteroids_Game.bullet_array(i).BFx < 0 Then
+            Asteroids_Game.bullet_array(i).inForm = False
+        End If
+        If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
+            Asteroids_Game.bullet_array(i).inForm = False
+        End If
+        If Asteroids_Game.bullet_array(i).inForm = False Then
+            Asteroids_Game.bullet_array(i).BBx = 30
+            Asteroids_Game.bullet_array(i).BBy = 30
+            Asteroids_Game.bullet_array(i).BFx = 30
+            Asteroids_Game.bullet_array(i).BFy = 30
+        End If
     End Sub
 End Class

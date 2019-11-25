@@ -36,124 +36,50 @@
         Next
     End Sub
     Public Sub collides()
-        'For i = 0 To Asteroids_Game.asteroid_array.Count - 1
-        '    collideangle = 0
-        '    For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 1
-        '        Dim opposite = Math.Abs((Asteroids_Game.mySpaceship.SFy - Asteroids_Game.asteroid_array(i).yPoints(j)))
-        '        Dim adjacent = Math.Abs((Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(j)))
-        '        collideangle += Math.Atan(opposite / adjacent)
-        '    Next
-        '    If collideangle = 2 * Math.PI Then
-        '        MsgBox("collision")
-        '    End If
-        'Next
 
-        For i = 0 To Asteroids_Game.asteroid_array.Count - 1
-            collideangle = 0
-            Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double
-            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2
-                ax = Math.Abs(Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(j))
-                ay = Math.Abs(Asteroids_Game.mySpaceship.SFy - Asteroids_Game.asteroid_array(i).yPoints(j))
-                bx = Math.Abs(Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
-                by = Math.Abs(Asteroids_Game.mySpaceship.SFy - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
-                'ax = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(j))
-                'ay = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(j))
-                'bx = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
-                'by = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
-                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-                dotproduct = ((ax * bx) + (ay * by))
-                thisone = Math.Acos(dotproduct / (a * b))
-                collideangle += thisone
-            Next
-            ax = (Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            ay = (Asteroids_Game.mySpaceship.SFy - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            bx = (Asteroids_Game.mySpaceship.SFx - Asteroids_Game.asteroid_array(i).xPoints(0))
-            by = (Asteroids_Game.mySpaceship.SFy - Asteroids_Game.asteroid_array(i).yPoints(0))
-            'ax = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            'ay = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            'bx = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(0))
-            'by = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(0))
-            a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-            b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-            dotproduct = ((ax * bx) + (ay * by))
-            thisone = Math.Acos(dotproduct / (a * b))
-            collideangle += thisone
-            If collideangle >= Math.PI Then
-                Form.ActiveForm.BackColor = (Color.Red)
+        angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy)
 
-            End If
-            collideangle = 0
-            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2
-                ax = Math.Abs(Asteroids_Game.mySpaceship.SLx - Asteroids_Game.asteroid_array(i).xPoints(j))
-                ay = Math.Abs(Asteroids_Game.mySpaceship.SLy - Asteroids_Game.asteroid_array(i).yPoints(j))
-                bx = Math.Abs(Asteroids_Game.mySpaceship.SLx - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
-                by = Math.Abs(Asteroids_Game.mySpaceship.SLy - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
-                'ax = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(j))
-                'ay = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(j))
-                'bx = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
-                'by = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
-                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-                dotproduct = ((ax * bx) + (ay * by))
-                thisone = Math.Acos(dotproduct / (a * b))
-                collideangle += thisone
-            Next
-            ax = (Asteroids_Game.mySpaceship.SLx - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            ay = (Asteroids_Game.mySpaceship.SLy - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            bx = (Asteroids_Game.mySpaceship.SLx - Asteroids_Game.asteroid_array(i).xPoints(0))
-            by = (Asteroids_Game.mySpaceship.SLy - Asteroids_Game.asteroid_array(i).yPoints(0))
-            'ax = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            'ay = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            'bx = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(0))
-            'by = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(0))
-            a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-            b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-            dotproduct = ((ax * bx) + (ay * by))
-            thisone = Math.Acos(dotproduct / (a * b))
-            collideangle += thisone
-            If collideangle >= Math.PI Then
-                Form.ActiveForm.BackColor = (Color.Red)
+        angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy)
 
-            End If
-            collideangle = 0
-            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2
-                ax = Math.Abs(Asteroids_Game.mySpaceship.SRx - Asteroids_Game.asteroid_array(i).xPoints(j))
-                ay = Math.Abs(Asteroids_Game.mySpaceship.SRy - Asteroids_Game.asteroid_array(i).yPoints(j))
-                bx = Math.Abs(Asteroids_Game.mySpaceship.SRx - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
-                by = Math.Abs(Asteroids_Game.mySpaceship.SRy - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
-                'ax = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(j))
-                'ay = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(j))
-                'bx = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
-                'by = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
-                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-                dotproduct = ((ax * bx) + (ay * by))
-                thisone = Math.Acos(dotproduct / (a * b))
-                collideangle += thisone
-            Next
-            ax = (Asteroids_Game.mySpaceship.SRx - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            ay = (Asteroids_Game.mySpaceship.SRy - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            bx = (Asteroids_Game.mySpaceship.SRx - Asteroids_Game.asteroid_array(i).xPoints(0))
-            by = (Asteroids_Game.mySpaceship.SRy - Asteroids_Game.asteroid_array(i).yPoints(0))
-            'ax = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            'ay = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            'bx = (Asteroids_Game.asteroid_array(i).startX - Asteroids_Game.asteroid_array(i).xPoints(0))
-            'by = (Asteroids_Game.asteroid_array(i).startY - Asteroids_Game.asteroid_array(i).yPoints(0))
-            a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-            b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-            dotproduct = ((ax * bx) + (ay * by))
-            thisone = Math.Acos(dotproduct / (a * b))
-            collideangle += thisone
-            If collideangle >= Math.PI Then
-                Form.ActiveForm.BackColor = (Color.Red)
+        angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy)
 
+        For i = 0 To Asteroids_Game.bullet_array.Count - 1
+            If Asteroids_Game.bullet_array(i).inForm = True Then
+                angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy)
+                angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy)
             End If
         Next
-        'negative tan opposite of adjacent
-        'shipx - astpoix / shipy - astpoiy
-
     End Sub
+    Public Function angleFunc(x, y)
+        For i = 0 To Asteroids_Game.asteroid_array.Count - 1
+
+            collideangle = 0
+                Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double
+                For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2
+                    ax = Math.Abs(x - Asteroids_Game.asteroid_array(i).xPoints(j))
+                    ay = Math.Abs(y - Asteroids_Game.asteroid_array(i).yPoints(j))
+                    bx = Math.Abs(x - Asteroids_Game.asteroid_array(i).xPoints(j + 1))
+                    by = Math.Abs(y - Asteroids_Game.asteroid_array(i).yPoints(j + 1))
+                    a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
+                    b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
+                    dotproduct = ((ax * bx) + (ay * by))
+                    thisone = Math.Acos(dotproduct / (a * b))
+                    collideangle += thisone
+                Next
+                ax = (x - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
+                ay = (y - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
+                bx = (x - Asteroids_Game.asteroid_array(i).xPoints(0))
+                by = (y - Asteroids_Game.asteroid_array(i).yPoints(0))
+                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
+                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
+                dotproduct = ((ax * bx) + (ay * by))
+                thisone = Math.Acos(dotproduct / (a * b))
+                collideangle += thisone
+            If collideangle >= 1.12 * Math.PI Then
+                Form.ActiveForm.BackColor = (Color.Red)
+            End If
+        Next
+    End Function
 
     Public Sub Update(i)
 

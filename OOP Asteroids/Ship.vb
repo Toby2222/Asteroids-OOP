@@ -47,10 +47,9 @@
         SOad = 0    'ship origin delta angle
         damax = 0.22    'max turn speed
         SOsd = 0    'ship origin delta speed
-        dsmax = 10    'max delta speed
+        dsmax = 6    'max delta speed
 
         'defining ship variables
-        maxSpeed = 10
         maxAngleSpeed = 0.12
 
         'define drag variables of ship
