@@ -12,7 +12,7 @@
     Public formheight As Integer
 
     'asteroid Variables
-    Public numberOfAsteroids As Integer = 1 '(Rnd() * 5) + 3
+    Public numberOfAsteroids As Integer = 500 '(Rnd() * 5) + 3
 
     'booleans for keys
     Public up As Boolean = False
@@ -22,6 +22,7 @@
 
     'defining a counter variable
     Public counter As Integer
+    Public testingspace As Integer = 0
 
     'defining the brush for painting the ship
     Public brushColor As Color = Color.White
@@ -61,7 +62,11 @@
             asteroid_array(i).Update(i)
         Next
         asteroid.collides()
-
+        testingspace += 1
+        If testingspace = 3 Then
+            testingspace = 0
+            Me.BackColor = Color.Black
+        End If
 #Region "Key Press"
         If right = True Then
             'prevent ship turning to fast
@@ -95,6 +100,7 @@
         Invalidate()
     End Sub
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         'numberOfAsteroids numbers
         Randomize()
 
