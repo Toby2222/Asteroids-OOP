@@ -1,4 +1,5 @@
 ﻿Public Class Ship
+#Region "variables"
     'define all the point coordinate for the ship
     Public SLx, SLy, SRx, SRy, SFx, SFy, SOx, SOy As Integer
 
@@ -16,20 +17,12 @@
 
     'definine delta angles (rate of change of angle)
     Public SOad As Double    'ship origin delta angle
-    Public damax As Double    'max turn speed
     Public SOsd As Double    'ship origin delta speed
     Public dsmax As Double    'max delta speed
 
-    'defining ship variables
-    Public curSpeed As Double
-    Public maxSpeed As Double
-    Public curAngleSpeed As Double
-    Public maxAngleSpeed As Double
-
     'define drag variables of ship
-    Public adrag As Double   'angle drag
     Public sdrag As Double   'speed drag
-
+#End Region
     Public Sub New()
         'give the points a value to represent the length from the origin to define the size of the ship
         SFl = 34    'ship front length
@@ -45,19 +38,16 @@
 
         'definine delta angles (rate of change of angle)
         SOad = 0    'ship origin delta angle
-        damax = 0.22    'max turn speed
         SOsd = 0    'ship origin delta speed
         dsmax = 6    'max delta speed
 
-        'defining ship variables
-        maxAngleSpeed = 0.12
-
         'define drag variables of ship
-        adrag = 0.003    'angle drag
         sdrag = 0.07    'speed drag
 
     End Sub
     Public Sub Update()
+        'update algorithm:
+        'ship point x/y = ship origin x/y + cos(ship origin angle) * Ship point length
         'update front point
         Asteroids_Game.mySpaceship.SFx = Asteroids_Game.mySpaceship.SOx + (Math.Cos(Asteroids_Game.mySpaceship.SOa) * Asteroids_Game.mySpaceship.SFl)
         Asteroids_Game.mySpaceship.SFy = Asteroids_Game.mySpaceship.SOy + (Math.Sin(Asteroids_Game.mySpaceship.SOa) * Asteroids_Game.mySpaceship.SFl)
@@ -78,7 +68,6 @@
         Asteroids_Game.mySpaceship.SOa += Asteroids_Game.mySpaceship.SOad
         'when the ship leaves the form appear on the opposite side
         If Asteroids_Game.mySpaceship.SOx < 0 Then
-
             Asteroids_Game.mySpaceship.SOx = Asteroids_Game.formwidth
         End If
         If Asteroids_Game.mySpaceship.SOy < 0 Then
