@@ -38,6 +38,7 @@ Partial Class Asteroids_Game
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.DoubleBuffered = True
+        Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Name = "Asteroids_Game"
         Me.Text = "Asteroids"
         Me.ResumeLayout(False)
