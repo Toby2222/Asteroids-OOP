@@ -75,17 +75,43 @@ Public Class Asteroids_Game
         For i = 0 To numberOfAsteroids - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
         Next
-        t1.Start()
-        t2.Start()
-        t3.Start()
-        t4.Start()
-        t5.Start()
+        If bullet_array.Count = 1 Then
+            t1.Start()
+            t1.Join()
+        ElseIf bullet_array.Count = 2 Then
+            t1.Start()
+            t2.Start()
+            t1.Join()
+            t2.Join()
+        ElseIf bullet_array.Count = 3 Then
+            t1.Start()
+            t2.Start()
+            t3.Start()
+            t1.Join()
+            t2.Join()
+            t3.Join()
+        ElseIf bullet_array.Count = 4 Then
+            t1.Start()
+            t2.Start()
+            t3.Start()
+            t4.Start()
+            t1.Join()
+            t2.Join()
+            t3.Join()
+            t4.Join()
+        ElseIf bullet_array.Count = 5 Then
+            t1.Start()
+            t2.Start()
+            t3.Start()
+            t4.Start()
+            t5.Start()
+            t1.Join()
+            t2.Join()
+            t3.Join()
+            t4.Join()
+            t5.Join()
+        End If
         t6.Start()
-        t1.Join()
-        t2.Join()
-        t3.Join()
-        t4.Join()
-        t5.Join()
         t6.Join()
         testingspace += 1 'increment this the testing variable
         If testingspace = 3 Then 'if the testing varaible makes it to three then revert the background to black
