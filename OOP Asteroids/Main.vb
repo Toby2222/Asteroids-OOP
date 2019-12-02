@@ -103,24 +103,16 @@
                 counter = 0 'reset counter for the spacing
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy) 'create a new bullet with the current spaceship x, y and angle
                 numberOfBullets += 1
-                'Else
-                '    For i = 0 To bullet_array.Count - 1 'loop through the bullet array
-                '        If counter >= 10 And bullet_array(i).inForm = False And bullet_array(i).fired = False Then 'if the spacing has elapsed and there is a bullet off screen 
-                '            counter = 0
-                '            bullet.fire(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy, i) 'fire one of the bullets from the array
-                '        End If
-                '    Next
+
             End If
         End If
 #End Region
 #Region "bullets"
         If bullet_array.Count > 0 Then
-            For i = 0 To bullet_array.Count - 1
-                If bullet_array(i).inForm = True Then
-                    bullet.update(i)
-                End If
-            Next
+
+            bullet.update()
         End If
+
 #End Region
         Invalidate()
     End Sub
