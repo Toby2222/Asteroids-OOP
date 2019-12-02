@@ -39,12 +39,12 @@
         angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy) 'function for detecting collisions between the front of the ship and the asteroid
         angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy) 'detect the left point of the ship
         angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy) 'detect the right point of the ship
-        For i = 0 To Asteroids_Game.bullet_array.Count - 1 'for loop to go through all the bullets
-            If Asteroids_Game.bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
-                angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy) 'detect front point of the bullet
-                'angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy) 'detect back point of the bullet
-            End If
-        Next
+    End Sub
+    Public Sub bulletCollides(i)
+        If Asteroids_Game.bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
+            angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy) 'detect front point of the bullet
+            'angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy) 'detect back point of the bullet
+        End If
     End Sub
     Public Function angleFunc(x, y)
         For i = 0 To Asteroids_Game.asteroid_array.Count - 1 'loop through all asteroids

@@ -33,29 +33,31 @@
     '    Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(currentAngle)) * bLength)
     '    bAngle = currentAngle
     'End Sub
-    Public Sub update(i)
-        'back x = front x + cos(angle)*length
-        Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back x
-        Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back y
-        Asteroids_Game.bullet_array(i).BFx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd)) 'front x
-        Asteroids_Game.bullet_array(i).BFy = Asteroids_Game.bullet_array(i).BFy + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd)) 'front y
-        'if outside the form change the variable
-        If Asteroids_Game.bullet_array(i).BFx >= Asteroids_Game.formwidth Or Asteroids_Game.bullet_array(i).BFx < 0 Then
-            Asteroids_Game.bullet_array(i).inForm = False
-            Asteroids_Game.bullet_array(i).fired = False
-            Asteroids_Game.numberOfBullets -= 1
-        End If
-        If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
-            Asteroids_Game.bullet_array(i).inForm = False
-            Asteroids_Game.bullet_array(i).fired = False
-            Asteroids_Game.numberOfBullets -= 1
-        End If
-        'hide the unused bullets off screen
-        If Asteroids_Game.bullet_array(i).inForm = False Then
-            Asteroids_Game.bullet_array(i).BBx = -1
-            Asteroids_Game.bullet_array(i).BBy = -1
-            Asteroids_Game.bullet_array(i).BFx = -1
-            Asteroids_Game.bullet_array(i).BFy = -1
-        End If
+    Public Sub update()
+        For i = 0 To Asteroids_Game.bullet_array.Count - 1
+            If Asteroids_Game.bullet_array(i).inForm = True Then
+
+                'back x = front x + cos(angle)*length
+                Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back x
+                Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back y
+                Asteroids_Game.bullet_array(i).BFx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd)) 'front x
+                Asteroids_Game.bullet_array(i).BFy = Asteroids_Game.bullet_array(i).BFy + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * (bSpeed + Asteroids_Game.mySpaceship.SOsd)) 'front y
+                'if outside the form change the variable
+                If Asteroids_Game.bullet_array(i).BFx >= Asteroids_Game.formwidth Or Asteroids_Game.bullet_array(i).BFx < 0 Then
+                    Asteroids_Game.bullet_array(i).inForm = False
+                    Asteroids_Game.bullet_array(i).fired = False
+                    Asteroids_Game.numberOfBullets -= 1
+                End If
+                If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
+                    Asteroids_Game.bullet_array(i).inForm = False
+                    Asteroids_Game.bullet_array(i).fired = False
+                    Asteroids_Game.numberOfBullets -= 1
+                End If
+            End If
+            For Each bullet In Asteroids_Game.bullet_array
+                bullet.Finalize()
+                Asteroids_Game.bullet_array.RemoveAt(i)
+            Next
+        Next
     End Sub
 End Class

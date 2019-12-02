@@ -1,4 +1,5 @@
-﻿Public Class Asteroids_Game
+﻿Imports System.Threading
+Public Class Asteroids_Game
 #Region "variables"
     'creating all the objects
     Public mySpaceship As Ship = New Ship 'ship object
@@ -23,6 +24,14 @@
     Public left As Boolean = False
     Public right As Boolean = False
     Public space As Boolean = False
+
+    'thread variables
+    Public t1 As New Thread(Sub() asteroid.bulletCollides(0))
+    Public t2 As New Thread(Sub() asteroid.bulletCollides(1))
+    Public t3 As New Thread(Sub() asteroid.bulletCollides(2))
+    Public t4 As New Thread(Sub() asteroid.bulletCollides(3))
+    Public t5 As New Thread(Sub() asteroid.bulletCollides(4))
+    Public t6 As New Thread(Sub() asteroid.collides())
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -66,7 +75,18 @@
         For i = 0 To numberOfAsteroids - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
         Next
-        asteroid.collides() 'run the collision function in the asteroid sub
+        t1.Start()
+        t2.Start()
+        t3.Start()
+        t4.Start()
+        t5.Start()
+        t6.Start()
+        t1.Join()
+        t2.Join()
+        t3.Join()
+        t4.Join()
+        t5.Join()
+        t6.Join()
         testingspace += 1 'increment this the testing variable
         If testingspace = 3 Then 'if the testing varaible makes it to three then revert the background to black
             testingspace = 0 'reset the testing variable to start the spacing
@@ -115,12 +135,10 @@
 #End Region
 #Region "bullets"
         If bullet_array.Count > 0 Then
-            For i = 0 To bullet_array.Count - 1
-                If bullet_array(i).inForm = True Then
-                    bullet.update(i)
-                End If
-            Next
+
+            bullet.update()
         End If
+
 #End Region
         Invalidate()
     End Sub
