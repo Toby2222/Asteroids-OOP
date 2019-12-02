@@ -34,6 +34,7 @@ Public Class Asteroids_Game
     Public t6 As New Thread(Sub() asteroid.collides())
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
+    Public tickcount As Integer = 0
 
     'defining the brush for painting the ship
     Public brushColor As Color = Color.White 'defining the colour of all the objects on screen
@@ -70,6 +71,10 @@ Public Class Asteroids_Game
 #End Region
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        tickcount += 1
+        If tickcount <= 1 Then
+            t6.Start()
+        End If
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
         For i = 0 To numberOfAsteroids - 1
@@ -111,8 +116,7 @@ Public Class Asteroids_Game
             t4.Join()
             t5.Join()
         End If
-        t6.Start()
-        t6.Join()
+
         testingspace += 1 'increment this the testing variable
         If testingspace = 3 Then 'if the testing varaible makes it to three then revert the background to black
             testingspace = 0 'reset the testing variable to start the spacing

@@ -37,8 +37,12 @@
     End Sub
     Public Sub collides() 'function for collisions
         angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy) 'function for detecting collisions between the front of the ship and the asteroid
+        Console.WriteLine(Asteroids_Game.mySpaceship.SFx)
+        Console.WriteLine(Asteroids_Game.mySpaceship.SFy)
         angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy) 'detect the left point of the ship
         angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy) 'detect the right point of the ship
+        System.Threading.Thread.Sleep(15)
+        collides()
     End Sub
     Public Sub bulletCollides(i)
         If Asteroids_Game.bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
@@ -72,7 +76,7 @@
             thisone = Math.Acos(dotproduct / (a * b))
             collideangle += thisone
             If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
-                'Form.ActiveForm.BackColor = (Color.Red)
+                Form.ActiveForm.BackColor = (Color.Red)
 
             End If
         Next
