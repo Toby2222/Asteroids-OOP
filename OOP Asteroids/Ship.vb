@@ -39,7 +39,7 @@
         'definine delta angles (rate of change of angle)
         SOad = 0    'ship origin delta angle
         SOsd = 0    'ship origin delta speed
-        dsmax = 6    'max delta speed
+        dsmax = 4    'max delta speed
 
         'define drag variables of ship
         sdrag = 0.07    'speed drag

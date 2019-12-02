@@ -24,15 +24,15 @@
         bAngle = currentAngle 'bullet angle = current ship angle passed into the sub
         Asteroids_Game.bullet_array.Add(Me) 'add the instantiated bullet object into the array
     End Sub
-    Public Sub fire(currentAngle, frontx, fronty, i) 'same as instantiation sub without adding the bullet to an array updating a current bullet
-        Asteroids_Game.bullet_array(i).fired = False
-        Asteroids_Game.bullet_array(i).inForm = True
-        Asteroids_Game.bullet_array(i).BFx = frontx
-        Asteroids_Game.bullet_array(i).BFy = fronty
-        Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(Asteroids_Game.mySpaceship.SOa)) * bLength)
-        Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(Asteroids_Game.mySpaceship.SOa)) * bLength)
-        bAngle = currentAngle
-    End Sub
+    'Public Sub fire(currentAngle, frontx, fronty, i) 'same as instantiation sub without adding the bullet to an array updating a current bullet
+    '    Asteroids_Game.bullet_array(i).fired = True
+    '    Asteroids_Game.bullet_array(i).inForm = True
+    '    Asteroids_Game.bullet_array(i).BFx = frontx
+    '    Asteroids_Game.bullet_array(i).BFy = fronty
+    '    Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(currentAngle)) * bLength)
+    '    Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(currentAngle)) * bLength)
+    '    bAngle = currentAngle
+    'End Sub
     Public Sub update(i)
         'back x = front x + cos(angle)*length
         Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back x
@@ -42,9 +42,13 @@
         'if outside the form change the variable
         If Asteroids_Game.bullet_array(i).BFx >= Asteroids_Game.formwidth Or Asteroids_Game.bullet_array(i).BFx < 0 Then
             Asteroids_Game.bullet_array(i).inForm = False
+            Asteroids_Game.bullet_array(i).fired = False
+            Asteroids_Game.numberOfBullets -= 1
         End If
         If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
             Asteroids_Game.bullet_array(i).inForm = False
+            Asteroids_Game.bullet_array(i).fired = False
+            Asteroids_Game.numberOfBullets -= 1
         End If
         'hide the unused bullets off screen
         If Asteroids_Game.bullet_array(i).inForm = False Then

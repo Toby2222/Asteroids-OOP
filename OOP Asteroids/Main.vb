@@ -14,14 +14,16 @@
     'asteroid variables
     Public numberOfAsteroids As Integer = (Rnd() * 5) + 3 'random generates 3 - 8 asteroids
 
+    'bullet variables
+    Public counter As Integer 'a counter to decide the spacing between bullets
+    Public numberOfBullets As Integer = 0
+
     'booleans for keys
     Public up As Boolean = False
     Public left As Boolean = False
     Public right As Boolean = False
     Public space As Boolean = False
 
-    'defining a counter variable
-    Public counter As Integer 'a counter to decide the spacing between bullets
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
     'defining the brush for painting the ship
@@ -89,6 +91,7 @@
             mySpaceship.pSOa = mySpaceship.SOa
             'stop the ship from propelling forward and turning at the same time
             'stop the ship from flying too quickly
+
             If mySpaceship.SOsd < mySpaceship.dsmax Then
                 mySpaceship.SOsd += 0.3
             End If
@@ -96,15 +99,17 @@
         End If
         If space = True Then
             counter += 1 'increment the counter for bullet spacing
-            If counter >= 10 And bullet_array.Count < 5 Then 'if the bullet spacing is ten and there are less than 5 bullets
+            If counter >= 10 And numberOfBullets < 5 Then 'if the bullet spacing is ten and there are less than 5 bullets
                 counter = 0 'reset counter for the spacing
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy) 'create a new bullet with the current spaceship x, y and angle
-            Else
-                For i = 0 To bullet_array.Count - 1 'loop through the bullet array
-                    If counter >= 10 And bullet_array(i).inForm = False Then 'if the spacing has elapsed and there is a bullet off screen 
-                        bullet.fire(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy, i) 'fire one of the bullets from the array
-                    End If
-                Next
+                numberOfBullets += 1
+                'Else
+                '    For i = 0 To bullet_array.Count - 1 'loop through the bullet array
+                '        If counter >= 10 And bullet_array(i).inForm = False And bullet_array(i).fired = False Then 'if the spacing has elapsed and there is a bullet off screen 
+                '            counter = 0
+                '            bullet.fire(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy, i) 'fire one of the bullets from the array
+                '        End If
+                '    Next
             End If
         End If
 #End Region

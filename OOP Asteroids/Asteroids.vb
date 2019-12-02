@@ -17,7 +17,7 @@
     Public Sub New() 'instantiating an asteroid
         onScreen = True
         alive = True
-        aSpeed = Rnd() * (3) + 1 'random speed varaible between 1 and 4
+        aSpeed = Rnd() * (2) + 1 'random speed varaible between 1 and 4
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9
         For i = 1 To numberOfPoints 'loop through the number of points and calculate angles between the points based on the number of points and random numbers
             FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
@@ -42,7 +42,7 @@
         For i = 0 To Asteroids_Game.bullet_array.Count - 1 'for loop to go through all the bullets
             If Asteroids_Game.bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
                 angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy) 'detect front point of the bullet
-                angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy) 'detect back point of the bullet
+                'angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy) 'detect back point of the bullet
             End If
         Next
     End Sub
@@ -72,7 +72,8 @@
             thisone = Math.Acos(dotproduct / (a * b))
             collideangle += thisone
             If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
-                Form.ActiveForm.BackColor = (Color.Red)
+                'Form.ActiveForm.BackColor = (Color.Red)
+
             End If
         Next
     End Function
