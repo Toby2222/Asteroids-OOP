@@ -36,44 +36,55 @@
         Next
     End Sub
     Public Sub collides() 'function for collisions
-        angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy) 'function for detecting collisions between the front of the ship and the asteroid
-        angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy) 'detect the left point of the ship
-        angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy) 'detect the right point of the ship
+        angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy, "Ship") 'function for detecting collisions between the front of the ship and the asteroid
+        angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy, "Ship") 'detect the left point of the ship
+        angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy, "Ship") 'detect the right point of the ship
         For i = 0 To Asteroids_Game.bullet_array.Count - 1 'for loop to go through all the bullets
             If Asteroids_Game.bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
-                angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy) 'detect front point of the bullet
+                angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy, "Bull") 'detect front point of the bullet
                 'angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy) 'detect back point of the bullet
             End If
         Next
     End Sub
-    Public Function angleFunc(x, y)
+    Public Function angleFunc(x, y, type)
         For i = 0 To Asteroids_Game.asteroid_array.Count - 1 'loop through all asteroids
-            collideangle = 0 'reset the angle to 0
-            Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double
-            For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2 'loop through the points of the asteroid
-                ax = Math.Abs(x - Asteroids_Game.asteroid_array(i).xPoints(j)) 'calculate the length of one side between the point being tested and the asteroid point
-                ay = Math.Abs(y - Asteroids_Game.asteroid_array(i).yPoints(j)) 'calculate the length of the other side
-                bx = Math.Abs(x - Asteroids_Game.asteroid_array(i).xPoints(j + 1)) 'calculate the length of one side between the point being tested and the next asteroid point
-                by = Math.Abs(y - Asteroids_Game.asteroid_array(i).yPoints(j + 1)) 'calculate the length of the other side
-                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2) 'calculate the length of the hypotenuse
-                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2) 'calculate the length of the hypotenuse
-                dotproduct = ((ax * bx) + (ay * by)) 'calculate the dotproduct of the length
-                thisone = Math.Acos(dotproduct / (a * b)) 'take the anti cosign of the dot product divided by the two vectors
-                collideangle += thisone 'add the angle calculated
-            Next
-            'same calculation for the last and first point
-            ax = (x - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            ay = (y - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
-            bx = (x - Asteroids_Game.asteroid_array(i).xPoints(0))
-            by = (y - Asteroids_Game.asteroid_array(i).yPoints(0))
-            a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
-            b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
-            dotproduct = ((ax * bx) + (ay * by))
-            thisone = Math.Acos(dotproduct / (a * b))
-            collideangle += thisone
-            If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
-                'Form.ActiveForm.BackColor = (Color.Red)
-
+            If x > Asteroids_Game.asteroid_array(i).startX - 100 And
+               x < Asteroids_Game.asteroid_array(i).startX + 100 And
+               y < Asteroids_Game.asteroid_array(i).startY + 100 And
+               y > Asteroids_Game.asteroid_array(i).startY - 100 Then
+                collideangle = 0  'reset the angle to 0
+                Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double
+                For j = 0 To Asteroids_Game.asteroid_array(i).numberOfPoints - 2 'loop through the points of the asteroid
+                    ax = Math.Abs(x - Asteroids_Game.asteroid_array(i).xPoints(j)) 'calculate the length of one side between the point being tested and the asteroid point
+                    ay = Math.Abs(y - Asteroids_Game.asteroid_array(i).yPoints(j)) 'calculate the length of the other side
+                    bx = Math.Abs(x - Asteroids_Game.asteroid_array(i).xPoints(j + 1)) 'calculate the length of one side between the point being tested and the next asteroid point
+                    by = Math.Abs(y - Asteroids_Game.asteroid_array(i).yPoints(j + 1)) 'calculate the length of the other side
+                    a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2) 'calculate the length of the hypotenuse
+                    b = Math.Sqrt((bx) ^ 2 + (by) ^ 2) 'calculate the length of the hypotenuse
+                    dotproduct = ((ax * bx) + (ay * by)) 'calculate the dotproduct of the length
+                    thisone = Math.Acos(dotproduct / (a * b)) 'take the anti cosign of the dot product divided by the two vectors
+                    collideangle += thisone 'add the angle calculated
+                Next
+                'same calculation for the last and first point
+                ax = (x - Asteroids_Game.asteroid_array(i).xPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
+                ay = (y - Asteroids_Game.asteroid_array(i).yPoints(Asteroids_Game.asteroid_array(i).numberOfPoints - 1))
+                bx = (x - Asteroids_Game.asteroid_array(i).xPoints(0))
+                by = (y - Asteroids_Game.asteroid_array(i).yPoints(0))
+                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
+                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
+                dotproduct = ((ax * bx) + (ay * by))
+                thisone = Math.Acos(dotproduct / (a * b))
+                collideangle += thisone
+                If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
+                    If type = "Ship" Then
+                        Form.ActiveForm.BackColor = (Color.Red)
+                    Else
+                        Form.ActiveForm.BackColor = (Color.Blue)
+                        Asteroids_Game.asteroid_array(i).Finalize()
+                        Asteroids_Game.asteroid_array.RemoveAt(i)
+                        Asteroids_Game.asteroid = New Asteroids()
+                    End If
+                End If
             End If
         Next
     End Function
