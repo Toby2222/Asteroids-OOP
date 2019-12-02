@@ -103,7 +103,6 @@
                 counter = 0 'reset counter for the spacing
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy) 'create a new bullet with the current spaceship x, y and angle
                 numberOfBullets += 1
-
             End If
         End If
 #End Region

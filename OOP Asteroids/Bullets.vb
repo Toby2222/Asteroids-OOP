@@ -34,7 +34,9 @@
     '    bAngle = currentAngle
     'End Sub
     Public Sub update()
-        For i = 0 To Asteroids_Game.bullet_array.Count - 1
+        Dim i = 0
+        For Each bullet As Bullets In Asteroids_Game.bullet_array
+
             If Asteroids_Game.bullet_array(i).inForm = True Then
                 'back x = front x + cos(angle)*length
                 Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back x
@@ -45,23 +47,20 @@
                 If Asteroids_Game.bullet_array(i).BFx >= Asteroids_Game.formwidth Or Asteroids_Game.bullet_array(i).BFx < 0 Then
                     Asteroids_Game.bullet_array(i).inForm = False
                     Asteroids_Game.bullet_array(i).fired = False
+                    bullet.Finalize()
+                    Asteroids_Game.bullet_array.RemoveAt(i)
                     Asteroids_Game.numberOfBullets -= 1
                 End If
                 If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
                     Asteroids_Game.bullet_array(i).inForm = False
                     Asteroids_Game.bullet_array(i).fired = False
+                    bullet.Finalize()
+                    Asteroids_Game.bullet_array.RemoveAt(i)
+
                     Asteroids_Game.numberOfBullets -= 1
                 End If
-            Else
-                Try
-                    For Each bullet In Asteroids_Game.bullet_array
-                        bullet.Finalize()
-                        Asteroids_Game.bullet_array.RemoveAt(i)
-                    Next
-                Catch
-                    Console.WriteLine("boo")
-                End Try
             End If
+            i += 1
         Next
     End Sub
 End Class
