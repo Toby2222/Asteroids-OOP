@@ -24,15 +24,6 @@
         bAngle = currentAngle 'bullet angle = current ship angle passed into the sub
         Asteroids_Game.bullet_array.Add(Me) 'add the instantiated bullet object into the array
     End Sub
-    'Public Sub fire(currentAngle, frontx, fronty, i) 'same as instantiation sub without adding the bullet to an array updating a current bullet
-    '    Asteroids_Game.bullet_array(i).fired = True
-    '    Asteroids_Game.bullet_array(i).inForm = True
-    '    Asteroids_Game.bullet_array(i).BFx = frontx
-    '    Asteroids_Game.bullet_array(i).BFy = fronty
-    '    Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Cos(currentAngle)) * bLength)
-    '    Asteroids_Game.bullet_array(i).BBy = Asteroids_Game.bullet_array(i).BFy + ((Math.Cos(currentAngle)) * bLength)
-    '    bAngle = currentAngle
-    'End Sub
     Public Sub update()
         Dim i = 0
         For Each bullet As Bullets In Asteroids_Game.bullet_array
@@ -65,6 +56,5 @@
             Asteroids_Game.bullet_array.RemoveAt(Asteroids_Game.lostBullets)
         End If
         Asteroids_Game.lostBullets = -1
-        '        Array.Clear(Asteroids_Game.lostBullets, 0, Asteroids_Game.lostBullets.Length)
     End Sub
 End Class
