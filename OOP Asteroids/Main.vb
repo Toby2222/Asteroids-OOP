@@ -17,6 +17,7 @@
     'bullet variables
     Public counter As Integer 'a counter to decide the spacing between bullets
     Public numberOfBullets As Integer = 0
+    Public lostBullets As Integer = -1
 
     'booleans for keys
     Public up As Boolean = False

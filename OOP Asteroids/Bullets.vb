@@ -48,19 +48,23 @@
                     Asteroids_Game.bullet_array(i).inForm = False
                     Asteroids_Game.bullet_array(i).fired = False
                     bullet.Finalize()
-                    Asteroids_Game.bullet_array.RemoveAt(i)
+                    Asteroids_Game.lostBullets = i
                     Asteroids_Game.numberOfBullets -= 1
                 End If
                 If Asteroids_Game.bullet_array(i).BFy >= Asteroids_Game.formheight Or Asteroids_Game.bullet_array(i).BFy < 0 Then
                     Asteroids_Game.bullet_array(i).inForm = False
                     Asteroids_Game.bullet_array(i).fired = False
                     bullet.Finalize()
-                    Asteroids_Game.bullet_array.RemoveAt(i)
-
+                    Asteroids_Game.lostBullets = i
                     Asteroids_Game.numberOfBullets -= 1
                 End If
             End If
             i += 1
         Next
+        If Asteroids_Game.lostBullets > -1 Then 'i = 0 To Asteroids_Game.lostBullets.Length - 1
+            Asteroids_Game.bullet_array.RemoveAt(Asteroids_Game.lostBullets)
+        End If
+        Asteroids_Game.lostBullets = -1
+        '        Array.Clear(Asteroids_Game.lostBullets, 0, Asteroids_Game.lostBullets.Length)
     End Sub
 End Class
