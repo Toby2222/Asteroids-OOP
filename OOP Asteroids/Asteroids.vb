@@ -10,11 +10,12 @@
     Public AsteroidPoints() As Point 'array for all points of the asteroid
     Public startX As Double 'starting x coordinate
     Public startY As Double 'starting y coordinate
+    Public Asteroidbig As Boolean 'boolean for if the asteroid is a large one
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double 'array of angles for each asteroid with a max of 8 angles
     Public collideangle As Double 'define a variable for calculating the angles between the asteroids and other objects
 #End Region
-    Public Sub New() 'instantiating an asteroid
+    Public Sub New(size) 'instantiating an asteroid
         onScreen = True
         alive = True
         aSpeed = Rnd() * (2) + 1 'random speed varaible between 1 and 4
@@ -28,7 +29,16 @@
         Asteroids_Game.asteroid_array.Add(Me) 'add the asteroid to the array
         Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1) 'call the asteroid angle function to decide where the asteroid should start and the angle it travels at
         For i = 0 To (numberOfPoints) - 1
-            Dim rand As Integer = (Rnd() * 45) + 35 'create a random variable to define the distance from the origin point for the points
+            Dim rand As Integer
+            If size = "b" Then
+                rand = (Rnd() * 45) + 35 'create a random variable to define the distance from the origin point for the points
+                Asteroidbig = True
+            Else
+                Asteroidbig = False
+                startX = Asteroids_Game.tempAsteroidx
+                startY = Asteroids_Game.tempAsteroidy
+                rand = (Rnd() * 25) + 15 'create a random variable to define the distance from the origin point for the points
+            End If
             xPoints(i) = startX + ((Math.Cos(FixedAngles(i))) * (rand)) 'the x points = the origin x + an angle * the random distance
             yPoints(i) = startY + ((Math.Sin(FixedAngles(i))) * (rand)) 'the y points = the origin y + an angle * the random distance
             Dim OnePoint As New Point(xPoints(i), yPoints(i)) 'make a point variable from the x and y defined
@@ -36,17 +46,17 @@
         Next
     End Sub
     Public Sub collides() 'function for collisions
-        angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy, "Ship") 'function for detecting collisions between the front of the ship and the asteroid
-        angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy, "Ship") 'detect the left point of the ship
-        angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy, "Ship") 'detect the right point of the ship
+        angleFunc(Asteroids_Game.mySpaceship.SFx, Asteroids_Game.mySpaceship.SFy, "Ship", 2) 'function for detecting collisions between the front of the ship and the asteroid
+        angleFunc(Asteroids_Game.mySpaceship.SLx, Asteroids_Game.mySpaceship.SLy, "Ship", 2) 'detect the left point of the ship
+        angleFunc(Asteroids_Game.mySpaceship.SRx, Asteroids_Game.mySpaceship.SRy, "Ship", 2) 'detect the right point of the ship
         For i = 0 To Asteroids_Game.bullet_array.Count - 1 'for loop to go through all the bullets
             If Asteroids_Game.bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
-                angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy, "Bull") 'detect front point of the bullet
+                angleFunc(Asteroids_Game.bullet_array(i).BFx, Asteroids_Game.bullet_array(i).BFy, "Bull", i) 'detect front point of the bullet
                 'angleFunc(Asteroids_Game.bullet_array(i).BBx, Asteroids_Game.bullet_array(i).BBy) 'detect back point of the bullet
             End If
         Next
     End Sub
-    Public Function angleFunc(x, y, type)
+    Public Function angleFunc(x, y, type, j)
         For i = 0 To Asteroids_Game.asteroid_array.Count - 1 'loop through all asteroids
             If x > Asteroids_Game.asteroid_array(i).startX - 100 And
                x < Asteroids_Game.asteroid_array(i).startX + 100 And
@@ -78,11 +88,23 @@
                 If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
                     If type = "Ship" Then
                         Form.ActiveForm.BackColor = (Color.Red)
+                        Asteroids_Game.mySpaceship.SOx = Asteroids_Game.formwidth / 2
+                        Asteroids_Game.mySpaceship.SOy = Asteroids_Game.formheight / 2
                     Else
                         Form.ActiveForm.BackColor = (Color.Blue)
+                        Asteroids_Game.tempAsteroidx = Asteroids_Game.asteroid_array(i).startX
+                        Asteroids_Game.tempAsteroidy = Asteroids_Game.asteroid_array(i).startY
                         Asteroids_Game.asteroid_array(i).Finalize()
                         Asteroids_Game.asteroid_array.RemoveAt(i)
-                        Asteroids_Game.asteroid = New Asteroids()
+                        If Asteroidbig = True Then
+                            Asteroids_Game.asteroid = New Asteroids("s")
+                            Asteroids_Game.asteroid = New Asteroids("s")
+                        Else
+                            Asteroids_Game.destroyed += 1
+                            If Asteroids_Game.destroyed = 2 Then
+                                Asteroids_Game.asteroid = New Asteroids("b")
+                            End If
+                        End If
                     End If
                 End If
             End If
@@ -111,7 +133,7 @@
         If Asteroids_Game.asteroid_array(i).onScreen = False Then
             Asteroids_Game.asteroid_array(i).Finalize()
             Asteroids_Game.asteroid_array.RemoveAt(i)
-            Asteroids_Game.asteroid = New Asteroids()
+            Asteroids_Game.asteroid = New Asteroids("b")
         End If
     End Sub
 End Class

@@ -13,6 +13,9 @@
 
     'asteroid variables
     Public numberOfAsteroids As Integer = (Rnd() * 5) + 3 'random generates 3 - 8 asteroids
+    Public tempAsteroidx As Double
+    Public tempAsteroidy As Double
+    Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
 
     'bullet variables
     Public counter As Integer 'a counter to decide the spacing between bullets
@@ -127,7 +130,7 @@
         formheight = Me.Height
         'populating defaults in Asteroids arrays
         For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids()
+            asteroid = New Asteroids("b")
         Next
     End Sub
     Function AsteroidAngle(i)
