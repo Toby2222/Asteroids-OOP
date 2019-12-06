@@ -13,11 +13,13 @@
     Public Asteroidbig As Boolean 'boolean for if the asteroid is a large one
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double 'array of angles for each asteroid with a max of 8 angles
+    Public size As String 'variable for the size of the asteroid
     Public collideangle As Double 'define a variable for calculating the angles between the asteroids and other objects
 #End Region
-    Public Sub New(size) 'instantiating an asteroid
+    Public Sub New(asize) 'instantiating an asteroid
         onScreen = True
         alive = True
+        size = asize
         aSpeed = Rnd() * (2) + 1 'random speed varaible between 1 and 4
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9
         For i = 1 To numberOfPoints 'loop through the number of points and calculate angles between the points based on the number of points and random numbers
@@ -92,23 +94,26 @@
                         Asteroids_Game.mySpaceship.SOy = Asteroids_Game.formheight / 2
                     Else
                         Form.ActiveForm.BackColor = (Color.Blue)
-                        Asteroids_Game.tempAsteroidx = Asteroids_Game.asteroid_array(i).startX
-                        Asteroids_Game.tempAsteroidy = Asteroids_Game.asteroid_array(i).startY
-                        Asteroids_Game.asteroid_array(i).Finalize()
-                        Asteroids_Game.asteroid_array.RemoveAt(i)
+
                         If Asteroidbig = True Then
+                            Asteroids_Game.tempAsteroidx = Asteroids_Game.asteroid_array(i).startX
+                            Asteroids_Game.tempAsteroidy = Asteroids_Game.asteroid_array(i).startY
+                            Asteroids_Game.asteroid_array(i).Finalize()
+                            Asteroids_Game.asteroid_array.RemoveAt(i)
                             Asteroids_Game.asteroid = New Asteroids("s")
-                            Asteroids_Game.asteroid = New Asteroids("s")
+                            'Asteroids_Game.asteroid = New Asteroids("s")
                         Else
-                            Asteroids_Game.destroyed += 1
-                            If Asteroids_Game.destroyed = 2 Then
-                                Asteroids_Game.asteroid = New Asteroids("b")
-                            End If
+                            Asteroids_Game.lostasteroids = i
                         End If
                     End If
                 End If
             End If
         Next
+        If Asteroids_Game.lostasteroids > -1 Then 'i = 0 To Asteroids_Game.lostBullets.Length - 1
+            Asteroids_Game.asteroid_array(Asteroids_Game.lostasteroids).Finalize()
+            Asteroids_Game.asteroid_array.RemoveAt(Asteroids_Game.lostasteroids)
+        End If
+        Asteroids_Game.lostBullets = -1
     End Function
 
     Public Sub Update(i)
@@ -131,9 +136,15 @@
         End If
         'if offscreen remove all the data from the variables and remove the asteroid from the array, and create a new asteroid
         If Asteroids_Game.asteroid_array(i).onScreen = False Then
-            Asteroids_Game.asteroid_array(i).Finalize()
-            Asteroids_Game.asteroid_array.RemoveAt(i)
-            Asteroids_Game.asteroid = New Asteroids("b")
+            If Asteroids_Game.asteroid_array(i).size = "b" Then
+                Asteroids_Game.asteroid_array(i).Finalize()
+                Asteroids_Game.asteroid_array.RemoveAt(i)
+                Asteroids_Game.asteroid = New Asteroids("b")
+            ElseIf Asteroids_Game.asteroid_array(i).size = "s" Then
+                Asteroids_Game.asteroid_array(i).Finalize()
+                Asteroids_Game.asteroid_array.RemoveAt(i)
+                Asteroids_Game.asteroid = New Asteroids("s")
+            End If
         End If
     End Sub
 End Class

@@ -16,6 +16,7 @@
     Public tempAsteroidx As Double
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
+    Public lostasteroids As Integer = -1
 
     'bullet variables
     Public counter As Integer 'a counter to decide the spacing between bullets
@@ -57,9 +58,9 @@
 #End Region
 #Region "asteroids"
         'for loop to draw asteroids from a random number of points given
-        For i = 0 To numberOfAsteroids - 1
-            If asteroid_array(i).alive = True And asteroid_array(i).onScreen = True Then
-                e.Graphics.DrawPolygon(pen, asteroid_array(i).AsteroidPoints) 'if the asteroid has not been destroyed and is on screen then draw it
+        For i = 0 To asteroid_array.Count - 1
+            If asteroid_array(i).onScreen = True Then
+                e.Graphics.DrawPolygon(pen, asteroid_array(i).AsteroidPoints) 'if the asteroid is on screen then draw it
             End If
         Next
 #End Region
@@ -67,7 +68,7 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
-        For i = 0 To numberOfAsteroids - 1
+        For i = 0 To asteroid_array.Count - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
         Next
         asteroid.collides() 'run the collision function in the asteroid sub
