@@ -23,6 +23,9 @@
     Public numberOfBullets As Integer = 0
     Public lostBullets As Integer = -1
 
+    'collision varaibles
+    Public collideangle As Double 'define a variable for calculating the angles between the asteroids and other objects
+
     'booleans for keys
     Public up As Boolean = False
     Public left As Boolean = False
@@ -65,13 +68,27 @@
         Next
 #End Region
     End Sub
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'numberOfAsteroids numbers
+        Randomize()
+        'set the starting points for the origin point within the ship
+        mySpaceship.SOx = 78
+        mySpaceship.SOy = 96
+        'finds the starting size of the form
+        formwidth = Me.Width
+        formheight = Me.Height
+        'populating defaults in Asteroids arrays
+        For i = 0 To numberOfAsteroids - 1
+            asteroid = New Asteroids("b")
+        Next
+    End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
         For i = 0 To asteroid_array.Count - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
         Next
-        asteroid.collides() 'run the collision function in the asteroid sub
+        collides() 'run the collision function in the asteroid sub
         testingspace += 1 'increment this the testing variable
         If testingspace = 3 Then 'if the testing varaible makes it to three then revert the background to black
             testingspace = 0 'reset the testing variable to start the spacing
@@ -120,20 +137,73 @@
 #End Region
         Invalidate()
     End Sub
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'numberOfAsteroids numbers
-        Randomize()
-        'set the starting points for the origin point within the ship
-        mySpaceship.SOx = 78
-        mySpaceship.SOy = 96
-        'finds the starting size of the form
-        formwidth = Me.Width
-        formheight = Me.Height
-        'populating defaults in Asteroids arrays
-        For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids("b")
+    Public Sub collides() 'function for collisions
+        angleFunc(mySpaceship.SFx, mySpaceship.SFy, "Ship", 2) 'function for detecting collisions between the front of the ship and the asteroid
+        angleFunc(mySpaceship.SLx, mySpaceship.SLy, "Ship", 2) 'detect the left point of the ship
+        angleFunc(mySpaceship.SRx, mySpaceship.SRy, "Ship", 2) 'detect the right point of the ship
+        For i = 0 To bullet_array.Count - 1 'for loop to go through all the bullets
+            If bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
+                angleFunc(bullet_array(i).BFx, bullet_array(i).BFy, "Bull", i) 'detect front point of the bullet
+                'angleFunc(bullet_array(i).BBx, bullet_array(i).BBy) 'detect back point of the bullet
+            End If
         Next
     End Sub
+    Public Function angleFunc(x, y, type, j)
+        For i = 0 To asteroid_array.Count - 1 'loop through all asteroids
+            If x > asteroid_array(i).startX - 100 And
+               x < asteroid_array(i).startX + 100 And
+               y < asteroid_array(i).startY + 100 And
+               y > asteroid_array(i).startY - 100 Then
+                collideangle = 0  'reset the angle to 0
+                Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double
+                For j = 0 To asteroid_array(i).numberOfPoints - 2 'loop through the points of the asteroid
+                    ax = Math.Abs(x - asteroid_array(i).xPoints(j)) 'calculate the length of one side between the point being tested and the asteroid point
+                    ay = Math.Abs(y - asteroid_array(i).yPoints(j)) 'calculate the length of the other side
+                    bx = Math.Abs(x - asteroid_array(i).xPoints(j + 1)) 'calculate the length of one side between the point being tested and the next asteroid point
+                    by = Math.Abs(y - asteroid_array(i).yPoints(j + 1)) 'calculate the length of the other side
+                    a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2) 'calculate the length of the hypotenuse
+                    b = Math.Sqrt((bx) ^ 2 + (by) ^ 2) 'calculate the length of the hypotenuse
+                    dotproduct = ((ax * bx) + (ay * by)) 'calculate the dotproduct of the length
+                    thisone = Math.Acos(dotproduct / (a * b)) 'take the anti cosign of the dot product divided by the two vectors
+                    collideangle += thisone 'add the angle calculated
+                Next
+                'same calculation for the last and first point
+                ax = (x - asteroid_array(i).xPoints(asteroid_array(i).numberOfPoints - 1))
+                ay = (y - asteroid_array(i).yPoints(asteroid_array(i).numberOfPoints - 1))
+                bx = (x - asteroid_array(i).xPoints(0))
+                by = (y - asteroid_array(i).yPoints(0))
+                a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
+                b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
+                dotproduct = ((ax * bx) + (ay * by))
+                thisone = Math.Acos(dotproduct / (a * b))
+                collideangle += thisone
+                If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
+                    If type = "Ship" Then
+                        Form.ActiveForm.BackColor = (Color.Red)
+                        mySpaceship.SOx = formwidth / 2
+                        mySpaceship.SOy = formheight / 2
+                    Else
+                        Form.ActiveForm.BackColor = (Color.Blue)
+                        If asteroid_array(i).Asteroidbig = True Then
+                            tempAsteroidx = asteroid_array(i).startX
+                            tempAsteroidy = asteroid_array(i).startY
+                            asteroid.fin(i)
+                            asteroid_array.RemoveAt(i)
+                            asteroid = New Asteroids("s")
+                            'asteroid = New Asteroids("s")
+                        Else
+                            lostasteroids = i
+                        End If
+                    End If
+                End If
+            End If
+        Next
+        If lostasteroids > -1 Then 'i = 0 To lostBullets.Length - 1
+            asteroid.fin(lostasteroids)
+            asteroid_array.RemoveAt(lostasteroids)
+        End If
+        lostBullets = -1
+    End Function
     Function AsteroidAngle(i)
         'numberOfAsteroids number to decde the starting side
         Dim side As Integer = (Rnd() * 3) + 1

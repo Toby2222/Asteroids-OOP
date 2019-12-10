@@ -53,9 +53,12 @@
             i += 1
         Next
         If Asteroids_Game.lostBullets > -1 Then 'i = 0 To Asteroids_Game.lostBullets.Length - 1
-            Asteroids_Game.bullet_array(Asteroids_Game.lostBullets).Finalize()
+            fin(Asteroids_Game.lostBullets)
             Asteroids_Game.bullet_array.RemoveAt(Asteroids_Game.lostBullets)
         End If
         Asteroids_Game.lostBullets = -1
+    End Sub
+    Public Sub fin(i)
+        Asteroids_Game.bullet_array(i).Finalize()
     End Sub
 End Class
