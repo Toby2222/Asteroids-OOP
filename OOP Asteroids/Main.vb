@@ -21,7 +21,9 @@
     'bullet variables
     Public counter As Integer 'a counter to decide the spacing between bullets
     Public numberOfBullets As Integer = 0
-    Public lostBullets As Integer = -1
+    Public lostBullets() As Integer
+    Public hit As Boolean = False
+    Public lostbulletcounter As Integer = 0
 
     'collision varaibles
     Public collideangle As Double 'define a variable for calculating the angles between the asteroids and other objects
@@ -121,7 +123,7 @@
         End If
         If space = True Then
             counter += 1 'increment the counter for bullet spacing
-            If counter >= 10 And numberOfBullets < 5 Then 'if the bullet spacing is ten and there are less than 5 bullets
+            If counter >= 3 And numberOfBullets < 5 Then 'if the bullet spacing is ten and there are less than 5 bullets
                 counter = 0 'reset counter for the spacing
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy) 'create a new bullet with the current spaceship x, y and angle
                 numberOfBullets += 1
@@ -133,7 +135,13 @@
 
             bullet.update()
         End If
-
+        Dim j As Integer = 0
+        For Each bullet In bullet_array
+            If bullet.inForm = False Then
+                bullet_array.RemoveAt(j)
+            End If
+            j += 1
+        Next
 #End Region
         Invalidate()
     End Sub
@@ -143,10 +151,24 @@
         angleFunc(mySpaceship.SRx, mySpaceship.SRy, "Ship", 2) 'detect the right point of the ship
         For i = 0 To bullet_array.Count - 1 'for loop to go through all the bullets
             If bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
-                angleFunc(bullet_array(i).BFx, bullet_array(i).BFy, "Bull", i) 'detect front point of the bullet
-                'angleFunc(bullet_array(i).BBx, bullet_array(i).BBy) 'detect back point of the bullet
+                If angleFunc(bullet_array(i).BFx, bullet_array(i).BFy, "Bull", i) = "hit" Then
+                    bullet_array(i).inForm = False
+                    bullet_array(i).fired = False
+                    bullet.fin(i)
+                    lostBullets(lostbulletcounter) = i
+                    numberOfBullets -= 1
+                    lostbulletcounter += 1
+                End If
             End If
+
         Next
+        If lostBullets Is Nothing = False Then
+            For i = 0 To lostBullets.Length - 1
+                bullet.fin(lostBullets(i))
+                bullet_array.RemoveAt(lostBullets(i))
+            Next
+            Array.Clear(lostBullets, 0, lostBullets.Length)
+        End If
     End Sub
     Public Function angleFunc(x, y, type, j)
         For i = 0 To asteroid_array.Count - 1 'loop through all asteroids
@@ -183,6 +205,7 @@
                         mySpaceship.SOx = formwidth / 2
                         mySpaceship.SOy = formheight / 2
                     Else
+                        hit = True
                         Form.ActiveForm.BackColor = (Color.Blue)
                         If asteroid_array(i).Asteroidbig = True Then
                             tempAsteroidx = asteroid_array(i).startX
@@ -204,6 +227,9 @@
             asteroid_array.RemoveAt(lostasteroids)
         End If
         lostasteroids = -1
+        If type = "Bull" And hit = True Then
+            Return "hit"
+        End If
     End Function
     Function AsteroidAngle(i)
         'numberOfAsteroids number to decde the starting side
