@@ -190,7 +190,8 @@
                             asteroid.fin(i)
                             asteroid_array.RemoveAt(i)
                             asteroid = New Asteroids("s")
-                            'asteroid = New Asteroids("s")
+                            asteroid = New Asteroids("s")
+                            asteroid = New Asteroids("s")
                         Else
                             lostasteroids = i
                         End If
@@ -202,7 +203,7 @@
             asteroid.fin(lostasteroids)
             asteroid_array.RemoveAt(lostasteroids)
         End If
-        lostBullets = -1
+        lostasteroids = -1
     End Function
     Function AsteroidAngle(i)
         'numberOfAsteroids number to decde the starting side
