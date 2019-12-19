@@ -123,10 +123,10 @@
         End If
         If space = True Then
             counter += 1 'increment the counter for bullet spacing
-            If counter >= 3 And numberOfBullets < 5 Then 'if the bullet spacing is ten and there are less than 5 bullets
+            If counter >= 5 And numberOfBullets < 5 Then 'if the bullet spacing is 5 and there are less than 5 bullets
                 counter = 0 'reset counter for the spacing
                 bullet = New Bullets(mySpaceship.SOa, mySpaceship.SOx, mySpaceship.SOy) 'create a new bullet with the current spaceship x, y and angle
-                numberOfBullets += 1
+                numberOfBullets = bullet_array.Count
             End If
         End If
 #End Region
@@ -138,7 +138,9 @@
         Dim j As Integer = 0
         For Each bullet In bullet_array
             If bullet.inForm = False Then
+                bullet.fin(j)
                 bullet_array.RemoveAt(j)
+                Exit For
             End If
             j += 1
         Next
@@ -154,21 +156,20 @@
                 If angleFunc(bullet_array(i).BFx, bullet_array(i).BFy, "Bull", i) = "hit" Then
                     bullet_array(i).inForm = False
                     bullet_array(i).fired = False
-                    bullet.fin(i)
-                    lostBullets(lostbulletcounter) = i
+                    'lostBullets(lostbulletcounter) = i
                     numberOfBullets -= 1
-                    lostbulletcounter += 1
+                    'lostbulletcounter += 1
                 End If
             End If
 
         Next
-        If lostBullets Is Nothing = False Then
-            For i = 0 To lostBullets.Length - 1
-                bullet.fin(lostBullets(i))
-                bullet_array.RemoveAt(lostBullets(i))
-            Next
-            Array.Clear(lostBullets, 0, lostBullets.Length)
-        End If
+        'If lostBullets Is Nothing = False Then
+        '    For i = 0 To lostBullets.Length - 1
+        '        bullet.fin(lostBullets(i))
+        '        bullet_array.RemoveAt(lostBullets(i))
+        '    Next
+        '    Array.Clear(lostBullets, 0, lostBullets.Length)
+        'End If
     End Sub
     Public Function angleFunc(x, y, type, j)
         For i = 0 To asteroid_array.Count - 1 'loop through all asteroids
@@ -218,8 +219,11 @@
                         Else
                             lostasteroids = i
                         End If
+                        Exit For
                     End If
                 End If
+            Else
+                hit = False
             End If
         Next
         If lostasteroids > -1 Then 'i = 0 To lostBullets.Length - 1
