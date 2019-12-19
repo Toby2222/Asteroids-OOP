@@ -16,6 +16,7 @@
 #End Region
     Public Sub New(asize, NewOld) 'instantiating an asteroid
         onScreen = True
+        size = asize
         aSpeed = Rnd() * (2) + 1 'random speed variable between 1 and 4
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9
         For i = 1 To numberOfPoints 'loop through the number of points and calculate angles between the points based on the number of points and random numbers
@@ -28,7 +29,7 @@
         Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1) 'call the asteroid angle function to decide where the asteroid should start and the angle it travels at
         For i = 0 To (numberOfPoints) - 1
             Dim rand As Integer
-            If asize = "b" Then
+            If size = "b" Then
                 rand = (Rnd() * 45) + 35 'create a random variable to define the distance from the origin point for the points
                 Asteroidbig = True
             Else
