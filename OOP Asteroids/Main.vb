@@ -36,6 +36,10 @@
 
     'educational aspects variables
     Public score As Integer = 0
+    Public fileReader As System.IO.StreamReader
+    Public filewriter As System.IO.StreamWriter
+    Public stringreader As String
+    Public fieldreader As String()
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -86,6 +90,10 @@
         For i = 0 To numberOfAsteroids - 1
             asteroid = New Asteroids("b", "NewB")
         Next
+        fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
+        stringreader = fileReader.ReadLine()
+        fieldreader = Split(stringreader, ",")
+        HighscoreBox.Text = "High score: " + fieldreader(0) + " - " + fieldreader(1)
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If score < 0 Then
@@ -324,6 +332,14 @@
         End If
         If e.KeyCode = Keys.Space Then
             space = True
+        End If
+        If e.KeyCode = Keys.Escape Then
+            If score > Int(fieldreader(1)) Then
+                My.Computer.FileSystem.DeleteFile("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
+                filewriter = My.Computer.FileSystem.OpenTextFileWriter("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv", True)
+                Dim highname As String = InputBox("Name for the high score")
+                filewriter.WriteLine(highname + "," + score)
+            End If
         End If
     End Sub
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp

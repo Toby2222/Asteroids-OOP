@@ -25,6 +25,7 @@ Partial Class Asteroids_Game
         Me.components = New System.ComponentModel.Container()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ScoreBox = New System.Windows.Forms.Label()
+        Me.HighscoreBox = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Timer1
@@ -44,6 +45,18 @@ Partial Class Asteroids_Game
         Me.ScoreBox.TabIndex = 1
         Me.ScoreBox.Text = "Score: 0"
         '
+        'HighscoreBox
+        '
+        Me.HighscoreBox.AutoSize = True
+        Me.HighscoreBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.HighscoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.HighscoreBox.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.HighscoreBox.Location = New System.Drawing.Point(561, 9)
+        Me.HighscoreBox.Name = "HighscoreBox"
+        Me.HighscoreBox.Size = New System.Drawing.Size(227, 24)
+        Me.HighscoreBox.TabIndex = 2
+        Me.HighscoreBox.Text = "Highscore: Example 9999"
+        '
         'Asteroids_Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -51,6 +64,7 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.HighscoreBox)
         Me.Controls.Add(Me.ScoreBox)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
@@ -63,4 +77,5 @@ Partial Class Asteroids_Game
 
     Friend WithEvents Timer1 As Timer
     Friend WithEvents ScoreBox As Label
+    Friend WithEvents HighscoreBox As Label
 End Class
