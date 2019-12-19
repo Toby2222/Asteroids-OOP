@@ -15,10 +15,10 @@
     Public SRa As Integer    'ship right angle
     Public pSOa As Double   'define previous spaceship origin angle
 
-    'definine delta angles (rate of change of angle)
+    'define delta angles (rate of change of angle)
     Public SOad As Double    'ship origin delta angle
     Public SOsd As Double    'ship origin delta speed
-    Public dsmax As Double    'max delta speed
+    Public dsmax As Double    'maximum delta speed
 
     'define drag variables of ship
     Public sdrag As Double   'speed drag
@@ -36,10 +36,10 @@
         SRa = 4.36332313    'ship right angle
         pSOa = SOa    'define previous spaceship origin angle
 
-        'definine delta angles (rate of change of angle)
+        'define delta angles (rate of change of angle)
         SOad = 0    'ship origin delta angle
         SOsd = 0    'ship origin delta speed
-        dsmax = 4    'max delta speed
+        dsmax = 4    'maximum delta speed
 
         'define drag variables of ship
         sdrag = 0.07    'speed drag

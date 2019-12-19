@@ -24,12 +24,25 @@ Partial Class Asteroids_Game
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.ScoreBox = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Timer1
         '
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 15
+        '
+        'ScoreBox
+        '
+        Me.ScoreBox.AutoSize = True
+        Me.ScoreBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ScoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.ScoreBox.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.ScoreBox.Location = New System.Drawing.Point(12, 9)
+        Me.ScoreBox.Name = "ScoreBox"
+        Me.ScoreBox.Size = New System.Drawing.Size(80, 24)
+        Me.ScoreBox.TabIndex = 1
+        Me.ScoreBox.Text = "Score: 0"
         '
         'Asteroids_Game
         '
@@ -38,13 +51,16 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.ScoreBox)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Name = "Asteroids_Game"
         Me.Text = "Asteroids"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents ScoreBox As Label
 End Class

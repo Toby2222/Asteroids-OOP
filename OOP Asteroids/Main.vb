@@ -25,14 +25,17 @@
     Public hit As Boolean = False
     Public lostbulletcounter As Integer = 0
 
-    'collision varaibles
+    'collision variables
     Public collideangle As Double 'define a variable for calculating the angles between the asteroids and other objects
 
-    'booleans for keys
+    'boolean for keys
     Public up As Boolean = False
     Public left As Boolean = False
     Public right As Boolean = False
     Public space As Boolean = False
+
+    'educational aspects variables
+    Public score As Integer = 0
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -85,6 +88,9 @@
         Next
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If score < 0 Then
+            score = 0
+        End If
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
         For i = 0 To asteroid_array.Count - 1
@@ -161,21 +167,11 @@
             If bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
                 If angleFunc(bullet_array(i).BFx, bullet_array(i).BFy, "Bull", i) = "hit" Then
                     bullet_array(i).inForm = False
-                    bullet_array(i).fired = False
-                    'lostBullets(lostbulletcounter) = i
                     numberOfBullets -= 1
-                    'lostbulletcounter += 1
                 End If
             End If
 
         Next
-        'If lostBullets Is Nothing = False Then
-        '    For i = 0 To lostBullets.Length - 1
-        '        bullet.fin(lostBullets(i))
-        '        bullet_array.RemoveAt(lostBullets(i))
-        '    Next
-        '    Array.Clear(lostBullets, 0, lostBullets.Length)
-        'End If
     End Sub
     Public Function angleFunc(x, y, type, j)
         For i = 0 To asteroid_array.Count - 1 'loop through all asteroids
@@ -192,7 +188,7 @@
                     by = Math.Abs(y - asteroid_array(i).yPoints(j + 1)) 'calculate the length of the other side
                     a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2) 'calculate the length of the hypotenuse
                     b = Math.Sqrt((bx) ^ 2 + (by) ^ 2) 'calculate the length of the hypotenuse
-                    dotproduct = ((ax * bx) + (ay * by)) 'calculate the dotproduct of the length
+                    dotproduct = ((ax * bx) + (ay * by)) 'calculate the dot product of the length
                     thisone = Math.Acos(dotproduct / (a * b)) 'take the anti cosign of the dot product divided by the two vectors
                     collideangle += thisone 'add the angle calculated
                 Next
@@ -208,6 +204,8 @@
                 collideangle += thisone
                 If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
                     If type = "Ship" Then
+                        score -= 75
+                        ScoreBox.Text = "Score: " + score.ToString
                         Form.ActiveForm.BackColor = (Color.Red)
                         mySpaceship.SOx = formwidth / 2
                         mySpaceship.SOy = formheight / 2
@@ -215,6 +213,8 @@
                         hit = True
                         Form.ActiveForm.BackColor = (Color.Blue)
                         If asteroid_array(i).Asteroidbig = True Then
+                            score += 10
+                            ScoreBox.Text = "Score: " + score.ToString
                             tempAsteroidx = asteroid_array(i).startX
                             tempAsteroidy = asteroid_array(i).startY
                             asteroid.fin(i)
@@ -223,6 +223,8 @@
                             asteroid = New Asteroids("s", "NewS")
                             asteroid = New Asteroids("s", "NewS")
                         Else
+                            score += 25
+                            ScoreBox.Text = "Score: " + score.ToString
                             lostasteroids = i
                         End If
                         Exit For
@@ -242,37 +244,37 @@
         End If
     End Function
     Function AsteroidAngle(i)
-        'numberOfAsteroids number to decde the starting side
+        'numberOfAsteroids number to decide the starting side
         Dim side As Integer = (Rnd() * 3) + 1
         'if side is one then start at top
         If side = 3 Then
             Dim rand As Integer = (Rnd() * formwidth)
-            'set the start pos somewhere along the top
+            'set the start position somewhere along the top
             asteroid_array(i).startX = rand
             asteroid_array(i).startY = 0
-            'if start pos is in upper third of top number then 180 to 270
+            'if start position is in upper third of top number then 180 to 270
             If rand > ((2 / 3) * formwidth) Then
                 asteroid_array(i).aAngle = ((Rnd() * (0.5 * Math.PI)) + Math.PI)
-                'if start pos is in bottom third of top number then bottom 90 to 180
+                'if start position is in bottom third of top number then bottom 90 to 180
             ElseIf rand < ((1 / 3) * formwidth) Then
                 asteroid_array(i).aAngle = ((Rnd() * (0.5 * Math.PI)) + (0.5 * Math.PI))
-                'if start pos is in middle thid of top number then bottom 90 to 270
+                'if start position is in middle third of top number then bottom 90 to 270
             Else
                 asteroid_array(i).aAngle = ((Rnd() * (Math.PI)) + (0.5 * Math.PI))
             End If
             'if side is two then start at right
         ElseIf side = 4 Then
             Dim rand As Integer = (Rnd() * formheight)
-            'set the start pos somewhere along the right
+            'set the start position somewhere along the right
             asteroid_array(i).startX = formwidth
             asteroid_array(i).startY = rand
-            'if start pos is in upper third of right number then 270 to 360
+            'if start position is in upper third of right number then 270 to 360
             If rand > ((2 / 3) * formheight) Then
                 asteroid_array(i).aAngle = ((Rnd() * (0.5 * Math.PI)) + (Math.PI * 1.5))
-                'if start pos is in the bottom third of right number then 180 to 270
+                'if start position is in the bottom third of right number then 180 to 270
             ElseIf rand < ((1 / 3) * formheight) Then
                 asteroid_array(i).aAngle = ((Rnd() * (0.5 * Math.PI)) + Math.PI)
-                'if the start pos is in the middle third of the right number then 180 to 360
+                'if the start position is in the middle third of the right number then 180 to 360
             Else
                 asteroid_array(i).aAngle = ((Rnd() * (Math.PI)) + (Math.PI))
             End If
@@ -281,15 +283,15 @@
             Dim rand As Integer = (Rnd() * formwidth)
             asteroid_array(i).startX = rand
             asteroid_array(i).startY = formheight
-            'if start pos is in upper third of bottom number then 270 to 360
+            'if start position is in upper third of bottom number then 270 to 360
             If rand > ((2 / 3) * formwidth) Then
 
                 asteroid_array(i).aAngle = (Rnd() * (0.2 * Math.PI)) + (1.2 * Math.PI)
-                'if start pos is in the bottom third of bottom number then 0 to 90
+                'if start position is in the bottom third of bottom number then 0 to 90
             ElseIf rand < ((1 / 3) * formwidth) Then
                 asteroid_array(i).aAngle = ((Rnd() * (0.45 * Math.PI)) + (Math.PI * 1.53))
 
-                'if the start pos is in the middle third of the bottom number then 270 to 90
+                'if the start position is in the middle third of the bottom number then 270 to 90
             Else
                 asteroid_array(i).aAngle = ((Rnd() * (Math.PI)) + (1.5 * Math.PI))
             End If
@@ -298,13 +300,13 @@
             Dim rand As Integer = (Rnd() * formheight)
             asteroid_array(i).startX = 0
             asteroid_array(i).startY = rand
-            'if start pos is in upper third of left number then 0 to 90
+            'if start position is in upper third of left number then 0 to 90
             If rand > ((2 / 3) * formheight) Then
                 asteroid_array(i).aAngle = (Rnd() * (0.5 * Math.PI))
-                'if start pos is in the bottom third of right number then 90 to 180
+                'if start position is in the bottom third of right number then 90 to 180
             ElseIf rand < ((1 / 3) * formheight) Then
                 asteroid_array(i).aAngle = ((Rnd() * (0.5 * Math.PI)) + (0.5 * Math.PI))
-                'if the start pos is in the middle third of the right number then 0 to 180
+                'if the start position is in the middle third of the right number then 0 to 180
             Else
                 asteroid_array(i).aAngle = (Rnd() * (Math.PI))
             End If
@@ -344,4 +346,5 @@
         formheight = (Me.Height)
         Invalidate()
     End Sub
+
 End Class
