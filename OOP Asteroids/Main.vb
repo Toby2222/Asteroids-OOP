@@ -335,10 +335,12 @@
         End If
         If e.KeyCode = Keys.Escape Then
             If score > Int(fieldreader(1)) Then
+                Dim highname As String = InputBox("Name for the high score")
+                'fileReader.CloseFile
+                fileReader.Close()
                 My.Computer.FileSystem.DeleteFile("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
                 filewriter = My.Computer.FileSystem.OpenTextFileWriter("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv", True)
-                Dim highname As String = InputBox("Name for the high score")
-                filewriter.WriteLine(highname + "," + score)
+                filewriter.WriteLine(highname + "," + score.ToString)
             End If
         End If
     End Sub
