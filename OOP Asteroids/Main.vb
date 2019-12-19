@@ -12,7 +12,7 @@
     Public formheight As Integer 'height
 
     'asteroid variables
-    Public numberOfAsteroids As Integer = (Rnd() * 5) + 3 'random generates 3 - 8 asteroids
+    Public numberOfAsteroids As Integer = (Rnd() * 5) + 5 'random generates 3 - 8 asteroids
     Public tempAsteroidx As Double
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
@@ -81,7 +81,7 @@
         formheight = Me.Height
         'populating defaults in Asteroids arrays
         For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids("b")
+            asteroid = New Asteroids("b", "NewB")
         Next
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -145,6 +145,12 @@
             j += 1
         Next
 #End Region
+        If asteroid_array.Count = 0 Then
+            numberOfAsteroids = (Rnd() * 7) + 7
+            For i = 0 To numberOfAsteroids - 1
+                asteroid = New Asteroids("b", "NewB")
+            Next
+        End If
         Invalidate()
     End Sub
     Public Sub collides() 'function for collisions
@@ -213,9 +219,9 @@
                             tempAsteroidy = asteroid_array(i).startY
                             asteroid.fin(i)
                             asteroid_array.RemoveAt(i)
-                            asteroid = New Asteroids("s")
-                            asteroid = New Asteroids("s")
-                            asteroid = New Asteroids("s")
+                            asteroid = New Asteroids("s", "NewS")
+                            asteroid = New Asteroids("s", "NewS")
+                            asteroid = New Asteroids("s", "NewS")
                         Else
                             lostasteroids = i
                         End If
