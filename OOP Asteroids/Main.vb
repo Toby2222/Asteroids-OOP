@@ -92,7 +92,7 @@
         Next
         collides() 'run the collision function in the asteroid sub
         testingspace += 1 'increment this the testing variable
-        If testingspace = 3 Then 'if the testing varaible makes it to three then revert the background to black
+        If testingspace = 3 Then 'if the testing variable makes it to three then revert the background to black
             testingspace = 0 'reset the testing variable to start the spacing
             Me.BackColor = Color.Black 'revert the background colour to black
         End If
