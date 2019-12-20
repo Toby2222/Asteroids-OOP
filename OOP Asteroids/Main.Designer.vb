@@ -26,6 +26,7 @@ Partial Class Asteroids_Game
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ScoreBox = New System.Windows.Forms.Label()
         Me.HighscoreBox = New System.Windows.Forms.Label()
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Timer1
@@ -57,6 +58,11 @@ Partial Class Asteroids_Game
         Me.HighscoreBox.TabIndex = 2
         Me.HighscoreBox.Text = "Highscore: Example 9999"
         '
+        'Timer2
+        '
+        Me.Timer2.Enabled = True
+        Me.Timer2.Interval = 120000
+        '
         'Asteroids_Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -81,4 +87,5 @@ Partial Class Asteroids_Game
     Friend WithEvents Timer1 As Timer
     Friend WithEvents ScoreBox As Label
     Friend WithEvents HighscoreBox As Label
+    Friend WithEvents Timer2 As Timer
 End Class

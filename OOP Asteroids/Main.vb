@@ -12,7 +12,7 @@
     Public formheight As Integer 'height
 
     'asteroid variables
-    Public numberOfAsteroids As Integer = (Rnd() * 5) + 5 'random generates 3 - 8 asteroids
+    Public numberOfAsteroids As Integer = 1 '(Rnd() * 5) + 5 'random generates 3 - 8 asteroids
     Public tempAsteroidx As Double
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
@@ -34,12 +34,16 @@
     Public right As Boolean = False
     Public space As Boolean = False
 
-    'educational aspects variables
+    'score variables
     Public score As Integer = 0
     Public fileReader As System.IO.StreamReader
     Public filewriter As System.IO.StreamWriter
     Public stringreader As String
     Public fieldreader As String()
+
+    'additional function variables
+    Public lives As Integer = 3
+    Public level As Integer = 0
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -81,24 +85,23 @@
         'numberOfAsteroids numbers
         Randomize()
         'set the starting points for the origin point within the ship
-        mySpaceship.SOx = 78
-        mySpaceship.SOy = 96
-        'finds the starting size of the form
+        mySpaceship.SOx = Me.Width / 2
+        mySpaceship.SOy = Me.Height / 2
         formwidth = Me.Width
+        'finds the starting size of the form
         formheight = Me.Height
         'populating defaults in Asteroids arrays
         For i = 0 To numberOfAsteroids - 1
             asteroid = New Asteroids("b", "NewB")
         Next
-
-        fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        stringreader = fileReader.ReadLine()
-        fieldreader = Split(stringreader, ",")
+        'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
+        'stringreader = fileReader.ReadLine()
+        'fieldreader = Split(stringreader, ",")
         'HighscoreBox.Text = "High score: " + fieldreader(0) + " - " + fieldreader(1)
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If score < 0 Then
-            score = 0
+        If lives <= 0 Then
+            ending()
         End If
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
@@ -161,12 +164,39 @@
         Next
 #End Region
         If asteroid_array.Count = 0 Then
-            numberOfAsteroids = (Rnd() * 7) + 7
+            'Timer2.Interval() = 1
+            level += 1
+            numberOfAsteroids = (Rnd() * (7 + level + level)) + (7 + level + level)
             For i = 0 To numberOfAsteroids - 1
                 asteroid = New Asteroids("b", "NewB")
             Next
         End If
+        If score <= 0 Then
+            score = 0
+        End If
         Invalidate()
+    End Sub
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        level += 1
+        Dim i As Integer = 0
+        For Each asteroid In asteroid_array
+            asteroid.fin(i)
+            i += 1
+        Next
+        i = 0
+        asteroid_array.Clear()
+        For Each bullet In bullet_array
+            bullet.fin(i)
+            i += 1
+        Next
+        bullet_array.Clear()
+        mySpaceship.SOx = Me.Width / 2
+        mySpaceship.SOy = Me.Height / 2
+        numberOfAsteroids = (Rnd() * (5 + level + level)) + (5 + level + level)
+        'System.Threading.Thread.Sleep(2000)
+        For i = 0 To numberOfAsteroids - 1
+            asteroid = New Asteroids("b", "NewB")
+        Next
     End Sub
     Public Sub collides() 'function for collisions
         angleFunc(mySpaceship.SFx, mySpaceship.SFy, "Ship", 2) 'function for detecting collisions between the front of the ship and the asteroid
@@ -215,12 +245,16 @@
                     If type = "Ship" Then
                         score -= 75
                         ScoreBox.Text = "Score: " + score.ToString
-                        Form.ActiveForm.BackColor = (Color.Red)
+                        'Form.ActiveForm.BackColor = (Color.Red)
                         mySpaceship.SOx = formwidth / 2
                         mySpaceship.SOy = formheight / 2
+                        If GameMenu.gamemode = "fun" Then
+
+                            lives -= 1
+                        End If
                     Else
                         hit = True
-                        Form.ActiveForm.BackColor = (Color.Blue)
+                        'Form.ActiveForm.BackColor = (Color.Blue)
                         If asteroid_array(i).Asteroidbig = True Then
                             score += 10
                             ScoreBox.Text = "Score: " + score.ToString
@@ -321,6 +355,17 @@
             End If
         End If
     End Function
+    Public Sub ending()
+        'If score > Int(fieldreader(1)) Then
+        '    Dim highname As String = InputBox("Name for the high score")
+        '    'fileReader.CloseFile
+        '    fileReader.Close()
+        '    My.Computer.FileSystem.DeleteFile("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
+        '    filewriter = My.Computer.FileSystem.OpenTextFileWriter("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv", True)
+        '    filewriter.WriteLine(highname + "," + score.ToString)
+        'End If
+        End
+    End Sub
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Right Then
             right = True
@@ -335,14 +380,10 @@
             space = True
         End If
         If e.KeyCode = Keys.Escape Then
-            If score > Int(fieldreader(1)) Then
-                Dim highname As String = InputBox("Name for the high score")
-                'fileReader.CloseFile
-                fileReader.Close()
-                My.Computer.FileSystem.DeleteFile("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-                filewriter = My.Computer.FileSystem.OpenTextFileWriter("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv", True)
-                filewriter.WriteLine(highname + "," + score.ToString)
-            End If
+            ending()
+        End If
+        If e.KeyCode = Keys.P Then
+            Console.WriteLine("im a test")
         End If
     End Sub
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
