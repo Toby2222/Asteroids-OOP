@@ -12,7 +12,7 @@
     Public formheight As Integer 'height
 
     'asteroid variables
-    Public numberOfAsteroids As Integer = 1 '(Rnd() * 5) + 5 'random generates 3 - 8 asteroids
+    Public numberOfAsteroids As Integer = (Rnd() * 5) + 5 'random generates 3 - 8 asteroids
     Public tempAsteroidx As Double
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
