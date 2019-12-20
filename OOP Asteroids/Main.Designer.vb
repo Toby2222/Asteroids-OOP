@@ -61,7 +61,7 @@ Partial Class Asteroids_Game
         'Timer2
         '
         Me.Timer2.Enabled = True
-        Me.Timer2.Interval = 120000
+        Me.Timer2.Interval = 75000
         '
         'Asteroids_Game
         '
