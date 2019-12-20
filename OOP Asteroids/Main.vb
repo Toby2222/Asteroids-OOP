@@ -93,7 +93,7 @@
         fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
         stringreader = fileReader.ReadLine()
         fieldreader = Split(stringreader, ",")
-        HighscoreBox.Text = "High score: " + fieldreader(0) + " - " + fieldreader(1)
+        'HighscoreBox.Text = "High score: " + fieldreader(0) + " - " + fieldreader(1)
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If score < 0 Then
