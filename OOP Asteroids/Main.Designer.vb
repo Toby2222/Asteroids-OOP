@@ -36,7 +36,7 @@ Partial Class Asteroids_Game
         'ScoreBox
         '
         Me.ScoreBox.AutoSize = True
-        Me.ScoreBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ScoreBox.BackColor = System.Drawing.Color.Transparent
         Me.ScoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
         Me.ScoreBox.ForeColor = System.Drawing.SystemColors.HotTrack
         Me.ScoreBox.Location = New System.Drawing.Point(12, 9)
@@ -48,10 +48,10 @@ Partial Class Asteroids_Game
         'HighscoreBox
         '
         Me.HighscoreBox.AutoSize = True
-        Me.HighscoreBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.HighscoreBox.BackColor = System.Drawing.Color.Transparent
         Me.HighscoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
         Me.HighscoreBox.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.HighscoreBox.Location = New System.Drawing.Point(561, 9)
+        Me.HighscoreBox.Location = New System.Drawing.Point(1549, 9)
         Me.HighscoreBox.Name = "HighscoreBox"
         Me.HighscoreBox.Size = New System.Drawing.Size(227, 24)
         Me.HighscoreBox.TabIndex = 2
@@ -63,12 +63,15 @@ Partial Class Asteroids_Game
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(1816, 738)
         Me.Controls.Add(Me.HighscoreBox)
         Me.Controls.Add(Me.ScoreBox)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Asteroids_Game"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asteroids"
         Me.ResumeLayout(False)
         Me.PerformLayout()

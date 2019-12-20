@@ -90,6 +90,7 @@
         For i = 0 To numberOfAsteroids - 1
             asteroid = New Asteroids("b", "NewB")
         Next
+
         fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
         stringreader = fileReader.ReadLine()
         fieldreader = Split(stringreader, ",")
