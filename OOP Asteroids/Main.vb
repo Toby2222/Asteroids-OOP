@@ -92,12 +92,21 @@
         formheight = Me.Height
         'populating defaults in Asteroids arrays
         For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids("b", "NewB")
+            If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
+                If i = 0 Then
+                    asteroid = New Asteroids("b", "NewB", "0")
+                ElseIf i = 1 Then
+                    asteroid = New Asteroids("b", "NewB", "1")
+                Else
+                    asteroid = New Asteroids("b", "NewB", "z")
+
+                End If
+            End If
         Next
         'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        'stringreader = fileReader.ReadLine()
-        'fieldreader = Split(stringreader, ",")
-        'HighscoreBox.Text = "High score: " + fieldreader(0) + " - " + fieldreader(1)
+        'string reader = fileReader.ReadLine()
+        'field reader = Split(string reader, ",")
+        'HighscoreBox.Text = "High score: " + field reader(0) + " - " + field reader(1)
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If lives <= 0 Then
@@ -107,7 +116,32 @@
 #Region "asteroids"
         For i = 0 To asteroid_array.Count - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
+            If asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" Then
+                TextBox9.Show()
+                Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+                TextBox9.Location = originpoint0
+                TextBox9.ForeColor = Color.White
+                TextBox9.BackColor = Color.Black
+                TextBox9.ReadOnly = True
+                TextBox9.TabStop = True
+                TextBox9.Width = 20
+                TextBox9.Font = New Font("Times New Roman", 25)
+                TextBox9.Text = "0"
+            End If
+            If asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" Then
+                TextBox1.Show()
+                Dim originpoint1 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+                TextBox1.Location = originpoint1
+                TextBox1.ForeColor = Color.White
+                TextBox1.BackColor = Color.Black
+                TextBox1.ReadOnly = True
+                TextBox1.TabStop = True
+                TextBox1.Width = 20
+                TextBox1.Font = New Font("Times New Roman", 25)
+                TextBox1.Text = "1"
+            End If
         Next
+
         collides() 'run the collision function in the asteroid sub
         testingspace += 1 'increment this the testing variable
         If testingspace = 3 Then 'if the testing variable makes it to three then revert the background to black
@@ -168,7 +202,16 @@
             level += 1
             numberOfAsteroids = (Rnd() * (7 + level + level)) + (7 + level + level)
             For i = 0 To numberOfAsteroids - 1
-                asteroid = New Asteroids("b", "NewB")
+                If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
+                    If i = 0 Then
+                        asteroid = New Asteroids("b", "NewB", "0")
+                    ElseIf i = 1 Then
+                        asteroid = New Asteroids("b", "NewB", "1")
+                    Else
+                        asteroid = New Asteroids("b", "NewB", "z")
+
+                    End If
+                End If
             Next
         End If
         If score <= 0 Then
@@ -195,7 +238,16 @@
         numberOfAsteroids = (Rnd() * (5 + level + level)) + (5 + level + level)
         'System.Threading.Thread.Sleep(2000)
         For i = 0 To numberOfAsteroids - 1
-            asteroid = New Asteroids("b", "NewB")
+            If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
+                If i = 0 Then
+                    asteroid = New Asteroids("b", "NewB", "0")
+                ElseIf i = 1 Then
+                    asteroid = New Asteroids("b", "NewB", "1")
+                Else
+                    asteroid = New Asteroids("b", "NewB", "z")
+
+                End If
+            End If
         Next
     End Sub
     Public Sub collides() 'function for collisions
@@ -241,7 +293,7 @@
                 dotproduct = ((ax * bx) + (ay * by))
                 thisone = Math.Acos(dotproduct / (a * b))
                 collideangle += thisone
-                If collideangle >= 1.12 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
+                If collideangle >= 1.18 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
                     If type = "Ship" Then
                         score -= 75
                         ScoreBox.Text = "Score: " + score.ToString
@@ -260,11 +312,22 @@
                             ScoreBox.Text = "Score: " + score.ToString
                             tempAsteroidx = asteroid_array(i).startX
                             tempAsteroidy = asteroid_array(i).startY
+                            Dim temp As Char = asteroid_array(i).innervalue
+                            If temp <> "z" Then
+                                TextBox1.Hide()
+                                TextBox9.Hide()
+                                For Each asteroid In asteroid_array
+                                    If asteroid.size = "b" And asteroid.innervalue = "z" Then
+                                        asteroid.innervalue = temp
+                                        Exit For
+                                    End If
+                                Next
+                            End If
                             asteroid.fin(i)
                             asteroid_array.RemoveAt(i)
-                            asteroid = New Asteroids("s", "NewS")
-                            asteroid = New Asteroids("s", "NewS")
-                            asteroid = New Asteroids("s", "NewS")
+                            asteroid = New Asteroids("s", "NewS", "z")
+                            asteroid = New Asteroids("s", "NewS", "z")
+                            asteroid = New Asteroids("s", "NewS", "z")
                         Else
                             score += 25
                             ScoreBox.Text = "Score: " + score.ToString

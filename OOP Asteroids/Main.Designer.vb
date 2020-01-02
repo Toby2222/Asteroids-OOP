@@ -27,6 +27,8 @@ Partial Class Asteroids_Game
         Me.ScoreBox = New System.Windows.Forms.Label()
         Me.HighscoreBox = New System.Windows.Forms.Label()
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
+        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Timer1
@@ -55,13 +57,37 @@ Partial Class Asteroids_Game
         Me.HighscoreBox.Location = New System.Drawing.Point(1549, 9)
         Me.HighscoreBox.Name = "HighscoreBox"
         Me.HighscoreBox.Size = New System.Drawing.Size(227, 24)
-        Me.HighscoreBox.TabIndex = 2
+        Me.HighscoreBox.TabIndex = 3
         Me.HighscoreBox.Text = "Highscore: Example 9999"
         '
         'Timer2
         '
         Me.Timer2.Enabled = True
-        Me.Timer2.Interval = 75000
+        Me.Timer2.Interval = 45000
+        '
+        'TextBox9
+        '
+        Me.TextBox9.AccessibleRole = System.Windows.Forms.AccessibleRole.None
+        Me.TextBox9.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox9.Cursor = System.Windows.Forms.Cursors.No
+        Me.TextBox9.Enabled = False
+        Me.TextBox9.Location = New System.Drawing.Point(679, 185)
+        Me.TextBox9.Name = "TextBox9"
+        Me.TextBox9.ReadOnly = True
+        Me.TextBox9.Size = New System.Drawing.Size(206, 13)
+        Me.TextBox9.TabIndex = 0
+        Me.TextBox9.TabStop = False
+        '
+        'TextBox1
+        '
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Cursor = System.Windows.Forms.Cursors.No
+        Me.TextBox1.Enabled = False
+        Me.TextBox1.Location = New System.Drawing.Point(494, 230)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.Size = New System.Drawing.Size(176, 13)
+        Me.TextBox1.TabIndex = 0
         '
         'Asteroids_Game
         '
@@ -70,12 +96,16 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1816, 738)
+        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.TextBox9)
         Me.Controls.Add(Me.HighscoreBox)
         Me.Controls.Add(Me.ScoreBox)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(1832, 777)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(1832, 777)
         Me.Name = "Asteroids_Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asteroids"
@@ -88,4 +118,6 @@ Partial Class Asteroids_Game
     Friend WithEvents ScoreBox As Label
     Friend WithEvents HighscoreBox As Label
     Friend WithEvents Timer2 As Timer
+    Friend WithEvents TextBox9 As TextBox
+    Friend WithEvents TextBox1 As TextBox
 End Class
