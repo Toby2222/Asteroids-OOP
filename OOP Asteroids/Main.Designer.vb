@@ -27,8 +27,10 @@ Partial Class Asteroids_Game
         Me.ScoreBox = New System.Windows.Forms.Label()
         Me.HighscoreBox = New System.Windows.Forms.Label()
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
-        Me.TextBox9 = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Question = New System.Windows.Forms.Label()
+        Me.Zero = New System.Windows.Forms.Label()
+        Me.Playeranswer = New System.Windows.Forms.Label()
+        Me.One = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Timer1
@@ -65,29 +67,57 @@ Partial Class Asteroids_Game
         Me.Timer2.Enabled = True
         Me.Timer2.Interval = 45000
         '
-        'TextBox9
+        'Question
         '
-        Me.TextBox9.AccessibleRole = System.Windows.Forms.AccessibleRole.None
-        Me.TextBox9.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox9.Cursor = System.Windows.Forms.Cursors.No
-        Me.TextBox9.Enabled = False
-        Me.TextBox9.Location = New System.Drawing.Point(679, 185)
-        Me.TextBox9.Name = "TextBox9"
-        Me.TextBox9.ReadOnly = True
-        Me.TextBox9.Size = New System.Drawing.Size(206, 13)
-        Me.TextBox9.TabIndex = 0
-        Me.TextBox9.TabStop = False
+        Me.Question.AutoSize = True
+        Me.Question.BackColor = System.Drawing.Color.Transparent
+        Me.Question.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.25!)
+        Me.Question.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.Question.Location = New System.Drawing.Point(9, 9)
+        Me.Question.Name = "Question"
+        Me.Question.Size = New System.Drawing.Size(292, 38)
+        Me.Question.TabIndex = 4
+        Me.Question.Text = "Template Quesiton"
         '
-        'TextBox1
+        'Zero
         '
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox1.Cursor = System.Windows.Forms.Cursors.No
-        Me.TextBox1.Enabled = False
-        Me.TextBox1.Location = New System.Drawing.Point(494, 230)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(176, 13)
-        Me.TextBox1.TabIndex = 0
+        Me.Zero.AutoSize = True
+        Me.Zero.BackColor = System.Drawing.Color.Transparent
+        Me.Zero.Enabled = False
+        Me.Zero.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.Zero.ForeColor = System.Drawing.Color.White
+        Me.Zero.Location = New System.Drawing.Point(460, 244)
+        Me.Zero.Name = "Zero"
+        Me.Zero.Size = New System.Drawing.Size(32, 36)
+        Me.Zero.TabIndex = 5
+        Me.Zero.Text = "h"
+        '
+        'Playeranswer
+        '
+        Me.Playeranswer.AutoSize = True
+        Me.Playeranswer.BackColor = System.Drawing.Color.Transparent
+        Me.Playeranswer.Enabled = False
+        Me.Playeranswer.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.25!)
+        Me.Playeranswer.ForeColor = System.Drawing.Color.White
+        Me.Playeranswer.Location = New System.Drawing.Point(1623, 9)
+        Me.Playeranswer.Name = "Playeranswer"
+        Me.Playeranswer.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.Playeranswer.Size = New System.Drawing.Size(0, 44)
+        Me.Playeranswer.TabIndex = 6
+        Me.Playeranswer.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'One
+        '
+        Me.One.AutoSize = True
+        Me.One.BackColor = System.Drawing.Color.Transparent
+        Me.One.Enabled = False
+        Me.One.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.One.ForeColor = System.Drawing.Color.White
+        Me.One.Location = New System.Drawing.Point(1265, 285)
+        Me.One.Name = "One"
+        Me.One.Size = New System.Drawing.Size(32, 36)
+        Me.One.TabIndex = 7
+        Me.One.Text = "h"
         '
         'Asteroids_Game
         '
@@ -96,8 +126,10 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1816, 738)
-        Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.TextBox9)
+        Me.Controls.Add(Me.One)
+        Me.Controls.Add(Me.Playeranswer)
+        Me.Controls.Add(Me.Zero)
+        Me.Controls.Add(Me.Question)
         Me.Controls.Add(Me.HighscoreBox)
         Me.Controls.Add(Me.ScoreBox)
         Me.DoubleBuffered = True
@@ -118,6 +150,8 @@ Partial Class Asteroids_Game
     Friend WithEvents ScoreBox As Label
     Friend WithEvents HighscoreBox As Label
     Friend WithEvents Timer2 As Timer
-    Friend WithEvents TextBox9 As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Question As Label
+    Friend WithEvents Zero As Label
+    Friend WithEvents Playeranswer As Label
+    Friend WithEvents One As Label
 End Class

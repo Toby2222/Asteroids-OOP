@@ -3,31 +3,31 @@
     Private Sub PlayButton_Click(sender As Object, e As EventArgs) Handles PlayButton.Click
         If GamemodeBox.Text IsNot Nothing Then
             If GamemodeBox.Text = "Binary Conversions" Then
-                Asteroids_Game.Show()
                 gamemode = "bincon"
-            ElseIf GamemodeBox.Text = "Binary Calculations" Then
                 Asteroids_Game.Show()
+            ElseIf GamemodeBox.Text = "Binary Calculations" Then
                 gamemode = "bincal"
+                Asteroids_Game.Show()
 
             ElseIf GamemodeBox.Text = "Hexadecimal Conversions" Then
-                Asteroids_Game.Show()
                 gamemode = "hexcon"
+                Asteroids_Game.Show()
 
             ElseIf GamemodeBox.Text = "Hexadecimal Calculations" Then
-                Asteroids_Game.Show()
                 gamemode = "hexcal"
+                Asteroids_Game.Show()
 
             ElseIf GamemodeBox.Text = "Octal Conversions" Then
-                Asteroids_Game.Show()
                 gamemode = "octcon"
+                Asteroids_Game.Show()
 
             ElseIf GamemodeBox.Text = "Octal Calculations" Then
-                Asteroids_Game.Show()
                 gamemode = "octcal"
+                Asteroids_Game.Show()
 
             ElseIf GamemodeBox.Text = "Fun (Non-Educational)" Then
-                Asteroids_Game.Show()
                 gamemode = "fun"
+                Asteroids_Game.Show()
 
             End If
         End If
