@@ -23,20 +23,24 @@ Partial Class Asteroids_Game
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Tick = New System.Windows.Forms.Timer(Me.components)
         Me.ScoreBox = New System.Windows.Forms.Label()
         Me.HighscoreBox = New System.Windows.Forms.Label()
-        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
+        Me.LevelTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Question = New System.Windows.Forms.Label()
-        Me.Zero = New System.Windows.Forms.Label()
+        Me.Zero2 = New System.Windows.Forms.Label()
         Me.Playeranswer = New System.Windows.Forms.Label()
-        Me.One = New System.Windows.Forms.Label()
+        Me.One2 = New System.Windows.Forms.Label()
+        Me.One1 = New System.Windows.Forms.Label()
+        Me.Zero1 = New System.Windows.Forms.Label()
+        Me.Countdown = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'Timer1
+        'Tick
         '
-        Me.Timer1.Enabled = True
-        Me.Timer1.Interval = 15
+        Me.Tick.Enabled = True
+        Me.Tick.Interval = 15
         '
         'ScoreBox
         '
@@ -62,10 +66,10 @@ Partial Class Asteroids_Game
         Me.HighscoreBox.TabIndex = 3
         Me.HighscoreBox.Text = "Highscore: Example 9999"
         '
-        'Timer2
+        'LevelTimer
         '
-        Me.Timer2.Enabled = True
-        Me.Timer2.Interval = 45000
+        Me.LevelTimer.Enabled = True
+        Me.LevelTimer.Interval = 45000
         '
         'Question
         '
@@ -79,18 +83,18 @@ Partial Class Asteroids_Game
         Me.Question.TabIndex = 4
         Me.Question.Text = "Template Quesiton"
         '
-        'Zero
+        'Zero2
         '
-        Me.Zero.AutoSize = True
-        Me.Zero.BackColor = System.Drawing.Color.Transparent
-        Me.Zero.Enabled = False
-        Me.Zero.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
-        Me.Zero.ForeColor = System.Drawing.Color.White
-        Me.Zero.Location = New System.Drawing.Point(460, 244)
-        Me.Zero.Name = "Zero"
-        Me.Zero.Size = New System.Drawing.Size(32, 36)
-        Me.Zero.TabIndex = 5
-        Me.Zero.Text = "h"
+        Me.Zero2.AutoSize = True
+        Me.Zero2.BackColor = System.Drawing.Color.Transparent
+        Me.Zero2.Enabled = False
+        Me.Zero2.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.Zero2.ForeColor = System.Drawing.Color.White
+        Me.Zero2.Location = New System.Drawing.Point(460, 244)
+        Me.Zero2.Name = "Zero2"
+        Me.Zero2.Size = New System.Drawing.Size(32, 36)
+        Me.Zero2.TabIndex = 5
+        Me.Zero2.Text = "h"
         '
         'Playeranswer
         '
@@ -98,7 +102,7 @@ Partial Class Asteroids_Game
         Me.Playeranswer.BackColor = System.Drawing.Color.Transparent
         Me.Playeranswer.Enabled = False
         Me.Playeranswer.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.25!)
-        Me.Playeranswer.ForeColor = System.Drawing.Color.White
+        Me.Playeranswer.ForeColor = System.Drawing.Color.Red
         Me.Playeranswer.Location = New System.Drawing.Point(1623, 9)
         Me.Playeranswer.Name = "Playeranswer"
         Me.Playeranswer.RightToLeft = System.Windows.Forms.RightToLeft.Yes
@@ -106,18 +110,61 @@ Partial Class Asteroids_Game
         Me.Playeranswer.TabIndex = 6
         Me.Playeranswer.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
-        'One
+        'One2
         '
-        Me.One.AutoSize = True
-        Me.One.BackColor = System.Drawing.Color.Transparent
-        Me.One.Enabled = False
-        Me.One.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
-        Me.One.ForeColor = System.Drawing.Color.White
-        Me.One.Location = New System.Drawing.Point(1265, 285)
-        Me.One.Name = "One"
-        Me.One.Size = New System.Drawing.Size(32, 36)
-        Me.One.TabIndex = 7
-        Me.One.Text = "h"
+        Me.One2.AutoSize = True
+        Me.One2.BackColor = System.Drawing.Color.Transparent
+        Me.One2.Enabled = False
+        Me.One2.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.One2.ForeColor = System.Drawing.Color.White
+        Me.One2.Location = New System.Drawing.Point(1265, 285)
+        Me.One2.Name = "One2"
+        Me.One2.Size = New System.Drawing.Size(32, 36)
+        Me.One2.TabIndex = 7
+        Me.One2.Text = "h"
+        '
+        'One1
+        '
+        Me.One1.AutoSize = True
+        Me.One1.BackColor = System.Drawing.Color.Transparent
+        Me.One1.Enabled = False
+        Me.One1.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.One1.ForeColor = System.Drawing.Color.White
+        Me.One1.Location = New System.Drawing.Point(892, 351)
+        Me.One1.Name = "One1"
+        Me.One1.Size = New System.Drawing.Size(32, 36)
+        Me.One1.TabIndex = 8
+        Me.One1.Text = "h"
+        '
+        'Zero1
+        '
+        Me.Zero1.AutoSize = True
+        Me.Zero1.BackColor = System.Drawing.Color.Transparent
+        Me.Zero1.Enabled = False
+        Me.Zero1.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.Zero1.ForeColor = System.Drawing.Color.White
+        Me.Zero1.Location = New System.Drawing.Point(1029, 388)
+        Me.Zero1.Name = "Zero1"
+        Me.Zero1.Size = New System.Drawing.Size(32, 36)
+        Me.Zero1.TabIndex = 9
+        Me.Zero1.Text = "h"
+        '
+        'Countdown
+        '
+        Me.Countdown.Enabled = True
+        Me.Countdown.Interval = 1000
+        '
+        'Timer
+        '
+        Me.Timer.AutoSize = True
+        Me.Timer.BackColor = System.Drawing.Color.Transparent
+        Me.Timer.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.25!)
+        Me.Timer.ForeColor = System.Drawing.Color.MediumBlue
+        Me.Timer.Location = New System.Drawing.Point(1435, 9)
+        Me.Timer.Name = "Timer"
+        Me.Timer.Size = New System.Drawing.Size(41, 44)
+        Me.Timer.TabIndex = 10
+        Me.Timer.Text = "h"
         '
         'Asteroids_Game
         '
@@ -126,9 +173,12 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1816, 738)
-        Me.Controls.Add(Me.One)
+        Me.Controls.Add(Me.Timer)
+        Me.Controls.Add(Me.Zero1)
+        Me.Controls.Add(Me.One1)
+        Me.Controls.Add(Me.One2)
         Me.Controls.Add(Me.Playeranswer)
-        Me.Controls.Add(Me.Zero)
+        Me.Controls.Add(Me.Zero2)
         Me.Controls.Add(Me.Question)
         Me.Controls.Add(Me.HighscoreBox)
         Me.Controls.Add(Me.ScoreBox)
@@ -146,12 +196,16 @@ Partial Class Asteroids_Game
 
     End Sub
 
-    Friend WithEvents Timer1 As Timer
+    Friend WithEvents Tick As Timer
     Friend WithEvents ScoreBox As Label
     Friend WithEvents HighscoreBox As Label
-    Friend WithEvents Timer2 As Timer
+    Friend WithEvents LevelTimer As Timer
     Friend WithEvents Question As Label
-    Friend WithEvents Zero As Label
+    Friend WithEvents Zero2 As Label
     Friend WithEvents Playeranswer As Label
-    Friend WithEvents One As Label
+    Friend WithEvents One2 As Label
+    Friend WithEvents One1 As Label
+    Friend WithEvents Zero1 As Label
+    Friend WithEvents Countdown As Timer
+    Friend WithEvents Timer As Label
 End Class

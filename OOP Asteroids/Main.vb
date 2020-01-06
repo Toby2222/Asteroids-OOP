@@ -44,9 +44,17 @@
     'additional function variables
     Public lives As Integer = 3
     Public level As Integer = 0
-    Public PlayerAnswerVariable As String
+    Public PlayerAnswerVariable As String = ""
+    Public answer As String
     Public questionrandom As Integer
     Public questionType As Integer
+    Public One1Shown As Boolean = False
+    Public One2Shown As Boolean = False
+    Public Zero1Shown As Boolean = False
+    Public Zero2Shown As Boolean = False
+    Public EducationalScore As Integer
+    Public timeleft As Double = 600 'Total number of seconds
+    Public iSpan As TimeSpan = TimeSpan.FromSeconds(timeleft)
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -87,6 +95,9 @@
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'numberOfAsteroids numbers
         Randomize()
+        Timer.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
+                        iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
+                        iSpan.Seconds.ToString.PadLeft(2, "0"c)
         'set the starting points for the origin point within the ship
         mySpaceship.SOx = Me.Width / 2
         mySpaceship.SOy = Me.Height / 2
@@ -95,6 +106,27 @@
         formheight = Me.Height
 
         'populating defaults in Asteroids arrays
+        ModeLoader()
+
+        If GameMenu.gamemode <> "fun" Then
+            ScoreBox.Hide()
+            HighscoreBox.Hide()
+        Else
+            Zero1.Hide()
+            Zero2.Hide()
+            One1.Show()
+            One2.Hide()
+            Timer.Hide()
+            Question.Hide()
+            Playeranswer.Hide()
+        End If
+        Questions()
+        'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
+        'string reader = fileReader.ReadLine()
+        'field reader = Split(string reader, ",")
+        'HighscoreBox.Text = "High score: " + field reader(0) + " - " + field reader(1)
+    End Sub
+    Public Sub ModeLoader()
         For i = 0 To numberOfAsteroids - 1
             If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
                 If i = 0 Then
@@ -136,27 +168,25 @@
                 End If
             End If
         Next
-        If GameMenu.gamemode <> "fun" Then
-            ScoreBox.Hide()
-            HighscoreBox.Hide()
-        Else
-            Zero.Hide()
-            One.Hide()
-            Question.Hide()
-            Playeranswer.Hide()
-        End If
+    End Sub
+    Public Sub Questions()
 #Region "binary conversions"
         If GameMenu.gamemode = "bincon" Then
             questionType = Rnd() * 2
             If questionType = 0 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into an 8-bit binary number: " + questionrandom.ToString
+                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this hexadecimal number into an 8-bit binary number: " + Hex(questionrandom).ToString
+                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this octal number into an 8-bit binary number: " + Oct(questionrandom).ToString
+                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+
             End If
 #End Region
 #Region "binary calculations"
@@ -165,6 +195,7 @@
             If questionType = 0 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Add these binary numbers together: " + questionrandom.ToString
+
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
@@ -179,12 +210,17 @@
             If questionType = 0 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into a hex number: " + questionrandom.ToString
+                answer = Hex(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this binary number into a hex number: " + Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = Hex(Int(Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")))
+
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this octal number into a hex number: " + Oct(questionrandom).ToString
+                answer = Hex(Oct(questionrandom))
+
             End If
 #End Region
 #Region "hex calculations"
@@ -207,12 +243,17 @@
             If questionType = 0 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into an octal number: " + questionrandom.ToString
+                answer = Oct(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this binary number into an octal number: " + Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = Oct(Int(Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")))
+
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this hex number into an octal number: " + Hex(questionrandom).ToString
+                answer = Oct(Hex(questionrandom))
+
             End If
 #End Region
 #Region "octal calculations"
@@ -230,12 +271,8 @@
             End If
 #End Region
         End If
-        'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        'string reader = fileReader.ReadLine()
-        'field reader = Split(string reader, ",")
-        'HighscoreBox.Text = "High score: " + field reader(0) + " - " + field reader(1)
     End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick
         If lives <= 0 Then
             ending()
         End If
@@ -243,22 +280,41 @@
 #Region "asteroids"
         For i = 0 To asteroid_array.Count - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
-            If asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" Then
-                One.Show()
+            If asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" And One1Shown = False Then
+                One1Shown = True
+                One1.Show()
                 Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
-                One.Location = originpoint0
-                One.TabStop = True
-                One.Text = "0"
+                One1.Location = originpoint0
+                One1.TabStop = True
+                One1.Text = "1"
+            ElseIf asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" And One2Shown = False Then
+                One2Shown = True
+                One2.Show()
+                Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+                One2.Location = originpoint0
+                One2.TabStop = True
+                One2.Text = "1"
             End If
-            If asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" Then
-                Zero.Show()
+            If asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" And Zero1Shown = False Then
+                Zero1Shown = True
+                Zero1.Show()
                 Dim originpoint1 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
-                Zero.Location = originpoint1
-                Zero.TabStop = True
-                Zero.Text = "1"
+                Zero1.Location = originpoint1
+                Zero1.TabStop = True
+                Zero1.Text = "0"
+            ElseIf asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" And Zero2Shown = False Then
+                Zero2Shown = True
+                Zero2.Show()
+                Dim originpoint2 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+                Zero2.Location = originpoint2
+                Zero2.TabStop = True
+                Zero2.Text = "0"
             End If
         Next
-
+        One1Shown = False
+        One2Shown = False
+        Zero1Shown = False
+        Zero2Shown = False
         collides() 'run the collision function in the asteroid sub
         testingspace += 1 'increment this the testing variable
         If testingspace = 3 Then 'if the testing variable makes it to three then revert the background to black
@@ -314,32 +370,30 @@
             j += 1
         Next
 #End Region
+        If PlayerAnswerVariable <> "" Then
+            If AnswerCheck() = False Then
+                PlayerAnswerVariable = ""
+                Playeranswer.Text = PlayerAnswerVariable
+            ElseIf PlayerAnswerVariable.Length = answer.Length Then
+                EducationalScore += 100
+                ModeLoader()
+                Questions()
+            End If
+        End If
         If asteroid_array.Count = 0 Then
             'Timer2.Interval() = 1
             level += 1
             numberOfAsteroids = (Rnd() * (7 + level + level)) + (7 + level + level)
-            For i = 0 To numberOfAsteroids - 1
-                If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
-
-                    If i = 0 Then
-                        asteroid = New Asteroids("b", "NewB", "0")
-                    ElseIf i = 1 Then
-                        asteroid = New Asteroids("b", "NewB", "1")
-                    Else
-                        asteroid = New Asteroids("b", "NewB", "z")
-
-                    End If
-                End If
-            Next
+            ModeLoader()
         End If
         If score <= 0 Then
             score = 0
         End If
         Invalidate()
     End Sub
-    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles LevelTimer.Tick
+        level += 1
         If GameMenu.gamemode = "fun" Then
-            level += 1
             Dim i As Integer = 0
             For Each asteroid In asteroid_array
                 asteroid.fin(i)
@@ -371,6 +425,29 @@
             Next
         End If
     End Sub
+    Public Function AnswerCheck()
+        If GameMenu.gamemode = "bincon" Then
+            If questionType = 0 Then
+                If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            ElseIf questionType = 1 Then
+                If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            ElseIf questionType = 2 Then
+                If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End If
+        End If
+    End Function
     Public Sub collides() 'function for collisions
         angleFunc(mySpaceship.SFx, mySpaceship.SFy, "Ship", 2) 'function for detecting collisions between the front of the ship and the asteroid
         angleFunc(mySpaceship.SLx, mySpaceship.SLy, "Ship", 2) 'detect the left point of the ship
@@ -421,6 +498,16 @@
                         'Form.ActiveForm.BackColor = (Color.Red)
                         mySpaceship.SOx = formwidth / 2
                         mySpaceship.SOy = formheight / 2
+                        lostasteroids = i
+                        Dim temp As Char = asteroid_array(i).innervalue
+                        If temp <> "z" Then
+                            Zero1.Hide()
+                            One1.Hide()
+                            Zero2.Hide()
+                            One2.Hide()
+                        End If
+                        PlayerAnswerVariable = ""
+                        Playeranswer.Text = PlayerAnswerVariable
                         If GameMenu.gamemode = "fun" Then
 
                             lives -= 1
@@ -435,8 +522,10 @@
                             tempAsteroidy = asteroid_array(i).startY
                             Dim temp As Char = asteroid_array(i).innervalue
                             If temp <> "z" Then
-                                Zero.Hide()
-                                One.Hide()
+                                Zero1.Hide()
+                                One1.Hide()
+                                Zero2.Hide()
+                                One2.Hide()
                                 PlayerAnswerVariable = temp.ToString + PlayerAnswerVariable
                                 Playeranswer.Text = PlayerAnswerVariable
                                 For Each asteroid In asteroid_array
@@ -593,4 +682,13 @@
         Invalidate()
     End Sub
 
+    Private Sub Countdown_Tick(sender As Object, e As EventArgs) Handles Countdown.Tick
+        If timeleft > 0 Then
+            timeleft -= 1
+            iSpan = TimeSpan.FromSeconds(timeleft)
+            Timer.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
+                        iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
+                        iSpan.Seconds.ToString.PadLeft(2, "0"c)
+        End If
+    End Sub
 End Class
