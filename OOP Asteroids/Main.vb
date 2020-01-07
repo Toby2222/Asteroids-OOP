@@ -410,19 +410,7 @@
             mySpaceship.SOy = Me.Height / 2
             numberOfAsteroids = (Rnd() * (5 + level + level)) + (5 + level + level)
             'System.Threading.Thread.Sleep(2000)
-            For i = 0 To numberOfAsteroids - 1
-                If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
-
-                    If i = 0 Then
-                        asteroid = New Asteroids("b", "NewB", "0")
-                    ElseIf i = 1 Then
-                        asteroid = New Asteroids("b", "NewB", "1")
-                    Else
-                        asteroid = New Asteroids("b", "NewB", "z")
-
-                    End If
-                End If
-            Next
+            ModeLoader()
         End If
     End Sub
     Public Function AnswerCheck()
