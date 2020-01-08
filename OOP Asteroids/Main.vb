@@ -99,23 +99,23 @@
         'finds the starting size of the form
         formheight = Me.Height
 
-        'populating defaults in Asteroids arrays
-        ModeLoader()
 
         If GameMenu.gamemode <> "fun" Then
             ScoreBox.Hide()
-            HighscoreBox.Hide()
-            numberOfAsteroids = (Rnd() * 5) + 5 'random generates 5 to 10 asteroids
+            numberOfAsteroids = (Rnd() * 5) + 10 'random generates 10 to 15 asteroids
         Else
-            numberOfAsteroids = (Rnd() * 15) + 10 'random generates 10 to 15 asteroids
+            numberOfAsteroids = (Rnd() * 5) + 5 'random generates 5 to 10 asteroids
             Zero1.Hide()
             Zero2.Hide()
-            One1.Show()
+            One1.Hide()
             One2.Hide()
             Timer.Hide()
             Question.Hide()
             Playeranswer.Hide()
         End If
+        'populating defaults in Asteroids arrays
+        ModeLoader()
+        'generating the questions based on the game mode
         Questions()
     End Sub
     Public Sub ModeLoader()
@@ -129,9 +129,8 @@
                     asteroid = New Asteroids("b", "NewB", "0")
                 ElseIf i = 3 Then
                     asteroid = New Asteroids("b", "NewB", "0")
-                ElseIf i = 4 Then
+                ElseIf i >= 4 Then
                     asteroid = New Asteroids("b", "NewB", "z")
-
                 End If
             ElseIf GameMenu.gamemode = "hexcal" Or GameMenu.gamemode = "hexcon" Then
                 If i = 0 Then
@@ -142,7 +141,7 @@
                     asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16) + 1))
                 ElseIf i = 3 Then
                     asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16) + 1))
-                ElseIf i = 4 Then
+                ElseIf i >= 4 Then
                     asteroid = New Asteroids("b", "NewB", "z")
                 End If
             ElseIf GameMenu.gamemode = "octcal" Or GameMenu.gamemode = "octcon" Then
@@ -154,10 +153,11 @@
                     asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8) + 1))
                 ElseIf i = 3 Then
                     asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8) + 1))
-                ElseIf i = 4 Then
+                ElseIf i >= 4 Then
                     asteroid = New Asteroids("b", "NewB", "z")
-
                 End If
+            Else
+                asteroid = New Asteroids("b", "NewB", "z")
             End If
         Next
     End Sub
@@ -184,16 +184,18 @@
 #Region "binary calculations"
         ElseIf GameMenu.gamemode = "bincal" Then
             questionType = Rnd() * 2
-            If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString
-
-            ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
-            ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "multiply these binary numbers: " + Oct(questionrandom).ToString
+            If questionType = 0 Then 'add numbers
+                answer = (Rnd() * 255) + 1
+                questionrandom = (Rnd() * (answer - 1)) + 1
+                Question.Text = "Add these binary numbers together: " + questionrandom.ToString + " + " + (answer - questionrandom).ToString
+            ElseIf questionType = 1 Then 'subtract numbers
+                answer = (Rnd() * 255) + 1
+                questionrandom = (Rnd() * (answer - 1)) + 1
+                Question.Text = "Subtract these binary numbers : " + questionrandom.ToString + " - " + (answer + questionrandom).ToString
+            ElseIf questionType = 2 Then 'multiply numbers
+                answer = (Rnd() * 255) + 1
+                questionrandom = (Rnd() * (answer - 1)) + 1
+                Question.Text = "Multiply these binary numbers together: " + questionrandom.ToString + " X " + (answer / questionrandom).ToString
             End If
 #End Region
 #Region "hex conversions"
@@ -264,40 +266,37 @@
 #End Region
         End If
     End Sub
-    Public Sub AsteroidCharacters(w, x, y, z)
-        For i = 0 To asteroid_array.Count - 1
-            asteroid_array(i).Update(i) 'loop through the asteroids and update them all
-            If asteroid_array(i).innervalue = w And asteroid_array(i).size = "b" And One1Shown = False Then
-                One1Shown = True
-                One1.Show()
-                Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
-                One1.Location = originpoint0
-                One1.TabStop = True
-                One1.Text = "1"
-            ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One2Shown = False Then
-                One2Shown = True
-                One2.Show()
-                Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
-                One2.Location = originpoint0
-                One2.TabStop = True
-                One2.Text = "1"
-            End If
-            If asteroid_array(i).innervalue = y And asteroid_array(i).size = "b" And Zero1Shown = False Then
-                Zero1Shown = True
-                Zero1.Show()
-                Dim originpoint1 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
-                Zero1.Location = originpoint1
-                Zero1.TabStop = True
-                Zero1.Text = "0"
-            ElseIf asteroid_array(i).innervalue = z And asteroid_array(i).size = "b" And Zero2Shown = False Then
-                Zero2Shown = True
-                Zero2.Show()
-                Dim originpoint2 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
-                Zero2.Location = originpoint2
-                Zero2.TabStop = True
-                Zero2.Text = "0"
-            End If
-        Next
+    Public Sub AsteroidCharacters(x, i)
+        If asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One1Shown = False Then
+            One1Shown = True
+            One1.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+            One1.Location = originpoint
+            One1.TabStop = True
+            One1.Text = x
+        ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One2Shown = False Then
+            One2Shown = True
+            One2.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+            One2.Location = originpoint
+            One2.TabStop = True
+            One2.Text = x
+        ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And Zero1Shown = False Then
+            Zero1Shown = True
+            Zero1.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+            Zero1.Location = originpoint
+            Zero1.TabStop = True
+            Zero1.Text = x
+        ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And Zero2Shown = False Then
+            Zero2Shown = True
+            Zero2.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+            Zero2.Location = originpoint
+            Zero2.TabStop = True
+            Zero2.Text = x
+        End If
+
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick
         If lives <= 0 Then
@@ -305,9 +304,18 @@
         End If
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
-        If GameMenu.gamemode = "bical" Or GameMenu.gamemode = "bico" Then
-            AsteroidCharacters("1", "1", "0", "0")
-        End If
+        Dim i As Integer = 0
+        For Each asteroid In asteroid_array.ToList
+            asteroid_array(i).Update(i) 'loop through the asteroids and update them all
+            If asteroid_array(i).innervalue <> "z" And (GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon") Then
+                AsteroidCharacters(asteroid_array(i).innervalue, i)
+            ElseIf asteroid_array(i).innervalue <> "z" And (GameMenu.gamemode = "hexcal" Or GameMenu.gamemode = "hexcon") Then
+                AsteroidCharacters(asteroid_array(i).innervalue, i)
+            ElseIf asteroid_array(i).innervalue <> "z" And (GameMenu.gamemode = "octcal" Or GameMenu.gamemode = "octcon") Then
+                AsteroidCharacters(asteroid_array(i).innervalue, i)
+            End If
+            i += 1
+        Next
         One1Shown = False
         One2Shown = False
         Zero1Shown = False
@@ -520,9 +528,15 @@
                             End If
                             asteroid.fin(i)
                             asteroid_array.RemoveAt(i)
-                            asteroid = New Asteroids("s", "NewS", "z")
-                            asteroid = New Asteroids("s", "NewS", "z")
-                            asteroid = New Asteroids("s", "NewS", "z")
+                            If GameMenu.gamemode = "fun" Then
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                            Else
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                            End If
                         Else
                             score += 25
                             ScoreBox.Text = "Score: " + score.ToString
