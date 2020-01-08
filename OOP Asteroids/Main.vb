@@ -292,28 +292,28 @@
         If asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One1Shown = False Then
             One1Shown = True
             One1.Show()
-            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+            Dim originpoint As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
             One1.Location = originpoint
             One1.TabStop = True
             One1.Text = x
         ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One2Shown = False Then
             One2Shown = True
             One2.Show()
-            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+            Dim originpoint As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
             One2.Location = originpoint
             One2.TabStop = True
             One2.Text = x
         ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And Zero1Shown = False Then
             Zero1Shown = True
             Zero1.Show()
-            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+            Dim originpoint As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
             Zero1.Location = originpoint
             Zero1.TabStop = True
             Zero1.Text = x
         ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And Zero2Shown = False Then
             Zero2Shown = True
             Zero2.Show()
-            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+            Dim originpoint As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
             Zero2.Location = originpoint
             Zero2.TabStop = True
             Zero2.Text = x
@@ -504,11 +504,8 @@
                 dotproduct = ((ax * bx) + (ay * by))
                 thisone = Math.Acos(dotproduct / (a * b))
                 collideangle += thisone
-                If collideangle >= 1.18 * Math.PI Then 'if the angle is greater than 1.12 * math.pi
+                If collideangle >= 1.18 * Math.PI Then 'if the angle is greater than 1.18 * math.pi
                     If type = "Ship" Then
-                        score -= 75
-                        ScoreBox.Text = "Score: " + score.ToString
-                        'Form.ActiveForm.BackColor = (Color.Red)
                         mySpaceship.SOx = formwidth / 2
                         mySpaceship.SOy = formheight / 2
                         lostasteroids = i
