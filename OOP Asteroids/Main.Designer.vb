@@ -25,7 +25,6 @@ Partial Class Asteroids_Game
         Me.components = New System.ComponentModel.Container()
         Me.Tick = New System.Windows.Forms.Timer(Me.components)
         Me.ScoreBox = New System.Windows.Forms.Label()
-        Me.HighscoreBox = New System.Windows.Forms.Label()
         Me.LevelTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Question = New System.Windows.Forms.Label()
         Me.Zero2 = New System.Windows.Forms.Label()
@@ -46,25 +45,13 @@ Partial Class Asteroids_Game
         '
         Me.ScoreBox.AutoSize = True
         Me.ScoreBox.BackColor = System.Drawing.Color.Transparent
-        Me.ScoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.ScoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.25!)
         Me.ScoreBox.ForeColor = System.Drawing.SystemColors.HotTrack
         Me.ScoreBox.Location = New System.Drawing.Point(12, 9)
         Me.ScoreBox.Name = "ScoreBox"
-        Me.ScoreBox.Size = New System.Drawing.Size(80, 24)
+        Me.ScoreBox.Size = New System.Drawing.Size(139, 38)
         Me.ScoreBox.TabIndex = 1
         Me.ScoreBox.Text = "Score: 0"
-        '
-        'HighscoreBox
-        '
-        Me.HighscoreBox.AutoSize = True
-        Me.HighscoreBox.BackColor = System.Drawing.Color.Transparent
-        Me.HighscoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
-        Me.HighscoreBox.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.HighscoreBox.Location = New System.Drawing.Point(1549, 9)
-        Me.HighscoreBox.Name = "HighscoreBox"
-        Me.HighscoreBox.Size = New System.Drawing.Size(227, 24)
-        Me.HighscoreBox.TabIndex = 3
-        Me.HighscoreBox.Text = "Highscore: Example 9999"
         '
         'LevelTimer
         '
@@ -77,7 +64,7 @@ Partial Class Asteroids_Game
         Me.Question.BackColor = System.Drawing.Color.Transparent
         Me.Question.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.25!)
         Me.Question.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.Question.Location = New System.Drawing.Point(9, 9)
+        Me.Question.Location = New System.Drawing.Point(12, 9)
         Me.Question.Name = "Question"
         Me.Question.Size = New System.Drawing.Size(292, 38)
         Me.Question.TabIndex = 4
@@ -180,7 +167,6 @@ Partial Class Asteroids_Game
         Me.Controls.Add(Me.Playeranswer)
         Me.Controls.Add(Me.Zero2)
         Me.Controls.Add(Me.Question)
-        Me.Controls.Add(Me.HighscoreBox)
         Me.Controls.Add(Me.ScoreBox)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
@@ -198,7 +184,6 @@ Partial Class Asteroids_Game
 
     Friend WithEvents Tick As Timer
     Friend WithEvents ScoreBox As Label
-    Friend WithEvents HighscoreBox As Label
     Friend WithEvents LevelTimer As Timer
     Friend WithEvents Question As Label
     Friend WithEvents Zero2 As Label

@@ -12,7 +12,7 @@
     Public formheight As Integer 'height
 
     'asteroid variables
-    Public numberOfAsteroids As Integer = (Rnd() * 5) + 5 'random generates 5 - 10 asteroids
+    Public numberOfAsteroids As Integer
     Public tempAsteroidx As Double
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
@@ -34,18 +34,13 @@
     Public right As Boolean = False
     Public space As Boolean = False
 
-    'score variables
-    Public score As Integer = 0
-    Public fileReader As System.IO.StreamReader
-    Public filewriter As System.IO.StreamWriter
-    Public stringreader As String
-    Public fieldreader As String()
-
     'additional function variables
+    Public score As Integer = 0
     Public lives As Integer = 3
     Public level As Integer = 0
     Public PlayerAnswerVariable As String = ""
     Public answer As String
+    Public Decimalanswer As Integer
     Public questionrandom As Integer
     Public questionType As Integer
     Public One1Shown As Boolean = False
@@ -108,28 +103,24 @@
         'finds the starting size of the form
         formheight = Me.Height
 
-        'populating defaults in Asteroids arrays
-        ModeLoader()
 
         If GameMenu.gamemode <> "fun" Then
             ScoreBox.Hide()
-            HighscoreBox.Hide()
+            numberOfAsteroids = (Rnd() * 5) + 10 'random generates 10 to 15 asteroids
         Else
+            numberOfAsteroids = (Rnd() * 5) + 5 'random generates 5 to 10 asteroids
             Zero1.Hide()
             Zero2.Hide()
-            One1.Show()
+            One1.Hide()
             One2.Hide()
             Timer.Hide()
             Question.Hide()
             Playeranswer.Hide()
         End If
-        abovecentre = New Point(800, 300)
-        belowcentre = New Point(800, 350)
+        'populating defaults in Asteroids arrays
+        ModeLoader()
+        'generating the questions based on the game mode
         Questions()
-        'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        'string reader = fileReader.ReadLine()
-        'field reader = Split(string reader, ",")
-        'HighscoreBox.Text = "High score: " + field reader(0) + " - " + field reader(1)
     End Sub
     Public Sub ModeLoader()
         For i = 0 To numberOfAsteroids - 1
@@ -142,38 +133,41 @@
                     asteroid = New Asteroids("b", "NewB", "0")
                 ElseIf i = 3 Then
                     asteroid = New Asteroids("b", "NewB", "0")
-                ElseIf i = 4 Then
+                ElseIf i >= 4 Then
                     asteroid = New Asteroids("b", "NewB", "z")
-
                 End If
             ElseIf GameMenu.gamemode = "hexcal" Or GameMenu.gamemode = "hexcon" Then
                 If i = 0 Then
-                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16) + 1))
+                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16)))
                 ElseIf i = 1 Then
-                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16) + 1))
+                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16)))
                 ElseIf i = 2 Then
-                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16) + 1))
+                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16)))
                 ElseIf i = 3 Then
-                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16) + 1))
-                ElseIf i = 4 Then
+                    asteroid = New Asteroids("b", "NewB", Hex((Rnd() * 16)))
+                ElseIf i >= 4 Then
                     asteroid = New Asteroids("b", "NewB", "z")
                 End If
             ElseIf GameMenu.gamemode = "octcal" Or GameMenu.gamemode = "octcon" Then
                 If i = 0 Then
-                    asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8) + 1))
+                    asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8)))
                 ElseIf i = 1 Then
-                    asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8) + 1))
+                    asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8)))
                 ElseIf i = 2 Then
-                    asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8) + 1))
+                    asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8)))
                 ElseIf i = 3 Then
                     asteroid = New Asteroids("b", "NewB", Oct((Rnd() * 8) + 1))
-                ElseIf i = 4 Then
+                ElseIf i >= 4 Then
                     asteroid = New Asteroids("b", "NewB", "z")
-
                 End If
+            Else
+                asteroid = New Asteroids("b", "NewB", "z")
             End If
         Next
     End Sub
+    Public Function binaryconvert(x)
+        Return Convert.ToString(x, 2).ToString.PadLeft(8, "0")
+    End Function
     Public Sub Questions()
 #Region "binary conversions"
         If GameMenu.gamemode = "bincon" Then
@@ -181,32 +175,37 @@
             If questionType = 0 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into an 8-bit binary number: " + questionrandom.ToString
-                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = binaryconvert(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this hexadecimal number into an 8-bit binary number: " + Hex(questionrandom).ToString
-                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = binaryconvert(questionrandom)
 
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this octal number into an 8-bit binary number: " + Oct(questionrandom).ToString
-                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = binaryconvert(questionrandom)
 
             End If
 #End Region
 #Region "binary calculations"
         ElseIf GameMenu.gamemode = "bincal" Then
-            questionType = Rnd() * 2
-            If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString
-
-            ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
-            ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "multiply these binary numbers: " + Oct(questionrandom).ToString
+            questionType = Rnd() * 1
+            If questionType = 0 Then 'add numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = binaryconvert(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Add these binary numbers together: " + binaryconvert(questionrandom) + " + " + binaryconvert((Decimalanswer - questionrandom))
+            ElseIf questionType = 1 Then 'subtract numbers
+                Decimalanswer = (Rnd() * 127) + 1
+                answer = binaryconvert(Decimalanswer)
+                questionrandom = (Rnd() * 128) + Decimalanswer
+                Question.Text = "Subtract these binary numbers : " + binaryconvert(questionrandom) + " - " + binaryconvert((questionrandom - Decimalanswer))
+            ElseIf questionType = 2 Then 'multiply numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = binaryconvert(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Multiply these binary numbers together: " + binaryconvert(questionrandom) + " X " + binaryconvert((questionrandom / Decimalanswer))
             End If
 #End Region
 #Region "hex conversions"
@@ -218,8 +217,8 @@
                 answer = Hex(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Convert this binary number into a hex number: " + Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
-                answer = Hex(Int(Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")))
+                Question.Text = "Convert this binary number into a hex number: " + binaryconvert(questionrandom)
+                answer = Hex(Int(binaryconvert(questionrandom)))
 
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
@@ -230,16 +229,22 @@
 #End Region
 #Region "hex calculations"
         ElseIf GameMenu.gamemode = "hexcal" Then
-            questionType = Rnd() * 2
-            If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString
-            ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
-            ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "multiply these binary numbers: " + Oct(questionrandom).ToString
+            questionType = Rnd() * 1
+            If questionType = 0 Then 'add numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Hex(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Add these hexadecimal numbers together: " + Hex(questionrandom) + " + " + Hex((Decimalanswer - questionrandom))
+            ElseIf questionType = 1 Then 'subtract numbers
+                Decimalanswer = (Rnd() * 127) + 1
+                answer = Hex(Decimalanswer)
+                questionrandom = (Rnd() * 255) + Decimalanswer
+                Question.Text = "Subtract these hexadecimal numbers: " + Hex(questionrandom) + " - " + Hex((questionrandom - Decimalanswer))
+            ElseIf questionType = 2 Then 'multiply numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Hex(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Multiply these hexadecimal numbers: " + Hex(questionrandom) + " X " + Hex((questionrandom / Decimalanswer))
             End If
 #End Region
 #Region "octal conversions"
@@ -251,8 +256,8 @@
                 answer = Oct(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Convert this binary number into an octal number: " + Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
-                answer = Oct(Int(Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")))
+                Question.Text = "Convert this binary number into an octal number: " + binaryconvert(questionrandom)
+                answer = Oct(Int(binaryconvert(questionrandom)))
 
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
@@ -263,58 +268,75 @@
 #End Region
 #Region "octal calculations"
         ElseIf GameMenu.gamemode = "octcal" Then
-            questionType = Rnd() * 2
-            If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString
-            ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
-            ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "multiply these binary numbers: " + Oct(questionrandom).ToString
+            questionType = Rnd() * 1
+            If questionType = 0 Then 'add numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Oct(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Add these octal numbers together: " + Oct(questionrandom) + " + " + Oct((Decimalanswer - questionrandom))
+            ElseIf questionType = 1 Then 'subtract numbers
+                Decimalanswer = (Rnd() * 127) + 1
+                answer = Oct(Decimalanswer)
+                questionrandom = (Rnd() * 255) + Decimalanswer
+                Question.Text = "Subtract these octal numbers: " + Oct(questionrandom) + " - " + Oct((questionrandom - Decimalanswer))
+            ElseIf questionType = 2 Then 'multiply numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Oct(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Multiply these octal numbers: " + Oct(questionrandom) + " X " + Oct((questionrandom / Decimalanswer))
             End If
 #End Region
         End If
     End Sub
+    Public Sub AsteroidCharacters(x, i)
+        If asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One1Shown = False Then
+            One1Shown = True
+            One1.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+            One1.Location = originpoint
+            One1.TabStop = True
+            One1.Text = x
+        ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One2Shown = False Then
+            One2Shown = True
+            One2.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+            One2.Location = originpoint
+            One2.TabStop = True
+            One2.Text = x
+        ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And Zero1Shown = False Then
+            Zero1Shown = True
+            Zero1.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+            Zero1.Location = originpoint
+            Zero1.TabStop = True
+            Zero1.Text = x
+        ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And Zero2Shown = False Then
+            Zero2Shown = True
+            Zero2.Show()
+            Dim originpoint As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
+            Zero2.Location = originpoint
+            Zero2.TabStop = True
+            Zero2.Text = x
+        End If
+
+    End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick
         If lives <= 0 Then
-            ending()
+            End
         End If
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
-        For i = 0 To asteroid_array.Count - 1
+        Dim i As Integer = 0
+        For Each asteroid In asteroid_array.ToList
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
-            If asteroid_array(i).innervalue = "1" And One1Shown = False Then
-                One1Shown = True
-                One1.Show()
-                Dim originpoint0 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
-                One1.Location = originpoint0
-                One1.TabStop = True
-                One1.Text = "1"
-            ElseIf asteroid_array(i).innervalue = "1" And One2Shown = False Then
-                One2Shown = True
-                One2.Show()
-                Dim originpoint1 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
-                One2.Location = originpoint1
-                One2.TabStop = True
-                One2.Text = "1"
+            If asteroid_array(i).innervalue <> "z" And (GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon") Then
+                AsteroidCharacters(asteroid_array(i).innervalue, i)
+            ElseIf asteroid_array(i).innervalue <> "z" And (GameMenu.gamemode = "hexcal" Or GameMenu.gamemode = "hexcon") Then
+                AsteroidCharacters(asteroid_array(i).innervalue, i)
+            ElseIf asteroid_array(i).innervalue <> "z" And (GameMenu.gamemode = "octcal" Or GameMenu.gamemode = "octcon") Then
+                AsteroidCharacters(asteroid_array(i).innervalue, i)
             End If
-            If asteroid_array(i).innervalue = "0" And Zero1Shown = False Then
-                Zero1Shown = True
-                Zero1.Show()
-                Dim originpoint2 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
-                Zero1.Location = originpoint2
-                Zero1.TabStop = True
-                Zero1.Text = "0"
-            ElseIf asteroid_array(i).innervalue = "0" And Zero2Shown = False Then
-                Zero2Shown = True
-                Zero2.Show()
-                Dim originpoint3 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
-                Zero2.Location = originpoint3
-                Zero2.TabStop = True
-                Zero2.Text = "0"
-            End If
+            i += 1
         Next
         One1Shown = False
         One2Shown = False
@@ -386,7 +408,6 @@
             End If
         End If
         If asteroid_array.Count = 0 Then
-            'Timer2.Interval() = 1
             level += 1
             numberOfAsteroids = (Rnd() * (7 + level + level)) + (7 + level + level)
             ModeLoader()
@@ -414,7 +435,6 @@
             mySpaceship.SOx = Me.Width / 2
             mySpaceship.SOy = Me.Height / 2
             numberOfAsteroids = (Rnd() * (5 + level + level)) + (5 + level + level)
-            'System.Threading.Thread.Sleep(2000)
             ModeLoader()
         End If
     End Sub
@@ -506,6 +526,29 @@
                             lives -= 1
                         End If
                     Else
+                        If GameMenu.gamemode = "bincon" Or GameMenu.gamemode = "bincal" Then
+                            For Each asteroid In asteroid_array
+                                If asteroid.innervalue <> "z" Then
+                                    If Int((Rnd() * 2) + 1) = 1 Then
+                                        asteroid.innervalue = "1"
+                                    Else
+                                        asteroid.innervalue = "0"
+                                    End If
+                                End If
+                            Next
+                        ElseIf GameMenu.gamemode = "hexcon" Or GameMenu.gamemode = "hexcal" Then
+                            For Each asteroid In asteroid_array
+                                If asteroid.innervalue <> "z" Then
+                                    asteroid.innervalue = Hex((Rnd() * 16))
+                                End If
+                            Next
+                        ElseIf GameMenu.gamemode = "octcon" Or GameMenu.gamemode = "octcal" Then
+                            For Each asteroid In asteroid_array
+                                If asteroid.innervalue <> "z" Then
+                                    asteroid.innervalue = Oct((Rnd() * 16))
+                                End If
+                            Next
+                        End If
                         hit = True
                         'Form.ActiveForm.BackColor = (Color.Blue)
                         If asteroid_array(i).Asteroidbig = True Then
@@ -530,9 +573,15 @@
                             End If
                             asteroid.fin(i)
                             asteroid_array.RemoveAt(i)
-                            asteroid = New Asteroids("s", "NewS", "z")
-                            asteroid = New Asteroids("s", "NewS", "z")
-                            asteroid = New Asteroids("s", "NewS", "z")
+                            If GameMenu.gamemode = "fun" Then
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                            Else
+                                asteroid = New Asteroids("s", "NewS", "z")
+                                asteroid = New Asteroids("s", "NewS", "z")
+                            End If
                         Else
                             score += 25
                             ScoreBox.Text = "Score: " + score.ToString
@@ -554,7 +603,7 @@
                 hit = False
             End If
         Next
-        If lostasteroids > -1 Then 'i = 0 To lostBullets.Length - 1
+        If lostasteroids > -1 Then
             asteroid.fin(lostasteroids)
             asteroid_array.RemoveAt(lostasteroids)
         End If
@@ -632,17 +681,6 @@
             End If
         End If
     End Function
-    Public Sub ending()
-        'If score > Int(fieldreader(1)) Then
-        '    Dim highname As String = InputBox("Name for the high score")
-        '    'fileReader.CloseFile
-        '    fileReader.Close()
-        '    My.Computer.FileSystem.DeleteFile("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        '    filewriter = My.Computer.FileSystem.OpenTextFileWriter("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv", True)
-        '    filewriter.WriteLine(highname + "," + score.ToString)
-        'End If
-        End
-    End Sub
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Right Then
             right = True
@@ -657,7 +695,7 @@
             space = True
         End If
         If e.KeyCode = Keys.Escape Then
-            ending()
+            Me.Close()
         End If
         If e.KeyCode = Keys.P Then
             Console.WriteLine("im a test")
@@ -683,7 +721,6 @@
         formheight = (Me.Height)
         Invalidate()
     End Sub
-
     Private Sub Countdown_Tick(sender As Object, e As EventArgs) Handles Countdown.Tick
         If timeleft > 0 Then
             timeleft -= 1
