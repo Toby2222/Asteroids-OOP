@@ -12,7 +12,7 @@
     Public formheight As Integer 'height
 
     'asteroid variables
-    Public numberOfAsteroids As Integer = (Rnd() * 5) + 5 'random generates 5 - 10 asteroids
+    Public numberOfAsteroids As Integer
     Public tempAsteroidx As Double
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
@@ -34,14 +34,8 @@
     Public right As Boolean = False
     Public space As Boolean = False
 
-    'score variables
-    Public score As Integer = 0
-    Public fileReader As System.IO.StreamReader
-    Public filewriter As System.IO.StreamWriter
-    Public stringreader As String
-    Public fieldreader As String()
-
     'additional function variables
+    Public score As Integer = 0
     Public lives As Integer = 3
     Public level As Integer = 0
     Public PlayerAnswerVariable As String = ""
@@ -111,7 +105,9 @@
         If GameMenu.gamemode <> "fun" Then
             ScoreBox.Hide()
             HighscoreBox.Hide()
+            numberOfAsteroids = (Rnd() * 5) + 5 'random generates 5 to 10 asteroids
         Else
+            numberOfAsteroids = (Rnd() * 15) + 10 'random generates 10 to 15 asteroids
             Zero1.Hide()
             Zero2.Hide()
             One1.Show()
@@ -121,10 +117,6 @@
             Playeranswer.Hide()
         End If
         Questions()
-        'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        'string reader = fileReader.ReadLine()
-        'field reader = Split(string reader, ",")
-        'HighscoreBox.Text = "High score: " + field reader(0) + " - " + field reader(1)
     End Sub
     Public Sub ModeLoader()
         For i = 0 To numberOfAsteroids - 1
@@ -272,22 +264,17 @@
 #End Region
         End If
     End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick
-        If lives <= 0 Then
-            ending()
-        End If
-        mySpaceship.Update() 'update the ship
-#Region "asteroids"
+    Public Sub AsteroidCharacters(w, x, y, z)
         For i = 0 To asteroid_array.Count - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
-            If asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" And One1Shown = False Then
+            If asteroid_array(i).innervalue = w And asteroid_array(i).size = "b" And One1Shown = False Then
                 One1Shown = True
                 One1.Show()
                 Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
                 One1.Location = originpoint0
                 One1.TabStop = True
                 One1.Text = "1"
-            ElseIf asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" And One2Shown = False Then
+            ElseIf asteroid_array(i).innervalue = x And asteroid_array(i).size = "b" And One2Shown = False Then
                 One2Shown = True
                 One2.Show()
                 Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
@@ -295,14 +282,14 @@
                 One2.TabStop = True
                 One2.Text = "1"
             End If
-            If asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" And Zero1Shown = False Then
+            If asteroid_array(i).innervalue = y And asteroid_array(i).size = "b" And Zero1Shown = False Then
                 Zero1Shown = True
                 Zero1.Show()
                 Dim originpoint1 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
                 Zero1.Location = originpoint1
                 Zero1.TabStop = True
                 Zero1.Text = "0"
-            ElseIf asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" And Zero2Shown = False Then
+            ElseIf asteroid_array(i).innervalue = z And asteroid_array(i).size = "b" And Zero2Shown = False Then
                 Zero2Shown = True
                 Zero2.Show()
                 Dim originpoint2 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
@@ -311,6 +298,16 @@
                 Zero2.Text = "0"
             End If
         Next
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick
+        If lives <= 0 Then
+            End
+        End If
+        mySpaceship.Update() 'update the ship
+#Region "asteroids"
+        If GameMenu.gamemode = "bical" Or GameMenu.gamemode = "bico" Then
+            AsteroidCharacters("1", "1", "0", "0")
+        End If
         One1Shown = False
         One2Shown = False
         Zero1Shown = False
@@ -381,7 +378,6 @@
             End If
         End If
         If asteroid_array.Count = 0 Then
-            'Timer2.Interval() = 1
             level += 1
             numberOfAsteroids = (Rnd() * (7 + level + level)) + (7 + level + level)
             ModeLoader()
@@ -392,8 +388,8 @@
         Invalidate()
     End Sub
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles LevelTimer.Tick
-        level += 1
         If GameMenu.gamemode = "fun" Then
+            level += 1
             Dim i As Integer = 0
             For Each asteroid In asteroid_array
                 asteroid.fin(i)
@@ -409,7 +405,6 @@
             mySpaceship.SOx = Me.Width / 2
             mySpaceship.SOy = Me.Height / 2
             numberOfAsteroids = (Rnd() * (5 + level + level)) + (5 + level + level)
-            'System.Threading.Thread.Sleep(2000)
             ModeLoader()
         End If
     End Sub
@@ -618,17 +613,7 @@
             End If
         End If
     End Function
-    Public Sub ending()
-        'If score > Int(fieldreader(1)) Then
-        '    Dim highname As String = InputBox("Name for the high score")
-        '    'fileReader.CloseFile
-        '    fileReader.Close()
-        '    My.Computer.FileSystem.DeleteFile("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
-        '    filewriter = My.Computer.FileSystem.OpenTextFileWriter("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv", True)
-        '    filewriter.WriteLine(highname + "," + score.ToString)
-        'End If
-        End
-    End Sub
+
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Right Then
             right = True
@@ -643,7 +628,7 @@
             space = True
         End If
         If e.KeyCode = Keys.Escape Then
-            ending()
+            End
         End If
         If e.KeyCode = Keys.P Then
             Console.WriteLine("im a test")
