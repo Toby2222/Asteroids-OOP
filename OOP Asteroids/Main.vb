@@ -55,6 +55,9 @@
     Public EducationalScore As Integer
     Public timeleft As Double = 600 'Total number of seconds
     Public iSpan As TimeSpan = TimeSpan.FromSeconds(timeleft)
+    Public abovecentre As Point
+    Public belowcentre As Point
+    Public offscreen As New Point(-1000, -1000)
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -120,6 +123,8 @@
             Question.Hide()
             Playeranswer.Hide()
         End If
+        abovecentre = New Point(800, 300)
+        belowcentre = New Point(800, 350)
         Questions()
         'fileReader = My.Computer.FileSystem.OpenTextFileReader("D:\Documents\School Stuff\Computer Science\Asteroids_Highscore.csv")
         'string reader = fileReader.ReadLine()
@@ -280,33 +285,33 @@
 #Region "asteroids"
         For i = 0 To asteroid_array.Count - 1
             asteroid_array(i).Update(i) 'loop through the asteroids and update them all
-            If asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" And One1Shown = False Then
+            If asteroid_array(i).innervalue = "1" And One1Shown = False Then
                 One1Shown = True
                 One1.Show()
-                Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
+                Dim originpoint0 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
                 One1.Location = originpoint0
                 One1.TabStop = True
                 One1.Text = "1"
-            ElseIf asteroid_array(i).innervalue = "1" And asteroid_array(i).size = "b" And One2Shown = False Then
+            ElseIf asteroid_array(i).innervalue = "1" And One2Shown = False Then
                 One2Shown = True
                 One2.Show()
-                Dim originpoint0 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
-                One2.Location = originpoint0
+                Dim originpoint1 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
+                One2.Location = originpoint1
                 One2.TabStop = True
                 One2.Text = "1"
             End If
-            If asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" And Zero1Shown = False Then
+            If asteroid_array(i).innervalue = "0" And Zero1Shown = False Then
                 Zero1Shown = True
                 Zero1.Show()
-                Dim originpoint1 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 10)
-                Zero1.Location = originpoint1
+                Dim originpoint2 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
+                Zero1.Location = originpoint2
                 Zero1.TabStop = True
                 Zero1.Text = "0"
-            ElseIf asteroid_array(i).innervalue = "0" And asteroid_array(i).size = "b" And Zero2Shown = False Then
+            ElseIf asteroid_array(i).innervalue = "0" And Zero2Shown = False Then
                 Zero2Shown = True
                 Zero2.Show()
-                Dim originpoint2 As New Point(asteroid_array(i).startX, asteroid_array(i).startY - 20)
-                Zero2.Location = originpoint2
+                Dim originpoint3 As New Point(asteroid_array(i).startX - 15, asteroid_array(i).startY - 15)
+                Zero2.Location = originpoint3
                 Zero2.TabStop = True
                 Zero2.Text = "0"
             End If
@@ -392,8 +397,8 @@
         Invalidate()
     End Sub
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles LevelTimer.Tick
-        level += 1
         If GameMenu.gamemode = "fun" Then
+            level += 1
             Dim i As Integer = 0
             For Each asteroid In asteroid_array
                 asteroid.fin(i)
@@ -410,19 +415,7 @@
             mySpaceship.SOy = Me.Height / 2
             numberOfAsteroids = (Rnd() * (5 + level + level)) + (5 + level + level)
             'System.Threading.Thread.Sleep(2000)
-            For i = 0 To numberOfAsteroids - 1
-                If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then
-
-                    If i = 0 Then
-                        asteroid = New Asteroids("b", "NewB", "0")
-                    ElseIf i = 1 Then
-                        asteroid = New Asteroids("b", "NewB", "1")
-                    Else
-                        asteroid = New Asteroids("b", "NewB", "z")
-
-                    End If
-                End If
-            Next
+            ModeLoader()
         End If
     End Sub
     Public Function AnswerCheck()
@@ -544,6 +537,15 @@
                             score += 25
                             ScoreBox.Text = "Score: " + score.ToString
                             lostasteroids = i
+                            'Dim temp As Char = asteroid_array(i).innervalue
+                            'PlayerAnswerVariable = temp.ToString + PlayerAnswerVariable
+                            'Playeranswer.Text = PlayerAnswerVariable
+                            'For Each asteroid In asteroid_array
+                            '    If asteroid.size = "b" And asteroid.innervalue = "z" Then
+                            '        asteroid.innervalue = temp
+                            '        Exit For
+                            '    End If
+                            'Next
                         End If
                         Exit For
                     End If
@@ -689,6 +691,24 @@
             Timer.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
                         iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
                         iSpan.Seconds.ToString.PadLeft(2, "0"c)
+        Else
+            brushColor = Color.Black
+            Zero1.Location = offscreen
+            Zero2.Location = offscreen
+            One1.Location = offscreen
+            One2.Location = offscreen
+
+            Invalidate()
+            Timer.Hide()
+            Playeranswer.Show()
+            Playeranswer.Text = "Game Over"
+            Playeranswer.Location = (abovecentre)
+            Question.Show()
+            Question.Text = "Your Score: " + EducationalScore.ToString
+            Question.Location = (belowcentre)
+            Countdown.Stop()
+            Tick.Stop()
+            LevelTimer.Stop()
         End If
     End Sub
 End Class
