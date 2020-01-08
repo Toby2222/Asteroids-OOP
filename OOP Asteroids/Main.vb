@@ -40,6 +40,7 @@
     Public level As Integer = 0
     Public PlayerAnswerVariable As String = ""
     Public answer As String
+    Public Decimalanswer As Integer
     Public questionrandom As Integer
     Public questionType As Integer
     Public One1Shown As Boolean = False
@@ -161,6 +162,9 @@
             End If
         Next
     End Sub
+    Public Function binaryconvert(x)
+        Return Convert.ToString(x, 2).ToString.PadLeft(8, "0")
+    End Function
     Public Sub Questions()
 #Region "binary conversions"
         If GameMenu.gamemode = "bincon" Then
@@ -168,16 +172,16 @@
             If questionType = 0 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into an 8-bit binary number: " + questionrandom.ToString
-                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = binaryconvert(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this hexadecimal number into an 8-bit binary number: " + Hex(questionrandom).ToString
-                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = binaryconvert(questionrandom)
 
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this octal number into an 8-bit binary number: " + Oct(questionrandom).ToString
-                answer = Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
+                answer = binaryconvert(questionrandom)
 
             End If
 #End Region
@@ -185,17 +189,20 @@
         ElseIf GameMenu.gamemode = "bincal" Then
             questionType = Rnd() * 2
             If questionType = 0 Then 'add numbers
-                answer = (Rnd() * 255) + 1
-                questionrandom = (Rnd() * (answer - 1)) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString + " + " + (answer - questionrandom).ToString
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = binaryconvert(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Add these binary numbers together: " + binaryconvert(questionrandom) + " + " + binaryconvert((Decimalanswer - questionrandom))
             ElseIf questionType = 1 Then 'subtract numbers
-                answer = (Rnd() * 255) + 1
-                questionrandom = (Rnd() * (answer - 1)) + 1
-                Question.Text = "Subtract these binary numbers : " + questionrandom.ToString + " - " + (answer + questionrandom).ToString
+                Decimalanswer = (Rnd() * 127) + 1
+                answer = binaryconvert(Decimalanswer)
+                questionrandom = (Rnd() * 255) + answer
+                Question.Text = "Subtract these binary numbers : " + binaryconvert(questionrandom) + " - " + binaryconvert((questionrandom - Decimalanswer))
             ElseIf questionType = 2 Then 'multiply numbers
-                answer = (Rnd() * 255) + 1
-                questionrandom = (Rnd() * (answer - 1)) + 1
-                Question.Text = "Multiply these binary numbers together: " + questionrandom.ToString + " X " + (answer / questionrandom).ToString
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = binaryconvert(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Multiply these binary numbers together: " + binaryconvert(questionrandom) + " X " + binaryconvert((questionrandom / Decimalanswer))
             End If
 #End Region
 #Region "hex conversions"
@@ -207,8 +214,8 @@
                 answer = Hex(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Convert this binary number into a hex number: " + Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
-                answer = Hex(Int(Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")))
+                Question.Text = "Convert this binary number into a hex number: " + binaryconvert(questionrandom)
+                answer = Hex(Int(binaryconvert(questionrandom)))
 
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
@@ -220,15 +227,21 @@
 #Region "hex calculations"
         ElseIf GameMenu.gamemode = "hexcal" Then
             questionType = Rnd() * 2
-            If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString
-            ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
-            ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "multiply these binary numbers: " + Oct(questionrandom).ToString
+            If questionType = 0 Then 'add numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Hex(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Add these hexadecimal numbers together: " + Hex(questionrandom) + " + " + Hex((Decimalanswer - questionrandom))
+            ElseIf questionType = 1 Then 'subtract numbers
+                Decimalanswer = (Rnd() * 127) + 1
+                answer = Hex(Decimalanswer)
+                questionrandom = (Rnd() * 255) + answer
+                Question.Text = "Subtract these hexadecimal numbers: " + Hex(questionrandom) + " - " + Hex((questionrandom - Decimalanswer))
+            ElseIf questionType = 2 Then 'multiply numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Hex(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Multiply these hexadecimal numbers: " + Hex(questionrandom) + " X " + Hex((questionrandom / Decimalanswer))
             End If
 #End Region
 #Region "octal conversions"
@@ -240,8 +253,8 @@
                 answer = Oct(questionrandom)
             ElseIf questionType = 1 Then
                 questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Convert this binary number into an octal number: " + Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")
-                answer = Oct(Int(Convert.ToString(questionrandom, 2).ToString.PadLeft(8, "0")))
+                Question.Text = "Convert this binary number into an octal number: " + binaryconvert(questionrandom)
+                answer = Oct(Int(binaryconvert(questionrandom)))
 
             ElseIf questionType = 2 Then
                 questionrandom = (Rnd() * 255) + 1
@@ -253,15 +266,21 @@
 #Region "octal calculations"
         ElseIf GameMenu.gamemode = "octcal" Then
             questionType = Rnd() * 2
-            If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Add these binary numbers together: " + questionrandom.ToString
-            ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Subtract these binary numbers: " + Hex(questionrandom).ToString
-            ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "multiply these binary numbers: " + Oct(questionrandom).ToString
+            If questionType = 0 Then 'add numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Oct(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Add these octal numbers together: " + Oct(questionrandom) + " + " + Oct((Decimalanswer - questionrandom))
+            ElseIf questionType = 1 Then 'subtract numbers
+                Decimalanswer = (Rnd() * 127) + 1
+                answer = Oct(Decimalanswer)
+                questionrandom = (Rnd() * 255) + answer
+                Question.Text = "Subtract these octal numbers: " + Oct(questionrandom) + " - " + Oct((questionrandom - Decimalanswer))
+            ElseIf questionType = 2 Then 'multiply numbers
+                Decimalanswer = (Rnd() * 255) + 1
+                answer = Oct(Decimalanswer)
+                questionrandom = (Rnd() * (Decimalanswer - 1)) + 1
+                Question.Text = "Multiply these octal numbers: " + Oct(questionrandom) + " X " + Oct((questionrandom / Decimalanswer))
             End If
 #End Region
         End If
@@ -549,7 +568,7 @@
                 hit = False
             End If
         Next
-        If lostasteroids > -1 Then 'i = 0 To lostBullets.Length - 1
+        If lostasteroids > -1 Then
             asteroid.fin(lostasteroids)
             asteroid_array.RemoveAt(lostasteroids)
         End If
@@ -627,7 +646,6 @@
             End If
         End If
     End Function
-
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Right Then
             right = True
@@ -642,7 +660,7 @@
             space = True
         End If
         If e.KeyCode = Keys.Escape Then
-            End
+            Me.Close()
         End If
         If e.KeyCode = Keys.P Then
             Console.WriteLine("im a test")
@@ -668,7 +686,6 @@
         formheight = (Me.Height)
         Invalidate()
     End Sub
-
     Private Sub Countdown_Tick(sender As Object, e As EventArgs) Handles Countdown.Tick
         If timeleft > 0 Then
             timeleft -= 1
