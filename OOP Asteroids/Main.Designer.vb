@@ -87,10 +87,9 @@ Partial Class Asteroids_Game
         '
         Me.Playeranswer.AutoSize = True
         Me.Playeranswer.BackColor = System.Drawing.Color.Transparent
-        Me.Playeranswer.Enabled = False
         Me.Playeranswer.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.25!)
         Me.Playeranswer.ForeColor = System.Drawing.Color.Red
-        Me.Playeranswer.Location = New System.Drawing.Point(1623, 9)
+        Me.Playeranswer.Location = New System.Drawing.Point(19, 56)
         Me.Playeranswer.Name = "Playeranswer"
         Me.Playeranswer.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.Playeranswer.Size = New System.Drawing.Size(0, 44)
