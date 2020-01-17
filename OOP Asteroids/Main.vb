@@ -321,7 +321,7 @@
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick 'timer that is called every 15 milliseconds
         If lives <= 0 Then 'if the user ahs run out of lives end the game
-            ending() 'call the subroutine for ending the game
+            Ending() 'call the subroutine for ending the game
         End If
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
