@@ -159,7 +159,7 @@ Partial Class Asteroids_Game
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(1370, 738)
+        Me.ClientSize = New System.Drawing.Size(1626, 687)
         Me.Controls.Add(Me.Timer)
         Me.Controls.Add(Me.Zero1)
         Me.Controls.Add(Me.One1)
@@ -171,9 +171,9 @@ Partial Class Asteroids_Game
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(1832, 777)
+        Me.MaximumSize = New System.Drawing.Size(1642, 726)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(1364, 726)
+        Me.MinimumSize = New System.Drawing.Size(1642, 726)
         Me.Name = "Asteroids_Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asteroids"
