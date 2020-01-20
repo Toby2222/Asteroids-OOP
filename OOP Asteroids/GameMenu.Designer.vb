@@ -22,11 +22,17 @@ Partial Class GameMenu
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GameMenu))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GamemodeBox = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PlayButton = New System.Windows.Forms.Button()
+        Me.EducationalInstructions = New System.Windows.Forms.TextBox()
+        Me.NonEducational = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.UpdateTick = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -36,7 +42,7 @@ Partial Class GameMenu
         Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 45.25!)
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(85, 37)
+        Me.Label1.Location = New System.Drawing.Point(343, 37)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(385, 72)
         Me.Label1.TabIndex = 0
@@ -49,7 +55,7 @@ Partial Class GameMenu
         Me.GamemodeBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.25!)
         Me.GamemodeBox.FormattingEnabled = True
         Me.GamemodeBox.Items.AddRange(New Object() {"Binary Conversions", "Binary Calculations", "Hexadecimal Conversions", "Hexadecimal Calculations", "Octal Conversions", "Octal Calculations", "Fun (Non-Educational)"})
-        Me.GamemodeBox.Location = New System.Drawing.Point(129, 169)
+        Me.GamemodeBox.Location = New System.Drawing.Point(387, 169)
         Me.GamemodeBox.Name = "GamemodeBox"
         Me.GamemodeBox.Size = New System.Drawing.Size(296, 30)
         Me.GamemodeBox.TabIndex = 1
@@ -59,7 +65,7 @@ Partial Class GameMenu
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.25!)
         Me.Label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label2.Location = New System.Drawing.Point(224, 144)
+        Me.Label2.Location = New System.Drawing.Point(482, 144)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(107, 22)
         Me.Label2.TabIndex = 2
@@ -73,7 +79,7 @@ Partial Class GameMenu
         Me.PlayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.PlayButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
         Me.PlayButton.ForeColor = System.Drawing.Color.Blue
-        Me.PlayButton.Location = New System.Drawing.Point(194, 254)
+        Me.PlayButton.Location = New System.Drawing.Point(452, 254)
         Me.PlayButton.Margin = New System.Windows.Forms.Padding(0)
         Me.PlayButton.Name = "PlayButton"
         Me.PlayButton.Size = New System.Drawing.Size(166, 42)
@@ -81,18 +87,81 @@ Partial Class GameMenu
         Me.PlayButton.Text = "Press to Play"
         Me.PlayButton.UseVisualStyleBackColor = False
         '
-        'Menu
+        'EducationalInstructions
+        '
+        Me.EducationalInstructions.BackColor = System.Drawing.Color.Black
+        Me.EducationalInstructions.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.EducationalInstructions.Enabled = False
+        Me.EducationalInstructions.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!)
+        Me.EducationalInstructions.ForeColor = System.Drawing.Color.White
+        Me.EducationalInstructions.Location = New System.Drawing.Point(5, 216)
+        Me.EducationalInstructions.Multiline = True
+        Me.EducationalInstructions.Name = "EducationalInstructions"
+        Me.EducationalInstructions.ReadOnly = True
+        Me.EducationalInstructions.Size = New System.Drawing.Size(434, 124)
+        Me.EducationalInstructions.TabIndex = 5
+        Me.EducationalInstructions.Text = resources.GetString("EducationalInstructions.Text")
+        '
+        'NonEducational
+        '
+        Me.NonEducational.BackColor = System.Drawing.Color.Black
+        Me.NonEducational.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.NonEducational.Enabled = False
+        Me.NonEducational.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!)
+        Me.NonEducational.ForeColor = System.Drawing.Color.White
+        Me.NonEducational.Location = New System.Drawing.Point(675, 224)
+        Me.NonEducational.Multiline = True
+        Me.NonEducational.Name = "NonEducational"
+        Me.NonEducational.ReadOnly = True
+        Me.NonEducational.Size = New System.Drawing.Size(361, 101)
+        Me.NonEducational.TabIndex = 6
+        Me.NonEducational.Text = "     - Big asteroid = 10 points" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "     - Small asteroid = 25 points" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "     - Three " &
+    "lives" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "     - Level up when screen is clear or after two minutes" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "     - The hig" &
+    "her the level, the more asteroids"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(699, 194)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(172, 24)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Non-Educational:"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.White
+        Me.Label4.Location = New System.Drawing.Point(8, 185)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(126, 24)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Educational:"
+        '
+        'UpdateTick
+        '
+        Me.UpdateTick.Enabled = True
+        Me.UpdateTick.Interval = 1
+        '
+        'GameMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(555, 355)
+        Me.ClientSize = New System.Drawing.Size(1070, 355)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.NonEducational)
+        Me.Controls.Add(Me.EducationalInstructions)
         Me.Controls.Add(Me.PlayButton)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.GamemodeBox)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "Menu"
+        Me.Name = "GameMenu"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asteroids Menu"
         Me.ResumeLayout(False)
@@ -104,4 +173,9 @@ Partial Class GameMenu
     Friend WithEvents GamemodeBox As ComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents PlayButton As Button
+    Friend WithEvents EducationalInstructions As TextBox
+    Friend WithEvents NonEducational As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents UpdateTick As Timer
 End Class

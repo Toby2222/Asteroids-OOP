@@ -67,7 +67,7 @@ Partial Class Asteroids_Game
         Me.Question.Location = New System.Drawing.Point(12, 9)
         Me.Question.Name = "Question"
         Me.Question.Size = New System.Drawing.Size(292, 38)
-        Me.Question.TabIndex = 4
+        Me.Question.TabIndex = 1
         Me.Question.Text = "Template Quesiton"
         '
         'Zero2
