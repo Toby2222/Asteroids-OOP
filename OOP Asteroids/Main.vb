@@ -17,6 +17,7 @@
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
     Public lostasteroids As Integer = -1 'stores the position in the array of the asteroid that needs to be removed from the array
+    Public speedFactor As Double = 1
 
     'bullet variables
     Public counter As Integer 'a counter to decide the spacing between bullets
@@ -100,6 +101,7 @@
             i += 1
         Next
         asteroid_array.Clear() 'clear the array
+        speedFactor = 0.65
         'put the formatting for the timer into the text box
         Timer.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
                         iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
@@ -209,10 +211,10 @@
                 questionrandom = (Rnd() * 128) + Decimalanswer ' generate a number between the answer and 128 more max of 255
                 Question.Text = "Subtract these binary numbers : " + binaryconvert(questionrandom) + " - " + binaryconvert((questionrandom - Decimalanswer)) 'output the random number and calculate the other half of the calculation
             ElseIf questionType = 2 Then 'multiply numbers
-                multiplicationFactor = (Rnd() * (29)) + 1
-                questionrandom = Math.Floor(255 / multiplicationFactor)
-                answer = binaryconvert(questionrandom * multiplicationFactor)
-                Question.Text = "Multiply these binary numbers together: " + binaryconvert(questionrandom) + " X " + binaryconvert(multiplicationFactor)
+                multiplicationfactor = (Rnd() * (29)) + 1
+                questionrandom = Math.Floor(255 / multiplicationfactor)
+                answer = binaryconvert(questionrandom * multiplicationfactor)
+                Question.Text = "Multiply these binary numbers together: " + binaryconvert(questionrandom) + " X " + binaryconvert(multiplicationfactor)
             End If
 #End Region
 #Region "hex conversions"
@@ -248,10 +250,10 @@
                 questionrandom = (Rnd() * 255) + Decimalanswer
                 Question.Text = "Subtract these hexadecimal numbers: " + Hex(questionrandom) + " - " + Hex((questionrandom - Decimalanswer))
             ElseIf questionType = 2 Then 'multiply numbers
-                multiplicationFactor = (Rnd() * (29)) + 1
-                questionrandom = Math.Floor(255 / multiplicationFactor)
-                answer = Hex(questionrandom * multiplicationFactor)
-                Question.Text = "Multiply these hexadecimal numbers: " + Hex(questionrandom) + " X " + Hex(multiplicationFactor)
+                multiplicationfactor = (Rnd() * (29)) + 1
+                questionrandom = Math.Floor(255 / multiplicationfactor)
+                answer = Hex(questionrandom * multiplicationfactor)
+                Question.Text = "Multiply these hexadecimal numbers: " + Hex(questionrandom) + " X " + Hex(multiplicationfactor)
             End If
 #End Region
 #Region "octal conversions"
@@ -287,10 +289,10 @@
                 questionrandom = (Rnd() * 255) + Decimalanswer
                 Question.Text = "Subtract these octal numbers: " + Oct(questionrandom) + " - " + Oct((questionrandom - Decimalanswer))
             ElseIf questionType = 2 Then 'multiply numbers
-                multiplicationFactor = (Rnd() * (29)) + 1
-                questionrandom = Math.Floor(255 / multiplicationFactor)
-                answer = Oct(questionrandom * multiplicationFactor)
-                Question.Text = "Multiply these octal numbers: " + Oct(questionrandom) + " X " + Oct(multiplicationFactor)
+                multiplicationfactor = (Rnd() * (29)) + 1
+                questionrandom = Math.Floor(255 / multiplicationfactor)
+                answer = Oct(questionrandom * multiplicationfactor)
+                Question.Text = "Multiply these octal numbers: " + Oct(questionrandom) + " X " + Oct(multiplicationfactor)
             End If
 #End Region
         End If
@@ -416,9 +418,6 @@
         End If
         Invalidate() 'redraw everything
     End Sub
-    Private Function GetAsteroidArray()
-        Return asteroid_array
-    End Function
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles LevelTimer.Tick 'timer that is called every two minutes
         If GameMenu.gamemode = "fun" Then 'if fun is chosen
             level += 1 'increment level

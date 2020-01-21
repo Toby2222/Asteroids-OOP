@@ -19,7 +19,7 @@
         innervalue = value
         onScreen = True
         size = asize
-        aSpeed = Rnd() * (2) + 1 'random speed variable between 1 and 4
+        aSpeed = (Rnd() * (2) + 1) * Asteroids_Game.speedFactor 'random speed variable between 1 and 3
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9
         For i = 1 To numberOfPoints 'loop through the number of points and calculate angles between the points based on the number of points and random numbers
             FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
@@ -63,8 +63,14 @@
         Next
         'if off-screen change the variable
         If Asteroids_Game.asteroid_array(i).startX > Asteroids_Game.formwidth Or Asteroids_Game.asteroid_array(i).startX < 0 Then
+            'Console.WriteLine(Asteroids_Game.formwidth)
+            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startX)
+
             Asteroids_Game.asteroid_array(i).onScreen = False
         ElseIf Asteroids_Game.asteroid_array(i).startY > Asteroids_Game.formheight Or Asteroids_Game.asteroid_array(i).startY < 0 Then
+            'Console.WriteLine(Asteroids_Game.formheight)
+            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startY)
+
             Asteroids_Game.asteroid_array(i).onScreen = False
         Else
             Asteroids_Game.asteroid_array(i).onScreen = True
