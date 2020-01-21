@@ -176,25 +176,52 @@
             End If
         Next
     End Sub
-    Public Function binaryconvert(x) 'sub for converting numbers into binary, reuse this sub multiple times
-        Return Convert.ToString(x, 2).ToString.PadLeft(8, "0")
+    Public Function binaryconvert(x, y) 'sub for converting numbers into binary, reuse this sub multiple times
+        Return Convert.ToString(x, 2).ToString.PadLeft(y, "0")
     End Function
     Public Sub Questions()
+        If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "hexcal" Or GameMenu.gamemode = "octcal" Then
+            If level < 2 Then
+                questionType = 0 'find which question type to generate
+            ElseIf level < 5 Then
+                questionType = 1
+            ElseIf level < 7 Then
+                questionType = 2
+            Else
+                questionType = Rnd() * 2
+            End If
+        Else
+            If level < 2 Then
+                questionrandom = (Rnd() * 15) + 1
+            ElseIf level < 5 Then
+                questionrandom = (Rnd() * 63) + 1
+            Else
+                questionrandom = (Rnd() * 254) + 1
+            End If
+        End If
 #Region "binary conversions"
         If GameMenu.gamemode = "bincon" Then 'if binary conversion is chosen
-            questionType = Rnd() * 2 'find which question type to generate
             If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1 'generate a random number less than 256
-                Question.Text = "Convert this decimal number into an 8-bit binary number: " + questionrandom.ToString 'output the random number as a decimal
-                answer = binaryconvert(questionrandom) 'convert the question to binary ans save the answer
+                Question.Text = "Convert this decimal number into a binary number: " + questionrandom.ToString 'output the random number as a decimal
+                If level < 2 Then
+                    answer = binaryconvert(questionrandom, 4) 'convert the question to binary ans save the answer
+                Else
+                    answer = binaryconvert(questionrandom, 8) 'convert the question to binary ans save the answer
+                End If
             ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1 'generate a random number less than 256
-                Question.Text = "Convert this hexadecimal number into an 8-bit binary number: " + Hex(questionrandom).ToString 'output the random number as a hex number
-                answer = binaryconvert(questionrandom) 'convert the question to binary ans save the answer
+                Question.Text = "Convert this hexadecimal number into a binary number: " + Hex(questionrandom).ToString 'output the random number as a hex number
+                If level < 2 Then
+                    answer = binaryconvert(questionrandom, 4) 'convert the question to binary ans save the answer
+                Else
+                    answer = binaryconvert(questionrandom, 8) 'convert the question to binary ans save the answer
+                End If
             ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1 'generate a random number less than 256
-                Question.Text = "Convert this octal number into an 8-bit binary number: " + Oct(questionrandom).ToString 'output the number as an octal number
-                answer = binaryconvert(questionrandom) 'convert the question to binary ans save the answer
+                Question.Text = "Convert this octal number into a binary number: " + Oct(questionrandom).ToString 'output the number as an octal number
+                If level < 2 Then
+                    answer = binaryconvert(questionrandom, 4) 'convert the question to binary ans save the answer
+                Else
+                    answer = binaryconvert(questionrandom, 8) 'convert the question to binary ans save the answer
+                End If
             End If
 #End Region
 #Region "binary calculations"
@@ -202,35 +229,32 @@
             questionType = Rnd() * 1
             If questionType = 0 Then 'add numbers
                 Decimalanswer = (Rnd() * 255) + 1 'generate the decimal answer less than 256
-                answer = binaryconvert(Decimalanswer) 'convert the answer to binary
+                answer = binaryconvert(Decimalanswer, 8) 'convert the answer to binary
                 questionrandom = (Rnd() * (Decimalanswer - 1)) + 1 'generate a random number less than the answer
-                Question.Text = "Add these binary numbers together: " + binaryconvert(questionrandom) + " + " + binaryconvert((Decimalanswer - questionrandom)) 'output the random number and calculate the other number in the calculation
+                Question.Text = "Add these binary numbers together: " + binaryconvert(questionrandom, 8) + " + " + binaryconvert((Decimalanswer - questionrandom), 8) 'output the random number and calculate the other number in the calculation
             ElseIf questionType = 1 Then 'subtract numbers
                 Decimalanswer = (Rnd() * 127) + 1 'generate the decimal answer less than 127
-                answer = binaryconvert(Decimalanswer) 'convert the answer to binary
+                answer = binaryconvert(Decimalanswer, 8) 'convert the answer to binary
                 questionrandom = (Rnd() * 128) + Decimalanswer ' generate a number between the answer and 128 more max of 255
-                Question.Text = "Subtract these binary numbers : " + binaryconvert(questionrandom) + " - " + binaryconvert((questionrandom - Decimalanswer)) 'output the random number and calculate the other half of the calculation
+                Question.Text = "Subtract these binary numbers : " + binaryconvert(questionrandom, 8) + " - " + binaryconvert((questionrandom - Decimalanswer), 8) 'output the random number and calculate the other half of the calculation
             ElseIf questionType = 2 Then 'multiply numbers
                 multiplicationfactor = (Rnd() * (29)) + 1
                 questionrandom = Math.Floor(255 / multiplicationfactor)
-                answer = binaryconvert(questionrandom * multiplicationfactor)
-                Question.Text = "Multiply these binary numbers together: " + binaryconvert(questionrandom) + " X " + binaryconvert(multiplicationfactor)
+                answer = binaryconvert((questionrandom * multiplicationfactor), 8)
+                Question.Text = "Multiply these binary numbers together: " + binaryconvert(questionrandom, 8) + " X " + binaryconvert(multiplicationfactor, 8)
             End If
 #End Region
 #Region "hex conversions"
         ElseIf GameMenu.gamemode = "hexcon" Then 'if hexadecimal conversion is chosen - all same as binary except converted to hex
             questionType = Rnd() * 2
             If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into a hex number: " + questionrandom.ToString
                 answer = Hex(questionrandom)
             ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Convert this binary number into a hex number: " + binaryconvert(questionrandom)
-                answer = Hex(Int(binaryconvert(questionrandom)))
+                Question.Text = "Convert this binary number into a hex number: " + binaryconvert(questionrandom, 8)
+                answer = Hex(Int(binaryconvert(questionrandom, 8)))
 
             ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this octal number into a hex number: " + Oct(questionrandom).ToString
                 answer = Hex(Oct(questionrandom))
 
@@ -260,16 +284,13 @@
         ElseIf GameMenu.gamemode = "octcon" Then 'if octal conversion is chosen - binary conversion but octal numbers
             questionType = Rnd() * 2
             If questionType = 0 Then
-                questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this decimal number into an octal number: " + questionrandom.ToString
                 answer = Oct(questionrandom)
             ElseIf questionType = 1 Then
-                questionrandom = (Rnd() * 255) + 1
-                Question.Text = "Convert this binary number into an octal number: " + binaryconvert(questionrandom)
-                answer = Oct(Int(binaryconvert(questionrandom)))
+                Question.Text = "Convert this binary number into an octal number: " + binaryconvert(questionrandom, 8)
+                answer = Oct(Int(binaryconvert(questionrandom, 8)))
 
             ElseIf questionType = 2 Then
-                questionrandom = (Rnd() * 255) + 1
                 Question.Text = "Convert this hex number into an octal number: " + Hex(questionrandom).ToString
                 answer = Oct(Hex(questionrandom))
 
@@ -403,6 +424,7 @@
                 Playeranswer.Text = PlayerAnswerVariable
             ElseIf AnswerCheck() = True And PlayerAnswerVariable.Length = answer.Length Then 'if the function returns true and the length of the answer is correct add to the score and generate a new question
                 score += 500
+                level += 1
                 ModeLoader() 'reload the mode
                 Questions() 'generate a new question
             End If
@@ -421,7 +443,7 @@
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles LevelTimer.Tick 'timer that is called every two minutes
         If GameMenu.gamemode = "fun" Then 'if fun is chosen
             level += 1 'increment level
-            Dim i As Integer = 0 'creat e counter
+            Dim i As Integer = 0 'create counter
             For Each asteroid In asteroid_array 'destroy all the asteroids
                 asteroid.fin(i)
                 i += 1
@@ -442,7 +464,7 @@
         End If
     End Sub
     Public Function AnswerCheck()
-        'if the string being built up by the user is equalt to that part of the answer then return true, else return false
+        'if the string being built up by the user is equal to that part of the answer then return true, else return false
         If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
             Return True
         Else
