@@ -452,6 +452,7 @@
 
         Next
     End Sub
+
     Public Function angleFunc(x, y, type, j)
         For i = 0 To asteroid_array.Count - 1 'loop through all asteroids
             'if the point being tested is within 100 pixels of the centre point of the asteroid then continue otherwise stop calculating
