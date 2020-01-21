@@ -28,7 +28,6 @@
         ReDim yPoints(numberOfPoints - 1) 'define the size of the array of y coordinates
         ReDim AsteroidPoints(numberOfPoints - 1) 'define the size of the array of points of the asteroid
         Asteroids_Game.asteroid_array.Add(Me) 'add the asteroid to the array
-        GameMenu.asteroid_array.Add(Me)
         Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1) 'call the asteroid angle function to decide where the asteroid should start and the angle it travels at
         For i = 0 To (numberOfPoints) - 1
             Dim rand As Integer
@@ -84,5 +83,6 @@
                 Asteroids_Game.asteroid = New Asteroids("s", "OldS", temp)
             End If
         End If
+
     End Sub
 End Class

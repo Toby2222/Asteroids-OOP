@@ -335,7 +335,7 @@
 #Region "asteroids"
         Dim i As Integer = 0 'create a counter variable for the for each loop
         For Each asteroid In asteroid_array.ToList
-            asteroid_array(i).Update(i) 'loop through the asteroids and update them all
+            asteroid.Update(i) 'update the asteroids
             If asteroid_array(i).innervalue <> "z" Then 'if the value is not z present the charater in the appropriate asteroid by calling the character subroutine
                 AsteroidCharacters(asteroid_array(i).innervalue, i) 'pass the character subroutine the value of the asteroid and its position in the array
             End If
@@ -416,6 +416,9 @@
         End If
         Invalidate() 'redraw everything
     End Sub
+    Private Function GetAsteroidArray()
+        Return asteroid_array
+    End Function
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles LevelTimer.Tick 'timer that is called every two minutes
         If GameMenu.gamemode = "fun" Then 'if fun is chosen
             level += 1 'increment level
