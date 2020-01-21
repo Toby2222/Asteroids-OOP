@@ -28,6 +28,7 @@
         ReDim yPoints(numberOfPoints - 1) 'define the size of the array of y coordinates
         ReDim AsteroidPoints(numberOfPoints - 1) 'define the size of the array of points of the asteroid
         Asteroids_Game.asteroid_array.Add(Me) 'add the asteroid to the array
+        GameMenu.asteroid_array.Add(Me)
         Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1) 'call the asteroid angle function to decide where the asteroid should start and the angle it travels at
         For i = 0 To (numberOfPoints) - 1
             Dim rand As Integer
@@ -35,7 +36,6 @@
                 rand = (Rnd() * 45) + 35 'create a random variable to define the distance from the origin point for the points
                 Asteroidbig = True
             Else
-
                 Asteroidbig = False
                 If NewOld = "NewS" Then
                     startX = Asteroids_Game.tempAsteroidx
@@ -43,7 +43,6 @@
                 End If
                 rand = (Rnd() * 25) + 15 'create a random variable to define the distance from the origin point for the points
             End If
-
             xPoints(i) = startX + ((Math.Cos(FixedAngles(i))) * (rand)) 'the x points = the origin x + an angle * the random distance
             yPoints(i) = startY + ((Math.Sin(FixedAngles(i))) * (rand)) 'the y points = the origin y + an angle * the random distance
             Dim OnePoint As New Point(xPoints(i), yPoints(i)) 'make a point variable from the x and y defined

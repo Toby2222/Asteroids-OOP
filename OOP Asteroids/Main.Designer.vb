@@ -67,7 +67,7 @@ Partial Class Asteroids_Game
         Me.Question.Location = New System.Drawing.Point(12, 9)
         Me.Question.Name = "Question"
         Me.Question.Size = New System.Drawing.Size(292, 38)
-        Me.Question.TabIndex = 4
+        Me.Question.TabIndex = 1
         Me.Question.Text = "Template Quesiton"
         '
         'Zero2
@@ -87,10 +87,9 @@ Partial Class Asteroids_Game
         '
         Me.Playeranswer.AutoSize = True
         Me.Playeranswer.BackColor = System.Drawing.Color.Transparent
-        Me.Playeranswer.Enabled = False
         Me.Playeranswer.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.25!)
         Me.Playeranswer.ForeColor = System.Drawing.Color.Red
-        Me.Playeranswer.Location = New System.Drawing.Point(1623, 9)
+        Me.Playeranswer.Location = New System.Drawing.Point(19, 56)
         Me.Playeranswer.Name = "Playeranswer"
         Me.Playeranswer.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.Playeranswer.Size = New System.Drawing.Size(0, 44)
@@ -159,7 +158,7 @@ Partial Class Asteroids_Game
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(1370, 738)
+        Me.ClientSize = New System.Drawing.Size(1626, 687)
         Me.Controls.Add(Me.Timer)
         Me.Controls.Add(Me.Zero1)
         Me.Controls.Add(Me.One1)
@@ -171,9 +170,9 @@ Partial Class Asteroids_Game
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(1832, 777)
+        Me.MaximumSize = New System.Drawing.Size(1642, 726)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(1364, 726)
+        Me.MinimumSize = New System.Drawing.Size(1642, 726)
         Me.Name = "Asteroids_Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asteroids"
