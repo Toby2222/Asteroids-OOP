@@ -17,7 +17,8 @@
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
     Public lostasteroids As Integer = -1 'stores the position in the array of the asteroid that needs to be removed from the array
-    Public speedFactor As Double = 1
+    Public speedFactor As Double = 1 'factor for speed
+    Public allsmall As Boolean = False
 
     'bullet variables
     Public counter As Integer 'a counter to decide the spacing between bullets
@@ -43,6 +44,7 @@
     Public multiplicationfactor As Integer
     Public questionrandom As Integer 'stores the random number used in the questions
     Public questionType As Integer 'stores the number representing the type of question being generated
+
     'booleans for deciding which label to use for storing the characters
     Public One1Shown As Boolean = False
     Public One2Shown As Boolean = False
@@ -134,6 +136,12 @@
         Questions()
     End Sub
     Public Sub ModeLoader()
+        Dim i As Integer = 0 'create a counter
+        For Each asteroid In asteroid_array 'destroy all the asteroids
+            asteroid.fin(i)
+            i += 1
+        Next
+        asteroid_array.Clear() 'clear the array
         For i = 0 To numberOfAsteroids - 1 'loop through all the asteroids
             If GameMenu.gamemode = "bincal" Or GameMenu.gamemode = "bincon" Then 'if a binary gamemode is chosen, give the asteroids a character value of 1, 0 or z
                 If i = 0 Then '0,1,2,3 will contain binary digits that will be displayed in the text boxes 4 and above will contain a z which will not be displayed
@@ -364,6 +372,18 @@
             End If
             i += 1 'incremement the counter
         Next
+        For Each asteroid In asteroid_array.ToList
+            If asteroid.size = "s" Then
+                allsmall = True
+            Else
+                allsmall = False
+                Exit For
+            End If
+        Next
+        If allsmall = True Then
+            allsmall = False
+            ModeLoader()
+        End If
         'declare the labels as unused again
         One1Shown = False
         One2Shown = False
@@ -485,7 +505,6 @@
 
         Next
     End Sub
-
     Public Function angleFunc(x, y, type, j)
         For i = 0 To asteroid_array.Count - 1 'loop through all asteroids
             'if the point being tested is within 100 pixels of the centre point of the asteroid then continue otherwise stop calculating
@@ -760,5 +779,14 @@
         Else
             Ending()
         End If
+    End Sub
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Dim i As Integer = 0 'create a counter
+        For Each asteroid In asteroid_array 'destroy all the asteroids
+            asteroid.fin(i)
+            i += 1
+        Next
+        asteroid_array.Clear() 'clear the array
+        GameMenu.GameMenu_Reload()
     End Sub
 End Class
