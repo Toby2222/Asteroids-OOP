@@ -91,6 +91,7 @@ Partial Class GameMenu
         '
         Me.EducationalInstructions.BackColor = System.Drawing.Color.Black
         Me.EducationalInstructions.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.EducationalInstructions.Cursor = System.Windows.Forms.Cursors.Default
         Me.EducationalInstructions.Enabled = False
         Me.EducationalInstructions.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!)
         Me.EducationalInstructions.ForeColor = System.Drawing.Color.White
@@ -106,6 +107,7 @@ Partial Class GameMenu
         '
         Me.NonEducational.BackColor = System.Drawing.Color.Black
         Me.NonEducational.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.NonEducational.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.NonEducational.Enabled = False
         Me.NonEducational.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!)
         Me.NonEducational.ForeColor = System.Drawing.Color.White
@@ -122,6 +124,7 @@ Partial Class GameMenu
         'Label3
         '
         Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(699, 194)
@@ -133,6 +136,7 @@ Partial Class GameMenu
         'Label4
         '
         Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(8, 185)
@@ -144,7 +148,7 @@ Partial Class GameMenu
         'UpdateTick
         '
         Me.UpdateTick.Enabled = True
-        Me.UpdateTick.Interval = 1
+        Me.UpdateTick.Interval = 15
         '
         'GameMenu
         '
@@ -160,6 +164,7 @@ Partial Class GameMenu
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.GamemodeBox)
         Me.Controls.Add(Me.Label1)
+        Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "GameMenu"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
