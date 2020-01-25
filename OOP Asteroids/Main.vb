@@ -787,6 +787,6 @@
             i += 1
         Next
         asteroid_array.Clear() 'clear the array
-        GameMenu.GameMenu_Reload()
+        GameMenu.UpdateTick.Stop()
     End Sub
 End Class

@@ -1,5 +1,6 @@
 ﻿Public Class GameMenu
     Public gamemode As String
+    Public menuasteroids As Integer
     Private Sub PlayButton_Click(sender As Object, e As EventArgs) Handles PlayButton.Click
         If GamemodeBox.Text IsNot Nothing Then
             If GamemodeBox.Text = "Binary Conversions" Then
@@ -30,18 +31,11 @@
     Private Sub GameMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Asteroids_Game.formheight = Me.Height
         Asteroids_Game.formwidth = Me.Width
-        Asteroids_Game.speedFactor = 0.2
+        Asteroids_Game.speedFactor = 0.5
         For i = 0 To 0
             Asteroids_Game.asteroid = New Asteroids("b", "NewB", "z")
         Next
-    End Sub
-    Public Sub GameMenu_Reload()
-        Asteroids_Game.formheight = Me.Height
-        Asteroids_Game.formwidth = Me.Width
-        Asteroids_Game.speedFactor = 0.2
-        For i = 0 To 0
-            Asteroids_Game.asteroid = New Asteroids("b", "NewB", "z")
-        Next
+        menuasteroids = Asteroids_Game.asteroid_array.Count
     End Sub
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias 'line of code to help make the graphics smooth
@@ -52,7 +46,7 @@
         Next
     End Sub
     Private Sub UpdateTick_Tick(sender As Object, e As EventArgs) Handles UpdateTick.Tick
-        For i = 0 To Asteroids_Game.asteroid_array.Count - 1
+        For i = 0 To menuasteroids - 1
             Asteroids_Game.asteroid.Update(i)
         Next
         Invalidate()
