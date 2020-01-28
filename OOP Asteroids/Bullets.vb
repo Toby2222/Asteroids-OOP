@@ -10,7 +10,6 @@
     Public bLength As Integer 'integer to define the length of the bullets
     Public bAngle As Double 'double for the angle of the bullet
 #End Region
-
     Public Sub New(currentAngle, frontx, fronty) 'sub for instantiating a bullet
         inForm = True
         bLength = 2 'bullets length 2
