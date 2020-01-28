@@ -97,6 +97,7 @@
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'numberOfAsteroids numbers
         Randomize()
+        Tick.Start()
         Dim i As Integer = 0 'create a counter
         For Each asteroid In asteroid_array 'destroy all the asteroids
             asteroid.fin(i)
@@ -112,6 +113,10 @@
         mySpaceship.SOx = Me.Width / 2
         mySpaceship.SOy = Me.Height / 2
         formwidth = Me.Width
+
+        level = 0
+        brushColor = Color.White
+
         'finds the starting size of the form
         formheight = Me.Height
         abovecentre = New Point(Me.Width / 2 - 150, Me.Height / 2 - 25)
@@ -234,7 +239,6 @@
 #End Region
 #Region "binary calculations"
         ElseIf GameMenu.gamemode = "bincal" Then 'if binary calculations is chosen
-            questionType = Rnd() * 1
             If questionType = 0 Then 'add numbers
                 Decimalanswer = (Rnd() * 255) + 1 'generate the decimal answer less than 256
                 answer = binaryconvert(Decimalanswer, 8) 'convert the answer to binary
@@ -270,7 +274,6 @@
 #End Region
 #Region "hex calculations"
         ElseIf GameMenu.gamemode = "hexcal" Then 'if hex calculations is chosen - same as binary calculations but converted to hexadecimal
-            questionType = Rnd() * 1
             If questionType = 0 Then 'add numbers
                 Decimalanswer = (Rnd() * 255) + 1
                 answer = Hex(Decimalanswer)
@@ -306,7 +309,6 @@
 #End Region
 #Region "octal calculations"
         ElseIf GameMenu.gamemode = "octcal" Then 'if octal calculations is chosen - binary calculations but octal numbers
-            questionType = Rnd() * 1
             If questionType = 0 Then 'add numbers
                 Decimalanswer = (Rnd() * 255) + 1
                 answer = Oct(Decimalanswer)
@@ -779,14 +781,5 @@
         Else
             Ending()
         End If
-    End Sub
-    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        Dim i As Integer = 0 'create a counter
-        For Each asteroid In asteroid_array 'destroy all the asteroids
-            asteroid.fin(i)
-            i += 1
-        Next
-        asteroid_array.Clear() 'clear the array
-        GameMenu.GameMenu_Reload()
     End Sub
 End Class
