@@ -34,6 +34,7 @@ Partial Class Asteroids_Game
         Me.Zero1 = New System.Windows.Forms.Label()
         Me.Countdown = New System.Windows.Forms.Timer(Me.components)
         Me.Timer = New System.Windows.Forms.Label()
+        Me.livesbox = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Tick
@@ -152,6 +153,19 @@ Partial Class Asteroids_Game
         Me.Timer.TabIndex = 10
         Me.Timer.Text = "h"
         '
+        'livesbox
+        '
+        Me.livesbox.AutoSize = True
+        Me.livesbox.BackColor = System.Drawing.Color.Transparent
+        Me.livesbox.Enabled = False
+        Me.livesbox.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.25!)
+        Me.livesbox.ForeColor = System.Drawing.Color.White
+        Me.livesbox.Location = New System.Drawing.Point(1494, 17)
+        Me.livesbox.Name = "livesbox"
+        Me.livesbox.Size = New System.Drawing.Size(32, 36)
+        Me.livesbox.TabIndex = 11
+        Me.livesbox.Text = "h"
+        '
         'Asteroids_Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -159,6 +173,7 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1626, 687)
+        Me.Controls.Add(Me.livesbox)
         Me.Controls.Add(Me.Timer)
         Me.Controls.Add(Me.Zero1)
         Me.Controls.Add(Me.One1)
@@ -192,4 +207,5 @@ Partial Class Asteroids_Game
     Friend WithEvents Zero1 As Label
     Friend WithEvents Countdown As Timer
     Friend WithEvents Timer As Label
+    Friend WithEvents livesbox As Label
 End Class

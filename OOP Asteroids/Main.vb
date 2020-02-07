@@ -125,6 +125,7 @@
             ScoreBox.Hide()
             numberOfAsteroids = (Rnd() * 5) + 10 'random generates 10 to 15 asteroids
             Playeranswer.Text = ""
+            livesbox.Hide()
         Else 'if fun is chosen then hide the timer,question,playeranswer and the textboxes containing characters
             numberOfAsteroids = (Rnd() * 5) + 5 'random generates 5 to 10 asteroids
             Zero1.Hide()
@@ -133,6 +134,7 @@
             One2.Hide()
             Timer.Hide()
             Question.Hide()
+            livesbox.Show()
             Playeranswer.Hide()
         End If
         'populating defaults in Asteroids arrays
@@ -361,6 +363,7 @@
 
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick 'timer that is called every 15 milliseconds
+        livesbox.Text = "Lives: " + lives.ToString
         If lives <= 0 Then 'if the user has run out of lives end the game
             Ending() 'call the subroutine for ending the game
         End If
