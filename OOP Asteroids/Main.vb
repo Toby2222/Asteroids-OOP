@@ -126,6 +126,7 @@
             numberOfAsteroids = (Rnd() * 5) + 10 'random generates 10 to 15 asteroids
             Playeranswer.Text = ""
             livesbox.Hide()
+            Levelbox.Hide()
         Else 'if fun is chosen then hide the timer,question,playeranswer and the textboxes containing characters
             numberOfAsteroids = (Rnd() * 5) + 5 'random generates 5 to 10 asteroids
             Zero1.Hide()
@@ -134,6 +135,7 @@
             One2.Hide()
             Timer.Hide()
             Question.Hide()
+            Levelbox.Show()
             livesbox.Show()
             Playeranswer.Hide()
         End If
@@ -364,6 +366,7 @@
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Tick.Tick 'timer that is called every 15 milliseconds
         livesbox.Text = "Lives: " + lives.ToString
+        Levelbox.Text = "Level: " + level.ToString
         If lives <= 0 Then 'if the user has run out of lives end the game
             Ending() 'call the subroutine for ending the game
         End If
@@ -378,17 +381,19 @@
             End If
             i += 1 'incremement the counter
         Next
-        For Each asteroid In asteroid_array.ToList
-            If asteroid.size = "s" Then
-                allsmall = True
-            Else
+        If GameMenu.gamemode <> "fun" Then
+            For Each asteroid In asteroid_array.ToList
+                If asteroid.size = "s" Then
+                    allsmall = True
+                Else
+                    allsmall = False
+                    Exit For
+                End If
+            Next
+            If allsmall = True Then
                 allsmall = False
-                Exit For
+                ModeLoader()
             End If
-        Next
-        If allsmall = True Then
-            allsmall = False
-            ModeLoader()
         End If
         'declare the labels as unused again
         One1Shown = False
@@ -541,7 +546,7 @@
                 dotproduct = ((ax * bx) + (ay * by))
                 thisone = Math.Acos(dotproduct / (a * b))
                 collideangle += thisone
-                If collideangle >= 1.18 * Math.PI Then 'if the angle is greater than 1.18 * math.pi
+                If collideangle >= (1.05 * Math.PI) Then 'if the angle is greater than 1.18 * math.pi
                     If type = "Ship" Then 'if the collision object is the ship
                         'set the ship location to the centre of the screen
                         mySpaceship.SOx = formwidth / 2

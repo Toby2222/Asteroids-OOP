@@ -26,13 +26,4 @@
             End If
         End If
     End Sub
-
-    Private Sub GameMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Asteroids_Game.formheight = Me.Height
-        Asteroids_Game.formwidth = Me.Width
-        Asteroids_Game.speedFactor = 0.2
-        For i = 0 To 0
-            Asteroids_Game.asteroid = New Asteroids("b", "NewB", "z")
-        Next
-    End Sub
 End Class
