@@ -19,7 +19,7 @@
         innervalue = value
         onScreen = True
         size = asize
-        aSpeed = (Rnd() * (2) + 1) * Asteroids_Game.speedFactor 'random speed variable between 1 and 3
+        aSpeed = (Rnd() * (1) + 0.8) 'random speed variable between 1 and 3
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9
         For i = 1 To numberOfPoints 'loop through the number of points and calculate angles between the points based on the number of points and random numbers
             FixedAngles(i - 1) = Rnd(i * (2 * Math.PI) / numberOfPoints) + (i - 1) * (2 * Math.PI) / numberOfPoints
