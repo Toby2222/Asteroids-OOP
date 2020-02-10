@@ -47,6 +47,6 @@
         Next
     End Sub
     Public Sub fin(i)
-        Asteroids_Game.bullet_array(i).Finalize()
+        Asteroids_Game.bullet_array(i).Finalize() 'finalize the object in the position passed into the subroutine
     End Sub
 End Class

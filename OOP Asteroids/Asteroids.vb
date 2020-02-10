@@ -13,12 +13,12 @@
     Public numberOfPoints As Integer 'integer for number of points in the asteroid
     Public FixedAngles(7) As Double 'array of angles for each asteroid with a maximum of 8 angles
     Public size As String 'variable for the size of the asteroid
-    Public innervalue As Char
+    Public innervalue As Char 'variabe for the inner character displayed on the screen
 #End Region
     Public Sub New(asize, NewOld, value) 'instantiating an asteroid
-        innervalue = value
-        onScreen = True
-        size = asize
+        innervalue = value 'set the inner character to the character passed in
+        onScreen = True 'set the asteroid as onscreen
+        size = asize 'set the size as the size passed in
         aSpeed = (Rnd() * (1) + 0.8) 'random speed variable between 1 and 3
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9
         For i = 1 To numberOfPoints 'loop through the number of points and calculate angles between the points based on the number of points and random numbers
@@ -31,12 +31,12 @@
         Asteroids_Game.AsteroidAngle(Asteroids_Game.asteroid_array.Count - 1) 'call the asteroid angle function to decide where the asteroid should start and the angle it travels at
         For i = 0 To (numberOfPoints) - 1
             Dim rand As Integer
-            If size = "b" Then
+            If size = "b" Then 'if the asteroid is big
                 rand = (Rnd() * 45) + 35 'create a random variable to define the distance from the origin point for the points
-                Asteroidbig = True
+                Asteroidbig = True 'set asteroid big as true
             Else
-                Asteroidbig = False
-                If NewOld = "NewS" Then
+                Asteroidbig = False 'set asteroid big as false
+                If NewOld = "NewS" Then 'if the asteroid was small before, set the starting position to its 'death' point
                     startX = Asteroids_Game.tempAsteroidx
                     startY = Asteroids_Game.tempAsteroidy
                 End If
@@ -49,7 +49,7 @@
         Next
     End Sub
     Public Sub fin(i)
-        Asteroids_Game.asteroid_array(i).Finalize()
+        Asteroids_Game.asteroid_array(i).Finalize() 'finalize the object in the position passed into the subroutine
     End Sub
     Public Sub Update(i)
         'update the origin point of the asteroids
@@ -63,32 +63,25 @@
         Next
         'if off-screen change the variable
         If Asteroids_Game.asteroid_array(i).startX > Asteroids_Game.formwidth Or Asteroids_Game.asteroid_array(i).startX < 0 Then
-            'Console.WriteLine(Asteroids_Game.formwidth)
-            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startX)
-
             Asteroids_Game.asteroid_array(i).onScreen = False
         ElseIf Asteroids_Game.asteroid_array(i).startY > Asteroids_Game.formheight Or Asteroids_Game.asteroid_array(i).startY < 0 Then
-            'Console.WriteLine(Asteroids_Game.formheight)
-            'Console.WriteLine(Asteroids_Game.asteroid_array(i).startY)
-
             Asteroids_Game.asteroid_array(i).onScreen = False
         Else
             Asteroids_Game.asteroid_array(i).onScreen = True
         End If
         'if off-screen remove all the data from the variables and remove the asteroid from the array, and create a new asteroid
         If Asteroids_Game.asteroid_array(i).onScreen = False Then
-            If Asteroids_Game.asteroid_array(i).size = "b" Then
-                Dim temp As Char = Asteroids_Game.asteroid_array(i).innervalue
-                Asteroids_Game.asteroid_array(i).Finalize()
-                Asteroids_Game.asteroid_array.RemoveAt(i)
-                Asteroids_Game.asteroid = New Asteroids("b", "OldB", temp)
-            ElseIf Asteroids_Game.asteroid_array(i).size = "s" Then
-                Dim temp As Char = Asteroids_Game.asteroid_array(i).innervalue
-                fin(i)
-                Asteroids_Game.asteroid_array.RemoveAt(i)
-                Asteroids_Game.asteroid = New Asteroids("s", "OldS", temp)
+            If Asteroids_Game.asteroid_array(i).size = "b" Then 'if asteroid is big
+                Dim temp As Char = Asteroids_Game.asteroid_array(i).innervalue 'store the inner value temporarily
+                fin(i) 'destruct the object
+                Asteroids_Game.asteroid_array.RemoveAt(i) 'remove the object from the array
+                Asteroids_Game.asteroid = New Asteroids("b", "OldB", temp) 'create a new one with the same details and this one 
+            ElseIf Asteroids_Game.asteroid_array(i).size = "s" Then 'if the asteroid is small
+                Dim temp As Char = Asteroids_Game.asteroid_array(i).innervalue 'store the inner value
+                fin(i) 'destruct the object
+                Asteroids_Game.asteroid_array.RemoveAt(i) 'remove the object from the array
+                Asteroids_Game.asteroid = New Asteroids("s", "OldS", temp) 'create new one with the smae details
             End If
         End If
-
     End Sub
 End Class

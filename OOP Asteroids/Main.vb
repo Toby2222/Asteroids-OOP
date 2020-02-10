@@ -17,9 +17,9 @@
     Public tempAsteroidy As Double
     Public destroyed As Integer = 0 'integer for number of small asteroids destroyed
     Public lostasteroids As Integer = -1 'stores the position in the array of the asteroid that needs to be removed from the array
-    Public allsmall As Boolean = False
-    Public allone As Boolean = False
-    Public allzero As Boolean = False
+    Public allsmall As Boolean = False 'boolean used later for checking if all asteroids on screen are small
+    Public allone As Boolean = False 'booelaen for chacking if all inner values are 1
+    Public allzero As Boolean = False 'boolean for checking if all inner values are 0
 
 
     'bullet variables
@@ -382,16 +382,16 @@
             End If
             i += 1 'incremement the counter
         Next
-        If GameMenu.gamemode <> "fun" Then
-            For Each asteroid In asteroid_array.ToList
+        If GameMenu.gamemode <> "fun" Then 'if the game mode is not fun
+            For Each asteroid In asteroid_array.ToList 'go through the asteroids and check if ther are small
                 If asteroid.size = "s" Then
                     allsmall = True
                 Else
                     allsmall = False
-                    Exit For
+                    Exit For 'prevent the reload from occuring when unneeded
                 End If
             Next
-            If allsmall = True Then
+            If allsmall = True Then 'iff all the asteroids are small reser becasue it has become unplayable
                 allsmall = False
                 ModeLoader()
             End If
@@ -609,18 +609,18 @@
                         End If
                         If GameMenu.gamemode = "bincon" Or GameMenu.gamemode = "bincal" Then 'if binary game mode
                             For j = 0 To 3 'loop through all asteroids with a value other than z
-                                For Each asteroid In asteroid_array.ToList
+                                For Each asteroid In asteroid_array.ToList 'for every asteroid check if all the inner characters are the smae
                                     If asteroid.innervalue = "1" Then
                                         allone = True
                                     Else
                                         allone = False
-                                        Exit For
+                                        Exit For 'prevent numbers from changing when unwanted
                                     End If
                                     If asteroid.innervalue = "0" Then
                                         allzero = True
                                     Else
                                         allzero = False
-                                        Exit For
+                                        Exit For 'prevent numbers changing when unwanted
                                     End If
                                 Next
                                 If allone = True Or allzero = True Then
@@ -766,7 +766,10 @@
             Me.Close()
         End If
         If e.KeyCode = Keys.P Then
-            Ending()
+            'Ending()
+            Tick.Stop()
+            LevelTimer.Stop()
+            Countdown.Stop()
         End If
     End Sub
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
