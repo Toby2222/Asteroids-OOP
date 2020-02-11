@@ -24,7 +24,6 @@
     Public Sub update()
         Dim i = 0
         For Each bullet As Bullets In Asteroids_Game.bullet_array
-
             If Asteroids_Game.bullet_array(i).inForm = True Then
                 'back x = front x + cos(angle)*length
                 Asteroids_Game.bullet_array(i).BBx = Asteroids_Game.bullet_array(i).BFx + ((Math.Sin(Asteroids_Game.bullet_array(i).bAngle)) * bLength) 'back x
