@@ -371,7 +371,6 @@
         If lives <= 0 Then 'if the user has run out of lives end the game
             Ending() 'call the subroutine for ending the game
         End If
-        Beep()
         mySpaceship.Update() 'update the ship
 #Region "asteroids"
         Dim i As Integer = 0 'create a counter variable for the for each loop
