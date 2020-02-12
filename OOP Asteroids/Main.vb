@@ -535,17 +535,39 @@
                y < asteroid_array(i).startY + 60 And
                y > asteroid_array(i).startY - 60 Then
                 collideangle = 0  'reset the angle to 0
-                Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double 'define all the temporary variable needed for this collision
-                For j = 0 To asteroid_array(i).numberOfPoints - 2 'loop through the points of the asteroid
-                    ax = Math.Abs(x - asteroid_array(i).xPoints(j)) 'calculate the length of one side between the point being tested and the asteroid point
-                    ay = Math.Abs(y - asteroid_array(i).yPoints(j)) 'calculate the length of the other side
-                    bx = Math.Abs(x - asteroid_array(i).xPoints(j + 1)) 'calculate the length of one side between the point being tested and the next asteroid point
-                    by = Math.Abs(y - asteroid_array(i).yPoints(j + 1)) 'calculate the length of the other side
-                    a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2) 'calculate the length of the hypotenuse
-                    b = Math.Sqrt((bx) ^ 2 + (by) ^ 2) 'calculate the length of the hypotenuse
-                    dotproduct = ((ax * bx) + (ay * by)) 'calculate the dot product of the length
-                    thisone = Math.Acos(dotproduct / (a * b)) 'take the anti cosign of the dot product divided by the two vectors
-                    collideangle += thisone 'add the angle calculated
+                Dim a, b, ax, ay, bx, by, dotproduct, thisone As Double
+                'define all the temporary variable needed for this collision
+
+                For j = 0 To asteroid_array(i).numberOfPoints - 2
+                    'loop through the points of the asteroid
+
+                    ax = Math.Abs(x - asteroid_array(i).xPoints(j))
+                    'calculate the length of one side between the point being tested and the asteroid point
+
+                    ay = Math.Abs(y - asteroid_array(i).yPoints(j))
+                    'calculate the length of the other side
+
+                    bx = Math.Abs(x - asteroid_array(i).xPoints(j + 1))
+                    'calculate the length of one side between the point being tested and the next asteroid point
+
+                    by = Math.Abs(y - asteroid_array(i).yPoints(j + 1))
+                    'calculate the length of the other side
+
+                    a = Math.Sqrt((ax) ^ 2 + (ay) ^ 2)
+                    'calculate the length of the hypotenuse
+
+                    b = Math.Sqrt((bx) ^ 2 + (by) ^ 2)
+                    'calculate the length of the hypotenuse
+
+                    dotproduct = ((ax * bx) + (ay * by))
+                    'calculate the dot product of the length
+
+                    thisone = Math.Acos(dotproduct / (a * b))
+                    'take the anti cosign of the dot product divided by the two vectors
+
+                    collideangle += thisone
+                    'add the angle calculated
+
                 Next
                 'same calculation for the last and first point
                 ax = (x - asteroid_array(i).xPoints(asteroid_array(i).numberOfPoints - 1))
