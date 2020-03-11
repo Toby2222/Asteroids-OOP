@@ -199,7 +199,7 @@ Partial Class Asteroids_Game
         Me.FinalScoreBox.AutoSize = True
         Me.FinalScoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FinalScoreBox.ForeColor = System.Drawing.Color.Blue
-        Me.FinalScoreBox.Location = New System.Drawing.Point(760, 327)
+        Me.FinalScoreBox.Location = New System.Drawing.Point(720, 327)
         Me.FinalScoreBox.Name = "FinalScoreBox"
         Me.FinalScoreBox.Size = New System.Drawing.Size(107, 33)
         Me.FinalScoreBox.TabIndex = 14

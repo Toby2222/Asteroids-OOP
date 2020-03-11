@@ -664,7 +664,7 @@
                                             asteroid.innervalue = "0"
                                         End If
                                     Else
-                                        If AnswerSubstringCounter <= answer.Length Then 'if the counter is not greater than the length
+                                        If AnswerSubstringCounter < answer.Length Then 'if the counter is not greater than the length
                                             asteroid_array(j).innervalue = answer.Substring(AnswerSubstringCounter, 1) 'make the inner value equal to  a part of the answer
                                             AnswerSubstringCounter += 1 'increment counter
                                         End If
@@ -677,7 +677,7 @@
                                 If Rnd() * 2 = 1 Then
                                     asteroid_array(j).innervalue = Hex(Rnd() * 16)
                                 Else
-                                    If AnswerSubstringCounter <= answer.Length Then 'if the counter is not greater than the length
+                                    If AnswerSubstringCounter < answer.Length Then 'if the counter is not greater than the length
                                         asteroid_array(j).innervalue = answer.Substring(AnswerSubstringCounter, 1) 'make the inner value equal to  a part of the answer
                                         AnswerSubstringCounter += 1 'increment counter
                                     End If
@@ -689,7 +689,7 @@
                                 If Rnd() * 2 = 1 Then
                                     asteroid_array(j).innervalue = Oct(Rnd() * 16)
                                 Else
-                                    If AnswerSubstringCounter <= answer.Length Then 'if the counter is not greater than the length
+                                    If AnswerSubstringCounter < answer.Length Then 'if the counter is not greater than the length
                                         asteroid_array(j).innervalue = answer.Substring(AnswerSubstringCounter, 1) 'make the inner value equal to  a part of the answer
                                         AnswerSubstringCounter += 1 'increment counter
                                     End If
