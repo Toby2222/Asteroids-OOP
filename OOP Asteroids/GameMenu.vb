@@ -1,5 +1,7 @@
 ﻿Public Class GameMenu
     Public gamemode As String
+
+
     Private Sub PlayButton_Click(sender As Object, e As EventArgs) Handles PlayButton.Click
         If GamemodeBox.Text IsNot Nothing Then
             If GamemodeBox.Text = "Binary Conversions" Then
@@ -25,5 +27,9 @@
                 Asteroids_Game.Show()
             End If
         End If
+    End Sub
+
+    Private Sub GameMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        GamemodeBox.SelectedText = "--select--"
     End Sub
 End Class

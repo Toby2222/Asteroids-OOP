@@ -49,12 +49,14 @@ Partial Class GameMenu
         'GamemodeBox
         '
         Me.GamemodeBox.AllowDrop = True
+        Me.GamemodeBox.BackColor = System.Drawing.Color.White
         Me.GamemodeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.GamemodeBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.25!)
         Me.GamemodeBox.FormattingEnabled = True
         Me.GamemodeBox.Items.AddRange(New Object() {"Binary Conversions", "Binary Calculations", "Hexadecimal Conversions", "Hexadecimal Calculations", "Octal Conversions", "Octal Calculations", "Fun (Non-Educational)"})
         Me.GamemodeBox.Location = New System.Drawing.Point(387, 169)
         Me.GamemodeBox.Name = "GamemodeBox"
+        Me.GamemodeBox.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.GamemodeBox.Size = New System.Drawing.Size(296, 30)
         Me.GamemodeBox.TabIndex = 1
         '
@@ -159,6 +161,8 @@ Partial Class GameMenu
         Me.Controls.Add(Me.Label1)
         Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximumSize = New System.Drawing.Size(1086, 394)
+        Me.MinimumSize = New System.Drawing.Size(1086, 394)
         Me.Name = "GameMenu"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Asteroids Menu"
