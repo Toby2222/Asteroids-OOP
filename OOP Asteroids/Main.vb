@@ -122,6 +122,9 @@
         formheight = Me.Height
         abovecentre = New Point(Me.Width / 2 - 150, Me.Height / 2 - 25)
         belowcentre = New Point(Me.Width / 2 - 150, Me.Height / 2 + 25)
+        GameoverBox.Hide()
+        FinalScoreBox.Hide()
+        FinalInstructionBox.Hide()
         If GameMenu.gamemode <> "fun" Then
             ScoreBox.Hide()
             numberOfAsteroids = (Rnd() * 5) + 10 'random generates 10 to 15 asteroids
@@ -829,15 +832,17 @@
         Invalidate()
         ScoreBox.Hide()
         Timer.Hide()
-        Playeranswer.Show()
-        Playeranswer.Text = "Game Over"
-        Playeranswer.Location = (abovecentre)
-        Question.Show()
-        Question.Text = "Your Score: " + score.ToString
-        Question.Location = (belowcentre)
+        Levelbox.Hide()
+        livesbox.Hide()
+        Playeranswer.Hide()
+        Question.Hide()
         Countdown.Stop()
         Tick.Stop()
         LevelTimer.Stop()
+        GameoverBox.Show()
+        FinalScoreBox.Show()
+        FinalInstructionBox.Show()
+        FinalScoreBox.Text = "Score: " + score.ToString
     End Sub
     Private Sub Countdown_Tick(sender As Object, e As EventArgs) Handles Countdown.Tick
         If timeleft > 0 Then

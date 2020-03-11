@@ -194,7 +194,9 @@ Partial Class GameMenu
         Me.Controls.Add(Me.Label1)
         Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(1086, 394)
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(1086, 394)
         Me.Name = "GameMenu"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
