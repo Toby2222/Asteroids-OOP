@@ -454,7 +454,7 @@
                 PlayerAnswerVariable = ""
                 Playeranswer.Text = PlayerAnswerVariable
             ElseIf AnswerCheck() = True And PlayerAnswerVariable.Length = answer.Length Then 'if the function returns true and the length of the answer is correct add to the score and generate a new question
-                score += 500
+                score += 1000
                 level += 1
                 ModeLoader() 'reload the mode
                 Questions() 'generate a new question

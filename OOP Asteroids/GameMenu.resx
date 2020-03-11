@@ -120,7 +120,7 @@
   <data name="EducationalInstructions.Text" xml:space="preserve">
     <value>- Big asteroid = 10 points
 - Small asteroid = 25 points
-- Correct answer = 500 points
+- Correct answer = 1000 points
 - Shoot the asteroids to build up the answer string from right to left
 - Unlimited lives
 - Level up every three questions until max level is reached
