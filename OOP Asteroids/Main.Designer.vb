@@ -36,6 +36,9 @@ Partial Class Asteroids_Game
         Me.Timer = New System.Windows.Forms.Label()
         Me.livesbox = New System.Windows.Forms.Label()
         Me.Levelbox = New System.Windows.Forms.Label()
+        Me.GameoverBox = New System.Windows.Forms.Label()
+        Me.FinalScoreBox = New System.Windows.Forms.Label()
+        Me.FinalInstructionBox = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Tick
@@ -180,6 +183,39 @@ Partial Class Asteroids_Game
         Me.Levelbox.TabIndex = 12
         Me.Levelbox.Text = "h"
         '
+        'GameoverBox
+        '
+        Me.GameoverBox.AutoSize = True
+        Me.GameoverBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GameoverBox.ForeColor = System.Drawing.Color.Red
+        Me.GameoverBox.Location = New System.Drawing.Point(689, 266)
+        Me.GameoverBox.Name = "GameoverBox"
+        Me.GameoverBox.Size = New System.Drawing.Size(249, 55)
+        Me.GameoverBox.TabIndex = 13
+        Me.GameoverBox.Text = "Gameover"
+        '
+        'FinalScoreBox
+        '
+        Me.FinalScoreBox.AutoSize = True
+        Me.FinalScoreBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FinalScoreBox.ForeColor = System.Drawing.Color.Blue
+        Me.FinalScoreBox.Location = New System.Drawing.Point(760, 327)
+        Me.FinalScoreBox.Name = "FinalScoreBox"
+        Me.FinalScoreBox.Size = New System.Drawing.Size(107, 33)
+        Me.FinalScoreBox.TabIndex = 14
+        Me.FinalScoreBox.Text = "Score: "
+        '
+        'FinalInstructionBox
+        '
+        Me.FinalInstructionBox.AutoSize = True
+        Me.FinalInstructionBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FinalInstructionBox.ForeColor = System.Drawing.Color.White
+        Me.FinalInstructionBox.Location = New System.Drawing.Point(625, 387)
+        Me.FinalInstructionBox.Name = "FinalInstructionBox"
+        Me.FinalInstructionBox.Size = New System.Drawing.Size(376, 33)
+        Me.FinalInstructionBox.TabIndex = 15
+        Me.FinalInstructionBox.Text = "Press Esc to return to menu"
+        '
         'Asteroids_Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -187,6 +223,9 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1626, 687)
+        Me.Controls.Add(Me.FinalInstructionBox)
+        Me.Controls.Add(Me.FinalScoreBox)
+        Me.Controls.Add(Me.GameoverBox)
         Me.Controls.Add(Me.Levelbox)
         Me.Controls.Add(Me.livesbox)
         Me.Controls.Add(Me.Timer)
@@ -224,4 +263,7 @@ Partial Class Asteroids_Game
     Friend WithEvents Timer As Label
     Friend WithEvents livesbox As Label
     Friend WithEvents Levelbox As Label
+    Friend WithEvents GameoverBox As Label
+    Friend WithEvents FinalScoreBox As Label
+    Friend WithEvents FinalInstructionBox As Label
 End Class
