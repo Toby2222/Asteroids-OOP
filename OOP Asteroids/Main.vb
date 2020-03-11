@@ -449,7 +449,7 @@
             j += 1 'increment the counter
         Next
 #End Region
-        If PlayerAnswerVariable <> "" Then 'if there is an answer check it
+        If PlayerAnswerVariable <> "" And answer <> "" Then 'if there is an answer check it
             If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
                 PlayerAnswerVariable = ""
                 Playeranswer.Text = PlayerAnswerVariable
@@ -599,7 +599,7 @@
                             tempAsteroidx = asteroid_array(i).startX
                             tempAsteroidy = asteroid_array(i).startY
                             Dim temp As Char = asteroid_array(i).innervalue 'save the inner value of the asteroid
-                            If temp <> "z" Then 'if the value is not z hide all labels
+                            If temp = "z" Then 'if the value is not z hide all labels
                                 Zero1.Hide()
                                 One1.Hide()
                                 Zero2.Hide()
@@ -628,6 +628,21 @@
                             score += 25 'increment score by 25
                             ScoreBox.Text = "Score: " + score.ToString 'display new score
                             lostasteroids = i 'register the current asteroid as destroy to be removed
+                            Dim temp As Char = asteroid_array(i).innervalue 'save the inner value of the asteroid
+                            If temp = "z" Then 'if the value is not z hide all labels
+                                Zero1.Hide()
+                                One1.Hide()
+                                Zero2.Hide()
+                                One2.Hide()
+                                PlayerAnswerVariable = temp.ToString + PlayerAnswerVariable 'add the value to their answer and display
+                                Playeranswer.Text = PlayerAnswerVariable
+                                For Each asteroid In asteroid_array 'for every asteroid
+                                    If asteroid.size = "b" And asteroid.innervalue = "z" Then 'If The inner value Is z keep the inner value of the new asteroid as z
+                                        asteroid.innervalue = temp
+                                        Exit For
+                                    End If
+                                Next
+                            End If
                         End If
                         If GameMenu.gamemode = "bincon" Or GameMenu.gamemode = "bincal" Then 'if binary game mode
                             For j = 0 To 3 'loop through all asteroids with a value other than z
