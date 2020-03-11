@@ -390,7 +390,7 @@
                     Exit For 'prevent the reload from occuring when unneeded
                 End If
             Next
-            If allsmall = True Then 'iff all the asteroids are small reser becasue it has become unplayable
+            If allsmall = True Then 'if all the asteroids are small reser becasue it has become unplayable
                 allsmall = False
                 ModeLoader()
             End If
@@ -449,7 +449,7 @@
             j += 1 'increment the counter
         Next
 #End Region
-        If PlayerAnswerVariable <> "" And answer <> "" Then 'if there is an answer check it
+        If PlayerAnswerVariable <> "" Then 'if there is an answer check it
             If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
                 PlayerAnswerVariable = ""
                 Playeranswer.Text = PlayerAnswerVariable
@@ -499,11 +499,13 @@
         End If
     End Sub
     Public Function AnswerCheck()
-        'if the string being built up by the user is equal to that part of the answer then return true, else return false
-        If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
-            Return True
-        Else
-            Return False
+        If answer <> "" Then
+            'if the string being built up by the user is equal to that part of the answer then return true, else return false
+            If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
+                Return True
+            Else
+                Return False
+            End If
         End If
     End Function
     Public Sub collides() 'function for collisions
@@ -599,20 +601,20 @@
                             tempAsteroidx = asteroid_array(i).startX
                             tempAsteroidy = asteroid_array(i).startY
                             Dim temp As Char = asteroid_array(i).innervalue 'save the inner value of the asteroid
-                            If temp = "z" Then 'if the value is not z hide all labels
-                                Zero1.Hide()
-                                One1.Hide()
-                                Zero2.Hide()
-                                One2.Hide()
+                            If temp <> "z" Then 'if the value is not z add the digit to the answer
                                 PlayerAnswerVariable = temp.ToString + PlayerAnswerVariable 'add the value to their answer and display
                                 Playeranswer.Text = PlayerAnswerVariable
-                                For Each asteroid In asteroid_array 'for every asteroid
-                                    If asteroid.size = "b" And asteroid.innervalue = "z" Then 'If The inner value Is z keep the inner value of the new asteroid as z
-                                        asteroid.innervalue = temp
-                                        Exit For
-                                    End If
-                                Next
                             End If
+                            Zero1.Hide()
+                            One1.Hide()
+                            Zero2.Hide()
+                            One2.Hide()
+                            For j = 0 To asteroid_array.Count - 1
+                                If asteroid_array(j).innervalue = "z" Then
+                                    asteroid_array(j).innervalue = temp
+                                    Exit For
+                                End If
+                            Next
                             asteroid.fin(i)
                             asteroid_array.RemoveAt(i)
                             If GameMenu.gamemode = "fun" Then 'if the game mode is fun generate four new small asteroid
@@ -628,21 +630,10 @@
                             score += 25 'increment score by 25
                             ScoreBox.Text = "Score: " + score.ToString 'display new score
                             lostasteroids = i 'register the current asteroid as destroy to be removed
-                            Dim temp As Char = asteroid_array(i).innervalue 'save the inner value of the asteroid
-                            If temp = "z" Then 'if the value is not z hide all labels
-                                Zero1.Hide()
-                                One1.Hide()
-                                Zero2.Hide()
-                                One2.Hide()
-                                PlayerAnswerVariable = temp.ToString + PlayerAnswerVariable 'add the value to their answer and display
-                                Playeranswer.Text = PlayerAnswerVariable
-                                For Each asteroid In asteroid_array 'for every asteroid
-                                    If asteroid.size = "b" And asteroid.innervalue = "z" Then 'If The inner value Is z keep the inner value of the new asteroid as z
-                                        asteroid.innervalue = temp
-                                        Exit For
-                                    End If
-                                Next
-                            End If
+                            Zero1.Hide()
+                            One1.Hide()
+                            Zero2.Hide()
+                            One2.Hide()
                         End If
                         If GameMenu.gamemode = "bincon" Or GameMenu.gamemode = "bincal" Then 'if binary game mode
                             For j = 0 To 3 'loop through all asteroids with a value other than z
@@ -807,6 +798,12 @@
             Tick.Stop()
             LevelTimer.Stop()
             Countdown.Stop()
+        End If
+        If e.KeyCode = Keys.S Then
+            'Ending()
+            Tick.Start()
+            LevelTimer.Start()
+            Countdown.Start()
         End If
     End Sub
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
