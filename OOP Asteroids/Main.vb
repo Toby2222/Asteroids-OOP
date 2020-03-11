@@ -799,7 +799,7 @@
             LevelTimer.Stop()
             Countdown.Stop()
         End If
-        If e.KeyCode = Keys.S Then
+        If e.KeyCode = Keys.U Then
             'Ending()
             Tick.Start()
             LevelTimer.Start()

@@ -121,7 +121,7 @@
     <value>- Big asteroid = 10 points
 - Small asteroid = 25 points
 - Correct answer = 1000 points
-- Shoot the asteroids to build up the answer string from right to left
+- Shoot the asteroids to fill in the answer boxes left to right
 - Unlimited lives
 - Level up every three questions until max level is reached
 - The higher the level the harder the questions</value>
