@@ -39,10 +39,10 @@
         'define delta angles (rate of change of angle)
         SOad = 0    'ship origin delta angle
         SOsd = 0    'ship origin delta speed
-        dsmax = 4    'maximum delta speed
+        dsmax = 5.5    'maximum delta speed
 
         'define drag variables of ship
-        sdrag = 0.07    'speed drag
+        sdrag = 0.04    'speed drag
 
     End Sub
     Public Sub Update()
@@ -64,20 +64,18 @@
         If Asteroids_Game.mySpaceship.SOsd > 0 Then
             Asteroids_Game.mySpaceship.SOsd -= Asteroids_Game.mySpaceship.sdrag
         End If
-        'update the angle of the ship
-        Asteroids_Game.mySpaceship.SOa += Asteroids_Game.mySpaceship.SOad
         'when the ship leaves the form appear on the opposite side
-        If Asteroids_Game.mySpaceship.SOx < 0 Then
-            Asteroids_Game.mySpaceship.SOx = Asteroids_Game.formwidth
+        If Asteroids_Game.mySpaceship.SOx < 6 Then
+            Asteroids_Game.mySpaceship.SOx = Asteroids_Game.formwidth - 6
         End If
-        If Asteroids_Game.mySpaceship.SOy < 0 Then
-            Asteroids_Game.mySpaceship.SOy = Asteroids_Game.formheight
+        If Asteroids_Game.mySpaceship.SOy < 6 Then
+            Asteroids_Game.mySpaceship.SOy = Asteroids_Game.formheight - 6
         End If
-        If Asteroids_Game.mySpaceship.SOx > Asteroids_Game.formwidth Then
-            Asteroids_Game.mySpaceship.SOx = 0
+        If Asteroids_Game.mySpaceship.SOx > Asteroids_Game.formwidth - 6 Then
+            Asteroids_Game.mySpaceship.SOx = 6
         End If
-        If Asteroids_Game.mySpaceship.SOy > Asteroids_Game.formheight Then
-            Asteroids_Game.mySpaceship.SOy = 0
+        If Asteroids_Game.mySpaceship.SOy > Asteroids_Game.formheight - 6 Then
+            Asteroids_Game.mySpaceship.SOy = 6
         End If
     End Sub
 End Class

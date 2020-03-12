@@ -273,7 +273,6 @@
             ElseIf questionType = 1 Then
                 Question.Text = "Convert this binary number into a hex number: " + binaryconvert(questionrandom, 8)
                 answer = Hex(Int(binaryconvert(questionrandom, 8)))
-
             ElseIf questionType = 2 Then
                 Question.Text = "Convert this octal number into a hex number: " + Oct(questionrandom).ToString
                 answer = Hex(Oct(questionrandom))
