@@ -54,11 +54,11 @@
     Public Zero2Shown As Boolean = False
     Public timeleft As Double = 600 'Total number of seconds of the educational modes before game ends
     Public iSpan As TimeSpan = TimeSpan.FromSeconds(timeleft) 'used to represent the 600 seconds as minutes and seconds
-    'declare the points that represent where the gameover screen will position
-    Public abovecentre As Point
-    Public belowcentre As Point
+
+
     Public offscreen As New Point(-1000, -1000)
     Public AnswerSubstringCounter As Integer = 0
+    Public turnangle As Double = 0.1
 
     Public testingspace As Integer = 0 'variable deciding the length of time before the screen returns to black after a collision
 
@@ -120,8 +120,6 @@
 
         'finds the starting size of the form
         formheight = Me.Height
-        abovecentre = New Point(Me.Width / 2 - 150, Me.Height / 2 - 25)
-        belowcentre = New Point(Me.Width / 2 - 150, Me.Height / 2 + 25)
         GameoverBox.Hide()
         FinalScoreBox.Hide()
         FinalInstructionBox.Hide()
@@ -406,12 +404,15 @@
 #End Region
 #Region "Key Press"
         If right = True Then
-            'prevent ship turning to fast
-            mySpaceship.SOa += 0.1
+            mySpaceship.SOa += turnangle
+            turnangle -= 0.0001
         End If
         If left = True Then
-            'prevent ship turning to fast
-            mySpaceship.SOa -= 0.1
+            mySpaceship.SOa -= turnangle
+            turnangle -= 0.0001
+        End If
+        If right = False And left = False Then
+            turnangle = 0.1
         End If
         If up = True Then
             If right = True Or left = True Then
