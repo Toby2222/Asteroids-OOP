@@ -100,12 +100,6 @@
         'numberOfAsteroids numbers
         Randomize()
         Tick.Start()
-        Dim i As Integer = 0 'create a counter
-        For Each asteroid In asteroid_array 'destroy all the asteroids
-            asteroid.fin(i)
-            i += 1
-        Next
-        asteroid_array.Clear() 'clear the array
         'put the formatting for the timer into the text box
         Timer.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
                         iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
