@@ -454,16 +454,22 @@
             j += 1 'increment the counter
         Next
 #End Region
+        If PlayerAnswerVariable.Length > answer.Length Then
+            Playeranswer.Text = ""
+            PlayerAnswerVariable = ""
+            ModeLoader()
+            Questions()
+        End If
         If PlayerAnswerVariable <> "" Then 'if there is an answer check it
             If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
                 Playeranswer.Text = answer
                 correctanswerpause += 1
                 If correctanswerpause >= 100 Then
                     correctanswerpause = 0
-                    ModeLoader()
-                    Questions()
                     Playeranswer.Text = ""
                     PlayerAnswerVariable = ""
+                    ModeLoader()
+                    Questions()
                 End If
             ElseIf AnswerCheck() = True And PlayerAnswerVariable.Length = answer.Length Then 'if the function returns true and the length of the answer is correct add to the score and generate a new question
                 score += 1000
@@ -658,13 +664,13 @@
                         If GameMenu.gamemode = "bincon" Or GameMenu.gamemode = "bincal" Then 'if binary game mode
                             For j = 0 To 3 'loop through all asteroids with a value other than z
                                 For Each asteroid In asteroid_array.ToList 'for every asteroid check if all the inner characters are the smae
-                                    If asteroid.innervalue = "1" Then
+                                    If asteroid.innervalue = "1" Or asteroid.innervalue = "z" Then
                                         allone = True
                                     Else
                                         allone = False
                                         Exit For 'prevent numbers from changing when unwanted
                                     End If
-                                    If asteroid.innervalue = "0" Then
+                                    If asteroid.innervalue = "0" Or asteroid.innervalue = "z" Then
                                         allzero = True
                                     Else
                                         allzero = False
