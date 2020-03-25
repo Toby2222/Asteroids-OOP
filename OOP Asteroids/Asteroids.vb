@@ -17,7 +17,7 @@
 #End Region
     Public Sub New(asize, NewOld, value) 'instantiating an asteroid
         innervalue = value 'set the inner character to the character passed in
-        onScreen = True 'set the asteroid as onscreen
+        onScreen = True 'set the asteroid as on screen
         size = asize 'set the size as the size passed in
         aSpeed = (Rnd() * (1) + 0.8) 'random speed variable between 1 and 3
         numberOfPoints = Int(Rnd() * (4)) + 5 'random number of points between 5 and 9

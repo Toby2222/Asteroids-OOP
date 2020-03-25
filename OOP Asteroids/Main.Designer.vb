@@ -96,10 +96,9 @@ Partial Class Asteroids_Game
         Me.Playeranswer.ForeColor = System.Drawing.Color.Red
         Me.Playeranswer.Location = New System.Drawing.Point(19, 56)
         Me.Playeranswer.Name = "Playeranswer"
-        Me.Playeranswer.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.Playeranswer.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Playeranswer.Size = New System.Drawing.Size(0, 44)
         Me.Playeranswer.TabIndex = 6
-        Me.Playeranswer.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'One2
         '

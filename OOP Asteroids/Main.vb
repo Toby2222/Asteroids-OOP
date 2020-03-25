@@ -46,6 +46,7 @@
     Public multiplicationfactor As Integer
     Public questionrandom As Integer 'stores the random number used in the questions
     Public questionType As Integer 'stores the number representing the type of question being generated
+    Public correctanswerpause As Integer = 0
 
     'booleans for deciding which label to use for storing the characters
     Public One1Shown As Boolean = False
@@ -264,10 +265,10 @@
                 answer = Hex(questionrandom)
             ElseIf questionType = 1 Then
                 Question.Text = "Convert this binary number into a hex number: " + binaryconvert(questionrandom, 8)
-                answer = Hex(Int(binaryconvert(questionrandom, 8)))
+                answer = Hex(questionrandom)
             ElseIf questionType = 2 Then
                 Question.Text = "Convert this octal number into a hex number: " + Oct(questionrandom).ToString
-                answer = Hex(Oct(questionrandom))
+                answer = Hex(questionrandom)
 
             End If
 #End Region
@@ -298,11 +299,11 @@
                 answer = Oct(questionrandom)
             ElseIf questionType = 1 Then
                 Question.Text = "Convert this binary number into an octal number: " + binaryconvert(questionrandom, 8)
-                answer = Oct(Int(binaryconvert(questionrandom, 8)))
+                answer = Oct(questionrandom)
 
             ElseIf questionType = 2 Then
                 Question.Text = "Convert this hex number into an octal number: " + Hex(questionrandom).ToString
-                answer = Oct(Hex(questionrandom))
+                answer = Oct(questionrandom)
 
             End If
 #End Region
@@ -325,6 +326,13 @@
                 Question.Text = "Multiply these octal numbers: " + Oct(questionrandom) + " X " + Oct(multiplicationfactor)
             End If
 #End Region
+        End If
+        If GameMenu.gamemode <> "fun" Then
+
+            For i = 0 To answer.Length - 1
+                Playeranswer.Text += " _ "
+            Next
+            'Playeranswer.Text = answer
         End If
     End Sub
     Public Sub AsteroidCharacters(x, i)
@@ -376,15 +384,15 @@
             i += 1 'incremement the counter
         Next
         If GameMenu.gamemode <> "fun" Then 'if the game mode is not fun
-            For Each asteroid In asteroid_array.ToList 'go through the asteroids and check if ther are small
+            For Each asteroid In asteroid_array.ToList 'go through the asteroids and check if there are small
                 If asteroid.size = "s" Then
                     allsmall = True
                 Else
                     allsmall = False
-                    Exit For 'prevent the reload from occuring when unneeded
+                    Exit For 'prevent the reload from occurring when unneeded
                 End If
             Next
-            If allsmall = True Then 'if all the asteroids are small reser becasue it has become unplayable
+            If allsmall = True Then 'if all the asteroids are small reset because it has become unplayable
                 allsmall = False
                 ModeLoader()
             End If
@@ -448,11 +456,20 @@
 #End Region
         If PlayerAnswerVariable <> "" Then 'if there is an answer check it
             If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
-                PlayerAnswerVariable = ""
-                Playeranswer.Text = PlayerAnswerVariable
+                Playeranswer.Text = answer
+                correctanswerpause += 1
+                If correctanswerpause >= 100 Then
+                    correctanswerpause = 0
+                    ModeLoader()
+                    Questions()
+                    Playeranswer.Text = ""
+                    PlayerAnswerVariable = ""
+                End If
             ElseIf AnswerCheck() = True And PlayerAnswerVariable.Length = answer.Length Then 'if the function returns true and the length of the answer is correct add to the score and generate a new question
                 score += 1000
                 level += 1
+                Playeranswer.Text = ""
+                PlayerAnswerVariable = ""
                 ModeLoader() 'reload the mode
                 Questions() 'generate a new question
             End If
@@ -498,7 +515,7 @@
     Public Function AnswerCheck()
         If answer <> "" Then
             'if the string being built up by the user is equal to that part of the answer then return true, else return false
-            If PlayerAnswerVariable = answer.Substring(answer.Length - PlayerAnswerVariable.Length, PlayerAnswerVariable.Length) Then
+            If PlayerAnswerVariable = answer.Substring(0, PlayerAnswerVariable.Length) Then
                 Return True
             Else
                 Return False
@@ -506,9 +523,12 @@
         End If
     End Function
     Public Sub collides() 'function for collisions
-        angleFunc(mySpaceship.SFx, mySpaceship.SFy, "Ship", 2) 'function for detecting collisions between the front of the ship and the asteroid
-        angleFunc(mySpaceship.SLx, mySpaceship.SLy, "Ship", 2) 'detect the left point of the ship
-        angleFunc(mySpaceship.SRx, mySpaceship.SRy, "Ship", 2) 'detect the right point of the ship
+        If GameMenu.gamemode = "fun" Then
+
+            angleFunc(mySpaceship.SFx, mySpaceship.SFy, "Ship", 2) 'function for detecting collisions between the front of the ship and the asteroid
+            angleFunc(mySpaceship.SLx, mySpaceship.SLy, "Ship", 2) 'detect the left point of the ship
+            angleFunc(mySpaceship.SRx, mySpaceship.SRy, "Ship", 2) 'detect the right point of the ship
+        End If
         For i = 0 To bullet_array.Count - 1 'for loop to go through all the bullets
             If bullet_array(i).inForm = True Then 'if the bullet is on screen then check for collisions
                 If angleFunc(bullet_array(i).BFx, bullet_array(i).BFy, "Bull", i) = "hit" Then 'if the bullet has registered a hit on a ship
@@ -599,8 +619,11 @@
                             tempAsteroidy = asteroid_array(i).startY
                             Dim temp As Char = asteroid_array(i).innervalue 'save the inner value of the asteroid
                             If temp <> "z" Then 'if the value is not z add the digit to the answer
-                                PlayerAnswerVariable = temp.ToString + PlayerAnswerVariable 'add the value to their answer and display
+                                PlayerAnswerVariable = PlayerAnswerVariable + temp.ToString  'add the value to their answer and display
                                 Playeranswer.Text = PlayerAnswerVariable
+                                For k = 0 To (answer.Length - 1) - PlayerAnswerVariable.Length
+                                    Playeranswer.Text += " _ "
+                                Next
                             End If
                             Zero1.Hide()
                             One1.Hide()
