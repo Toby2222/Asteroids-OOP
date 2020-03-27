@@ -221,36 +221,36 @@ Partial Class Asteroids_Game
         '
         'uparrow
         '
-        Me.uparrow.Location = New System.Drawing.Point(1342, 510)
+        Me.uparrow.Location = New System.Drawing.Point(1309, 481)
         Me.uparrow.Name = "uparrow"
-        Me.uparrow.Size = New System.Drawing.Size(49, 47)
+        Me.uparrow.Size = New System.Drawing.Size(82, 76)
         Me.uparrow.TabIndex = 16
         Me.uparrow.Text = "UP"
         Me.uparrow.UseVisualStyleBackColor = True
         '
         'leftarrow
         '
-        Me.leftarrow.Location = New System.Drawing.Point(1291, 571)
+        Me.leftarrow.Location = New System.Drawing.Point(1236, 559)
         Me.leftarrow.Name = "leftarrow"
-        Me.leftarrow.Size = New System.Drawing.Size(49, 47)
+        Me.leftarrow.Size = New System.Drawing.Size(84, 75)
         Me.leftarrow.TabIndex = 17
         Me.leftarrow.Text = "LEFT"
         Me.leftarrow.UseVisualStyleBackColor = True
         '
         'rightarrow
         '
-        Me.rightarrow.Location = New System.Drawing.Point(1399, 571)
+        Me.rightarrow.Location = New System.Drawing.Point(1386, 559)
         Me.rightarrow.Name = "rightarrow"
-        Me.rightarrow.Size = New System.Drawing.Size(49, 47)
+        Me.rightarrow.Size = New System.Drawing.Size(90, 75)
         Me.rightarrow.TabIndex = 18
         Me.rightarrow.Text = "RIGHT"
         Me.rightarrow.UseVisualStyleBackColor = True
         '
         'shootkey
         '
-        Me.shootkey.Location = New System.Drawing.Point(27, 548)
+        Me.shootkey.Location = New System.Drawing.Point(27, 555)
         Me.shootkey.Name = "shootkey"
-        Me.shootkey.Size = New System.Drawing.Size(65, 47)
+        Me.shootkey.Size = New System.Drawing.Size(104, 79)
         Me.shootkey.TabIndex = 19
         Me.shootkey.Text = "SHOOT"
         Me.shootkey.UseVisualStyleBackColor = True
