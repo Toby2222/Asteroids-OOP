@@ -39,6 +39,10 @@ Partial Class Asteroids_Game
         Me.GameoverBox = New System.Windows.Forms.Label()
         Me.FinalScoreBox = New System.Windows.Forms.Label()
         Me.FinalInstructionBox = New System.Windows.Forms.Label()
+        Me.uparrow = New System.Windows.Forms.Button()
+        Me.leftarrow = New System.Windows.Forms.Button()
+        Me.rightarrow = New System.Windows.Forms.Button()
+        Me.shootkey = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Tick
@@ -215,6 +219,42 @@ Partial Class Asteroids_Game
         Me.FinalInstructionBox.TabIndex = 15
         Me.FinalInstructionBox.Text = "Press Esc to return to menu"
         '
+        'uparrow
+        '
+        Me.uparrow.Location = New System.Drawing.Point(1342, 510)
+        Me.uparrow.Name = "uparrow"
+        Me.uparrow.Size = New System.Drawing.Size(49, 47)
+        Me.uparrow.TabIndex = 16
+        Me.uparrow.Text = "UP"
+        Me.uparrow.UseVisualStyleBackColor = True
+        '
+        'leftarrow
+        '
+        Me.leftarrow.Location = New System.Drawing.Point(1291, 571)
+        Me.leftarrow.Name = "leftarrow"
+        Me.leftarrow.Size = New System.Drawing.Size(49, 47)
+        Me.leftarrow.TabIndex = 17
+        Me.leftarrow.Text = "LEFT"
+        Me.leftarrow.UseVisualStyleBackColor = True
+        '
+        'rightarrow
+        '
+        Me.rightarrow.Location = New System.Drawing.Point(1399, 571)
+        Me.rightarrow.Name = "rightarrow"
+        Me.rightarrow.Size = New System.Drawing.Size(49, 47)
+        Me.rightarrow.TabIndex = 18
+        Me.rightarrow.Text = "RIGHT"
+        Me.rightarrow.UseVisualStyleBackColor = True
+        '
+        'shootkey
+        '
+        Me.shootkey.Location = New System.Drawing.Point(27, 548)
+        Me.shootkey.Name = "shootkey"
+        Me.shootkey.Size = New System.Drawing.Size(65, 47)
+        Me.shootkey.TabIndex = 19
+        Me.shootkey.Text = "SHOOT"
+        Me.shootkey.UseVisualStyleBackColor = True
+        '
         'Asteroids_Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -222,6 +262,10 @@ Partial Class Asteroids_Game
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1626, 687)
+        Me.Controls.Add(Me.shootkey)
+        Me.Controls.Add(Me.rightarrow)
+        Me.Controls.Add(Me.leftarrow)
+        Me.Controls.Add(Me.uparrow)
         Me.Controls.Add(Me.FinalInstructionBox)
         Me.Controls.Add(Me.FinalScoreBox)
         Me.Controls.Add(Me.GameoverBox)
@@ -265,4 +309,8 @@ Partial Class Asteroids_Game
     Friend WithEvents GameoverBox As Label
     Friend WithEvents FinalScoreBox As Label
     Friend WithEvents FinalInstructionBox As Label
+    Friend WithEvents uparrow As Button
+    Friend WithEvents leftarrow As Button
+    Friend WithEvents rightarrow As Button
+    Friend WithEvents shootkey As Button
 End Class

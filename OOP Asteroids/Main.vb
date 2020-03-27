@@ -454,13 +454,14 @@
             j += 1 'increment the counter
         Next
 #End Region
-        If PlayerAnswerVariable.Length > answer.Length Then
-            Playeranswer.Text = ""
-            PlayerAnswerVariable = ""
-            ModeLoader()
-            Questions()
-        End If
         If PlayerAnswerVariable <> "" Then 'if there is an answer check it
+            If PlayerAnswerVariable.Length > answer.Length Then
+                Playeranswer.Text = ""
+                PlayerAnswerVariable = ""
+                ModeLoader()
+                Questions()
+            End If
+
             If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
                 Playeranswer.Text = answer
                 correctanswerpause += 1
@@ -662,41 +663,40 @@
                             One2.Hide()
                         End If
                         If GameMenu.gamemode = "bincon" Or GameMenu.gamemode = "bincal" Then 'if binary game mode
-                            For j = 0 To 3 'loop through all asteroids with a value other than z
-                                For Each asteroid In asteroid_array.ToList 'for every asteroid check if all the inner characters are the smae
-                                    If asteroid.innervalue = "1" Or asteroid.innervalue = "z" Then
-                                        allone = True
-                                    Else
-                                        allone = False
-                                        Exit For 'prevent numbers from changing when unwanted
-                                    End If
-                                    If asteroid.innervalue = "0" Or asteroid.innervalue = "z" Then
-                                        allzero = True
-                                    Else
-                                        allzero = False
-                                        Exit For 'prevent numbers changing when unwanted
-                                    End If
-                                Next
-                                If allone = True Or allzero = True Then
+                            For Each asteroid In asteroid_array.ToList 'for every asteroid check if all the inner characters are the same
+                                If asteroid.innervalue = "1" Or asteroid.innervalue = "z" Then
+                                    allone = True
+                                Else
                                     allone = False
+                                    Exit For 'prevent numbers from changing when unwanted
+                                End If
+                                If asteroid.innervalue = "0" Or asteroid.innervalue = "z" Then
+                                    allzero = True
+                                Else
                                     allzero = False
-                                    If Rnd() * 2 = 1 Then
-                                        If Int((Rnd() * 2) + 1) = 1 Then '50/50 of a one or a zero
-                                            asteroid.innervalue = "1"
-                                        Else
-                                            asteroid.innervalue = "0"
-                                        End If
-                                    Else
-                                        If AnswerSubstringCounter < answer.Length Then 'if the counter is not greater than the length
-                                            asteroid_array(j).innervalue = answer.Substring(AnswerSubstringCounter, 1) 'make the inner value equal to  a part of the answer
-                                            AnswerSubstringCounter += 1 'increment counter
-                                        End If
-                                    End If
+                                    Exit For 'prevent numbers changing when unwanted
                                 End If
                             Next
+                            If allone = True Or allzero = True Then
+                                allone = False
+                                allzero = False
+                                If Rnd() * 2 = 1 Then
+                                    If Int((Rnd() * 2) + 1) = 1 Then '50/50 of a one or a zero
+                                        asteroid.innervalue = "1"
+                                    Else
+                                        asteroid.innervalue = "0"
+                                    End If
+                                Else
+                                    If AnswerSubstringCounter < answer.Length Then 'if the counter is not greater than the length
+                                        asteroid_array(j).innervalue = answer.Substring(AnswerSubstringCounter, 1) 'make the inner value equal to  a part of the answer
+                                        AnswerSubstringCounter += 1 'increment counter
+                                    End If
+                                End If
+                            End If
+
                             AnswerSubstringCounter = 0
                         ElseIf GameMenu.gamemode = "hexcon" Or GameMenu.gamemode = "hexcal" Then
-                            For j = 0 To 3 'loop through all asteroids with a value other than z
+                            For Each asteroid In asteroid_array.ToList 'for every asteroid check if all the inner characters are the same
                                 If Rnd() * 2 = 1 Then
                                     asteroid_array(j).innervalue = Hex(Rnd() * 16)
                                 Else
@@ -708,7 +708,7 @@
                             Next
                             AnswerSubstringCounter = 0
                         ElseIf GameMenu.gamemode = "octcon" Or GameMenu.gamemode = "octcal" Then
-                            For j = 0 To 3 'loop through all asteroids with a value other than z
+                            For Each asteroid In asteroid_array.ToList 'for every asteroid check if all the inner characters are the same
                                 If Rnd() * 2 = 1 Then
                                     asteroid_array(j).innervalue = Oct(Rnd() * 16)
                                 Else
@@ -879,4 +879,36 @@
         End If
     End Sub
 
+    Private Sub Uparrow_Click(sender As Object, e As EventArgs) Handles uparrow.MouseDown
+        up = True
+    End Sub
+
+
+    Private Sub Leftarrow_Click(sender As Object, e As EventArgs) Handles leftarrow.MouseDown
+        left = True
+    End Sub
+
+    Private Sub Rightarrow_Click(sender As Object, e As EventArgs) Handles rightarrow.MouseDown
+        right = True
+    End Sub
+
+    Private Sub Shootkey_Click(sender As Object, e As EventArgs) Handles shootkey.MouseDown
+        space = True
+    End Sub
+    Private Sub Uparrow_unClick(sender As Object, e As EventArgs) Handles uparrow.MouseUp
+        up = False
+    End Sub
+
+
+    Private Sub Leftarrow_unClick(sender As Object, e As EventArgs) Handles leftarrow.MouseUp
+        left = False
+    End Sub
+
+    Private Sub Rightarrow_unClick(sender As Object, e As EventArgs) Handles rightarrow.MouseUp
+        right = False
+    End Sub
+
+    Private Sub Shootkey_unClick(sender As Object, e As EventArgs) Handles shootkey.MouseUp
+        space = False
+    End Sub
 End Class
