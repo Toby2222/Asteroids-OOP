@@ -454,30 +454,32 @@
             j += 1 'increment the counter
         Next
 #End Region
-        If PlayerAnswerVariable.Length > answer.Length Then
-            Playeranswer.Text = ""
-            PlayerAnswerVariable = ""
-            ModeLoader()
-            Questions()
-        End If
-        If PlayerAnswerVariable <> "" Then 'if there is an answer check it
-            If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
-                Playeranswer.Text = answer
-                correctanswerpause += 1
-                If correctanswerpause >= 100 Then
-                    correctanswerpause = 0
+        If GameMenu.gamemode <> "fun" Then
+            If PlayerAnswerVariable <> "" Then 'if there is an answer check it
+                If PlayerAnswerVariable.Length > answer.Length Then
                     Playeranswer.Text = ""
                     PlayerAnswerVariable = ""
                     ModeLoader()
                     Questions()
                 End If
-            ElseIf AnswerCheck() = True And PlayerAnswerVariable.Length = answer.Length Then 'if the function returns true and the length of the answer is correct add to the score and generate a new question
-                score += 1000
-                level += 1
-                Playeranswer.Text = ""
-                PlayerAnswerVariable = ""
-                ModeLoader() 'reload the mode
-                Questions() 'generate a new question
+                If AnswerCheck() = False Then 'if the check function return false reset the answer to "" and reset the displayed string
+                    Playeranswer.Text = answer
+                    correctanswerpause += 1
+                    If correctanswerpause >= 100 Then
+                        correctanswerpause = 0
+                        Playeranswer.Text = ""
+                        PlayerAnswerVariable = ""
+                        ModeLoader()
+                        Questions()
+                    End If
+                ElseIf AnswerCheck() = True And PlayerAnswerVariable.Length = answer.Length Then 'if the function returns true and the length of the answer is correct add to the score and generate a new question
+                    score += 1000
+                    level += 1
+                    Playeranswer.Text = ""
+                    PlayerAnswerVariable = ""
+                    ModeLoader() 'reload the mode
+                    Questions() 'generate a new question
+                End If
             End If
         End If
         If asteroid_array.Count = 0 Then 'if there are more asteroids in the array (they've all been destroyed)
