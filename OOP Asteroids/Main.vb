@@ -246,7 +246,7 @@
                 questionrandom = (Rnd() * (Decimalanswer - 1)) + 1 'generate a random number less than the answer
                 Question.Text = "Add these binary numbers together: " + binaryconvert(questionrandom, 8) + " + " + binaryconvert((Decimalanswer - questionrandom), 8) 'output the random number and calculate the other number in the calculation
             ElseIf questionType = 1 Then 'subtract numbers
-                Decimalanswer = (Rnd() * 127) + 1 'generate the decimal answer less than 127
+                Decimalanswer = (Rnd() * 126) + 1 'generate the decimal answer less than 127
                 answer = binaryconvert(Decimalanswer, 8) 'convert the answer to binary
                 questionrandom = (Rnd() * 128) + Decimalanswer ' generate a number between the answer and 128 more max of 255
                 Question.Text = "Subtract these binary numbers : " + binaryconvert(questionrandom, 8) + " - " + binaryconvert((questionrandom - Decimalanswer), 8) 'output the random number and calculate the other half of the calculation

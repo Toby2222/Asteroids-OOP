@@ -80,7 +80,7 @@
                 Dim temp As Char = Asteroids_Game.asteroid_array(i).innervalue 'store the inner value
                 fin(i) 'destruct the object
                 Asteroids_Game.asteroid_array.RemoveAt(i) 'remove the object from the array
-                Asteroids_Game.asteroid = New Asteroids("s", "OldS", temp) 'create new one with the smae details
+                Asteroids_Game.asteroid = New Asteroids("s", "OldS", temp) 'create new one with the same details
             End If
         End If
     End Sub
